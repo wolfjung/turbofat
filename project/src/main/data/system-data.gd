@@ -81,8 +81,9 @@ func _refresh_graphics_settings() -> void:
 		_prev_window_size = OS.window_size
 		_prev_window_position = OS.window_position
 	
-	OS.window_borderless = graphics_settings.fullscreen
-	OS.window_maximized = graphics_settings.fullscreen
+	if old_maximized != new_maximized:
+		OS.window_borderless = graphics_settings.fullscreen
+		OS.window_maximized = graphics_settings.fullscreen
 	
 	if old_maximized and not new_maximized:
 		# becoming windowed; restore the old window size and position
