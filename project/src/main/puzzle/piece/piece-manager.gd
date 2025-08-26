@@ -53,6 +53,9 @@ const TILE_MAP_DEFAULT_Z_INDEX := 3
 ## z index the piece manager's tilemap switches to temporarily when topping out
 const TILE_MAP_TOP_OUT_Z_INDEX := 4
 
+## Darkened color for locked pieces, if the 'lock fade' setting is enabled.
+const LOCKED_PIECE_MODULATE := Color("909090")
+
 export (NodePath) var playfield_path: NodePath
 export (NodePath) var piece_queue_path: NodePath
 
@@ -104,6 +107,12 @@ func _physics_process(_delta: float) -> void:
 		drawn_piece_orientation = piece.orientation
 		_update_tile_map()
 		emit_signal("tiles_changed", tile_map)
+	
+	if SystemData.gameplay_settings.lock_fade:
+		var darkness: float = inverse_lerp(0.0, PieceSpeeds.current_speed.lock_delay, piece.lock)
+		tile_map.modulate = lerp(Color.white, LOCKED_PIECE_MODULATE, clamp(darkness, 0.0, 1.0))
+	else:
+		tile_map.modulate = Color.white
 
 
 func get_state() -> State:
