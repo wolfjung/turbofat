@@ -18,7 +18,7 @@ CreatureScene = ExtResource( 28 )
 z_index = -1
 
 [node name="GroundMap" parent="Ground" instance=ExtResource( 8 )]
-tile_data = PoolIntArray( 0, 0, 0 )
+tile_data = PackedInt32Array( 0, 0, 0 )
 
 [node name="RippleWaves" parent="Ground" instance=ExtResource( 6 )]
 tile_map_path = NodePath("../GroundMap")
@@ -49,7 +49,7 @@ cell_shadow_mapping = {
 7: Rect2( 0, 0, 0, 0 )
 }
 
-[node name="Obstacles" type="YSort" parent="."]
+[node name="Obstacles" type="Node2D" parent="."]
 
 [node name="Player" parent="Obstacles" instance=ExtResource( 28 )]
 position = Vector2( -2, 32 )

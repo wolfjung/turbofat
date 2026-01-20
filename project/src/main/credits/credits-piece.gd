@@ -1,5 +1,5 @@
 class_name CreditsPiece
-extends Sprite
+extends Sprite2D
 ## Puzzle piece which appears on the credits.
 
 enum TargetType {

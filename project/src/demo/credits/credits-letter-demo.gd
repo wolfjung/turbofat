@@ -5,11 +5,11 @@ extends Node
 ## 	Space: Add a letter.
 ## 	[X]: Remove all letters.
 
-export (PackedScene) var CreditsLetterScene: PackedScene
+@export var CreditsLetterScene: PackedScene
 
 var _next_piece_index := 0
 
-onready var _letters := $Letters
+@onready var _letters := $Letters
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):
@@ -20,12 +20,12 @@ func _input(event: InputEvent) -> void:
 
 
 func _add_letter() -> void:
-	var new_letter: CreditsLetter = CreditsLetterScene.instance()
+	var new_letter: CreditsLetter = CreditsLetterScene.instantiate()
 	new_letter.piece_index = _next_piece_index
 	_next_piece_index = (_next_piece_index + 1) % 8
-	var target_rect := Rect2(_letters.rect_position, _letters.rect_size).grow(-100)
-	new_letter.position.x = rand_range(target_rect.position.x, target_rect.end.x)
-	new_letter.position.y = rand_range(target_rect.position.y, target_rect.end.y)
+	var target_rect := Rect2(_letters.position, _letters.size).grow(-100)
+	new_letter.position.x = randf_range(target_rect.position.x, target_rect.end.x)
+	new_letter.position.y = randf_range(target_rect.position.y, target_rect.end.y)
 	new_letter.scale = Vector2(0.33333, 0.33333)
 	_letters.add_child(new_letter)
 

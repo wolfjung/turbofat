@@ -11,15 +11,15 @@ func chat_key_pair(career_level: CareerLevel) -> ChatKeyPair:
 	var result: ChatKeyPair = ChatKeyPair.new()
 
 	# if it's an intro level, return any intro level cutscenes
-	if result.empty() and PlayerData.career.is_intro_level():
+	if result.is_empty() and PlayerData.career.is_intro_level():
 		result = _intro_chat_key_pair()
 	
 	# if it's a boss level, return any boss level cutscenes
-	if result.empty() and PlayerData.career.is_boss_level():
+	if result.is_empty() and PlayerData.career.is_boss_level():
 		result = _boss_chat_key_pair()
 	
 	# if it's the 3rd or 6th level, return any interludes
-	if result.empty() and PlayerData.career.hours_passed in PlayerData.career.career_interlude_hours() \
+	if result.is_empty() and PlayerData.career.hours_passed in PlayerData.career.career_interlude_hours() \
 			and not PlayerData.career.skipped_previous_level:
 		result = _interlude_chat_key_pair(career_level)
 	
@@ -40,7 +40,7 @@ func _intro_chat_key_pair() -> ChatKeyPair:
 		result.preroll = preroll_key
 	if ChatLibrary.chat_exists(postroll_key) and not PlayerData.chat_history.is_chat_finished(postroll_key):
 		result.postroll = postroll_key
-	if not result.empty():
+	if not result.is_empty():
 		result.type = ChatKeyPair.INTRO_LEVEL
 		
 	return result
@@ -59,17 +59,17 @@ func _boss_chat_key_pair() -> ChatKeyPair:
 	var reretry_preroll_key := region.get_boss_level_reretry_preroll_chat_key()
 	var postroll_key := region.get_boss_level_postroll_chat_key()
 	
-	if result.preroll.empty() \
+	if result.preroll.is_empty() \
 			and ChatLibrary.chat_exists(preroll_key) \
 			and not PlayerData.chat_history.is_chat_finished(preroll_key):
 		# if the preroll is unplayed, play it
 		result.preroll = preroll_key
-	if result.preroll.empty() \
+	if result.preroll.is_empty() \
 			and ChatLibrary.chat_exists(retry_preroll_key) \
 			and not PlayerData.chat_history.is_chat_finished(retry_preroll_key):
 		# if the retry preroll is unplayed, play it
 		result.preroll = retry_preroll_key
-	if result.preroll.empty() \
+	if result.preroll.is_empty() \
 			and ChatLibrary.chat_exists(reretry_preroll_key):
 		# Play the reretry preroll even if they've seen it before. In Chocolava Canyon, this includes advice to enable
 		# cheats and even if it's slightly patronizing, it's important the player sees this message more than once.
@@ -77,7 +77,7 @@ func _boss_chat_key_pair() -> ChatKeyPair:
 	
 	if ChatLibrary.chat_exists(postroll_key) and not PlayerData.chat_history.is_chat_finished(postroll_key):
 		result.postroll = postroll_key
-	if not result.empty():
+	if not result.is_empty():
 		result.type = ChatKeyPair.BOSS_LEVEL
 	
 	return result
@@ -110,11 +110,11 @@ func _interlude_chat_key_pair(career_level: CareerLevel) -> ChatKeyPair:
 		# find a region-specific cutscene
 		result = CareerCutsceneLibrary.next_interlude_chat_key_pair(
 				[region.cutscene_path], chef_id, customer_id, observer_id)
-	if result.empty():
+	if result.is_empty():
 		# no region-specific cutscene available; find a general cutscene
 		result = CareerCutsceneLibrary.next_interlude_chat_key_pair(
 				[CareerCutsceneLibrary.general_chat_key_root], chef_id, customer_id, observer_id)
-	if not result.empty():
+	if not result.is_empty():
 		result.type = ChatKeyPair.INTERLUDE
 	
 	return result

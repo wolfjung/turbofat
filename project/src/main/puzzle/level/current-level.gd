@@ -2,7 +2,7 @@ extends Node
 ## Stores information about the current level.
 
 ## emitted after the level has customized the puzzle's settings.
-signal settings_changed
+signal changed
 
 ## emitted when the 'best_result' field changes, such as when starting or clearing a level.
 signal best_result_changed
@@ -12,7 +12,7 @@ signal best_result_changed
 var keep_retrying := false
 
 ## Settings for the level currently being launched or played
-var settings := LevelSettings.new() setget switch_level
+var settings := LevelSettings.new(): set = switch_level
 
 ## If 'true' the player only gets one life.
 var hardcore := false
@@ -39,7 +39,7 @@ var chef_id: String
 
 ## Monitors when the player finishes a level.
 var first_result: int = Levels.Result.NONE
-var best_result: int = Levels.Result.NONE setget set_best_result
+var best_result: int = Levels.Result.NONE: set = set_best_result
 
 ## How many times the player has tried the level in this session.
 var attempt_count := 0
@@ -48,7 +48,7 @@ var attempt_count := 0
 var puzzle_environment_id: String
 
 func _ready() -> void:
-	Breadcrumb.connect("before_scene_changed", self, "_on_Breadcrumb_before_scene_changed")
+	Breadcrumb.connect("before_scene_changed", Callable(self, "_on_Breadcrumb_before_scene_changed"))
 
 
 ## Unsets all of the 'launched level' data.
@@ -111,7 +111,7 @@ func start_level(new_settings: LevelSettings, suppress_change_signal: bool = fal
 func switch_level(new_settings: LevelSettings, suppress_change_signal: bool = false) -> void:
 	settings = new_settings
 	if not suppress_change_signal:
-		emit_signal("settings_changed")
+		emit_signal("changed")
 
 
 ## Launches a puzzle scene with the previously specified 'launched level' settings.

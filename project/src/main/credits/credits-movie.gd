@@ -1,13 +1,13 @@
 extends Control
 ## Plays different movies during the credits scroll.
 
-export (PackedScene) var CrowdWalkCutsceneScene: PackedScene
-export (PackedScene) var CrowdSurfCutsceneScene: PackedScene
+@export var CrowdWalkCutsceneScene: PackedScene
+@export var CrowdSurfCutsceneScene: PackedScene
 
-onready var _viewport := $ViewportContainer/Viewport
+@onready var _viewport := $SubViewportContainer/SubViewport
 
-onready var _crowd_walk_cutscene := CrowdWalkCutsceneScene.instance()
-onready var _crowd_surf_cutscene := CrowdSurfCutsceneScene.instance()
+@onready var _crowd_walk_cutscene := CrowdWalkCutsceneScene.instantiate()
+@onready var _crowd_surf_cutscene := CrowdSurfCutsceneScene.instantiate()
 
 func _ready() -> void:
 	_viewport.add_child(_crowd_walk_cutscene)

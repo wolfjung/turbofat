@@ -6,7 +6,7 @@ extends Node
 
 signal save_button_pressed
 
-export (NodePath) var overworld_environment_path: NodePath
+@export var overworld_environment_path: NodePath
 
 ## Most recently imported creature definition.
 ##
@@ -14,7 +14,7 @@ export (NodePath) var overworld_environment_path: NodePath
 ## imported creature. Otherwise, it's tedious to keep being prompted if you import multiple creatures in a row.
 var _imported_def: CreatureDef
 
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
 
 ## Saves the creature and launches some visual effects.
 func save_creature() -> void:

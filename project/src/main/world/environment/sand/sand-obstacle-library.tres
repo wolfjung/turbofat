@@ -1,13 +1,13 @@
 [gd_resource type="TileSet" load_steps=7 format=2]
 
-[ext_resource path="res://assets/main/empty-600.png" type="Texture" id=2]
-[ext_resource path="res://assets/main/world/environment/sand/sand-no-goop-sheet.png" type="Texture" id=3]
-[ext_resource path="res://assets/main/world/environment/sand/sand-obstacle-corners-sheet.png" type="Texture" id=4]
-[ext_resource path="res://assets/main/world/environment/sand/sand-all-goop-obstacle-sheet.png" type="Texture" id=5]
-[ext_resource path="res://assets/main/world/environment/sand/sand-some-goop-obstacle-sheet.png" type="Texture" id=6]
+[ext_resource path="res://assets/main/empty-600.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/main/world/environment/sand/sand-no-goop-sheet.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/main/world/environment/sand/sand-obstacle-corners-sheet.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/main/world/environment/sand/sand-all-goop-obstacle-sheet.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/main/world/environment/sand/sand-some-goop-obstacle-sheet.png" type="Texture2D" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( -64, 0, 0, -32, 64, 0, 0, 32 )
+points = PackedVector2Array( -64, 0, 0, -32, 64, 0, 0, 32 )
 
 [resource]
 1/name = "Impassable"

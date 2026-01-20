@@ -11,7 +11,7 @@ const OUTPUT_PATH := "res://assets/main/locale/localizables-extracted.py"
 ## List of String lines to be written to the file.
 var _file_contents: Array = []
 
-onready var _creature_editor_library := Global.get_creature_editor_library()
+@onready var _creature_editor_library := Global.get_creature_editor_library()
 
 ## Extracts localizable strings from levels and chats and writes them to a file.
 func run() -> void:
@@ -35,7 +35,7 @@ func run() -> void:
 	_append_header_comment("Locales")
 	_extract_localizables_from_locales()
 	
-	FileUtils.write_file(OUTPUT_PATH, PoolStringArray(_file_contents).join("\n") + "\n")
+	FileUtils.write_file(OUTPUT_PATH, "\n".join(PackedStringArray(_file_contents)) + "\n")
 	TranslationServer.set_locale(old_locale)
 	_output.add_line("Wrote %s lines to %s." % [
 			StringUtils.comma_sep(_file_contents.size()),
@@ -55,7 +55,7 @@ func _append_header_comment(comment: String) -> void:
 
 ## Appends a localizable to the '_file_contents' to be written to a file later.
 func _append_localizable(localizable: String) -> void:
-	if localizable.empty():
+	if localizable.is_empty():
 		return
 	
 	var sanitized_string := localizable
@@ -102,19 +102,19 @@ func _extract_localizables_from_chat_event(event: ChatEvent) -> void:
 						push_warning("Invalid token count for set_phrase call. Expected 2 but was %s"
 								% [args.size()])
 					
-					_append_localizable(PoolStringArray(args.slice(1, args.size())).join(" "))
+					_append_localizable(PackedStringArray(args.slice(1, args." ".join(size()))))
 				"default_phrase":
 					if args.size() < 2:
 						push_warning("Invalid token count for default_phrase call. Expected 2 but was %s"
 								% [args.size()])
 					
-					_append_localizable(PoolStringArray(args.slice(1, args.size())).join(" "))
+					_append_localizable(PackedStringArray(args.slice(1, args." ".join(size()))))
 				"nametag_text":
 					if args.size() < 1:
 						push_warning("Invalid token count for nametag_text call. Expected 1 but was %s"
 								% [args.size()])
 					
-					_append_localizable(PoolStringArray(args.slice(0, args.size())).join(" "))
+					_append_localizable(PackedStringArray(args.slice(0, args." ".join(size()))))
 
 
 ## Extracts localizable strings from all cutscenes/chats and adds them to the in-memory list of localizables.
@@ -158,13 +158,13 @@ func _extract_localizables_from_levels() -> void:
 func _extract_localizables_from_scancodes() -> void:
 	# ascii printable characters: space, comma, period, slash...
 	for i in range(256):
-		var scancode_string := OS.get_scancode_string(i)
+		var scancode_string := OS.get_keycode_string(i)
 		if scancode_string.length() > 1:
 			_append_localizable(scancode_string)
 	
 	# non-ascii printable characters: F1, left, caps lock...
 	for i in range(16777217, 16777359):
-		var scancode_string := OS.get_scancode_string(i)
+		var scancode_string := OS.get_keycode_string(i)
 		if scancode_string.length() > 1:
 			_append_localizable(scancode_string)
 

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/medal-shimmer.wav-37328e238932519ad7622981ad051c27.sample"
+type="AudioStreamWAV"
+uid="uid://bo3oaxgauklos"
+path="res://.godot/imported/medal-shimmer.wav-37328e238932519ad7622981ad051c27.sample"
 
 [deps]
 
 source_file="res://assets/main/puzzle/result/medal-shimmer.wav"
-dest_files=[ "res://.import/medal-shimmer.wav-37328e238932519ad7622981ad051c27.sample" ]
+dest_files=["res://.godot/imported/medal-shimmer.wav-37328e238932519ad7622981ad051c27.sample"]
 
 [params]
 

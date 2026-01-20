@@ -1,11 +1,11 @@
-tool
+@tool
 extends ObstacleSpawner
 ## Conditionally spawns a Poki Desert crowdie on the overworld.
 ##
 ## Provides a utility method in the editor for shuffling the crowdie's appearance.
 
 ## Editor toggle which randomizes the crowdie's appearance
-export (bool) var shuffle: bool setget set_shuffle
+@export var shuffle: bool: set = set_shuffle
 
 ## Randomizes the crowdie's appearance.
 func set_shuffle(value: bool) -> void:
@@ -15,12 +15,12 @@ func set_shuffle(value: bool) -> void:
 	target_properties["frame"] = randi() % 20
 	target_properties["crowd_color_index"] = Utils.randi_range(0, PokiCrowdie.CROWD_COLORS.size() - 1)
 	
-	property_list_changed_notify()
+	notify_property_list_changed()
 
 
 ## Spawns and orients the crowdie and removes the spawner from the scene tree.
 func spawn_target() -> void:
-	.spawn_target()
+	super.spawn_target()
 	if not is_inside_tree():
 		return
 	
@@ -29,7 +29,7 @@ func spawn_target() -> void:
 	if PlayerData.chat_history.is_chat_finished("chat/career/poki/100"):
 		# people face the restaurant
 		var entrances := get_tree().get_nodes_in_group("turbo_fat_entrances")
-		var entrance: Sprite
+		var entrance: Sprite2D
 		if entrances:
 			entrance = entrances[0]
 		

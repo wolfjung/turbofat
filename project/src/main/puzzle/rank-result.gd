@@ -2,7 +2,7 @@ class_name RankResult
 ## Contains rank information for a playthrough. This includes raw statistics such as how many lines-per-minute the
 ## player cleared, as well as derived statistics such as the computed lines-per-minute rank.
 
-var timestamp := OS.get_datetime()
+var timestamp := Time.get_datetime_dict_from_system()
 
 ## how this rank result should be compared:
 ## '-seconds': lowest seconds is best

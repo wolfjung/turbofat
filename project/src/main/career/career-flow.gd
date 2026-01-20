@@ -35,7 +35,7 @@ func push_career_trail() -> void:
 	
 	if not redirected:
 		# After a puzzle (or any other scene), we go back to the career map.
-		SceneTransition.change_scene()
+		SceneTransition.change_scene_to_file()
 
 
 ## Updates the state of career mode based on the player's puzzle performance.

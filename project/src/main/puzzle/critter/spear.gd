@@ -32,10 +32,10 @@ const POPPED_IN := State.POPPED_IN
 const POPPED_OUT := State.POPPED_OUT
 
 ## Enum from State for the spear's current animation state.
-var state: int = NONE setget set_state
+var state: int = NONE: set = set_state
 
 ## Which playfield side the spear appears from.
-var side: int = Side.LEFT setget set_side
+var side: int = Side.LEFT: set = set_side
 
 ## The duration in seconds of the spear's pop in/pop out animation.
 var pop_anim_duration := 0.6
@@ -55,25 +55,25 @@ var _free_after_poof := false
 var _next_states := []
 
 ## Schedules events for the spear's pop in/pop out animations.
-var _pop_tween: SceneTreeTween
+var _pop_tween: Tween
 
-onready var poof: Sprite = $Poof
-onready var sfx: SpearSfx = $SpearSfx
-onready var spear_holder: Control = $SpearHolder
-onready var spear_sprite: Sprite = $SpearHolder/Spear
-onready var wait: SpearWaitSprite = $Wait
+@onready var poof: Sprite2D = $Poof
+@onready var sfx: SpearSfx = $SpearSfx
+@onready var spear_holder: Control = $SpearHolder
+@onready var spear_sprite: Sprite2D = $SpearHolder/Spear
+@onready var wait: SpearWaitSprite = $Wait
 
-onready var _crumb_holder := $CrumbHolder
-onready var _dirt_particles_burst: Particles2D = $SoilFront/DirtParticlesBurst
-onready var _dirt_particles_continuous: Particles2D = $SoilFront/DirtParticlesContinuous
-onready var _face: Sprite = $SpearHolder/Spear/Face
-onready var _soil_back: Sprite = $SoilFront
-onready var _soil_front: Sprite = $SoilBack
-onready var _states: StateMachine = $States
+@onready var _crumb_holder := $CrumbHolder
+@onready var _dirt_particles_burst: GPUParticles2D = $SoilFront/DirtParticlesBurst
+@onready var _dirt_particles_continuous: GPUParticles2D = $SoilFront/DirtParticlesContinuous
+@onready var _face: Sprite2D = $SpearHolder/Spear/Face
+@onready var _soil_back: Sprite2D = $SoilFront
+@onready var _soil_front: Sprite2D = $SoilBack
+@onready var _states: StateMachine = $States
 
 ## key: (int) Enum from State
 ## value: (Node) State node from the _states StateMachine
-onready var _state_nodes_by_enum := {
+@onready var _state_nodes_by_enum := {
 	NONE: $States/None,
 	WAITING: $States/Waiting,
 	WAITING_END: $States/WaitingEnd,
@@ -127,7 +127,7 @@ func clear_next_states() -> void:
 
 ## Returns 'true' if there are states remaining in the spear's queue of upcoming animation states.
 func has_next_state() -> bool:
-	return not _next_states.empty()
+	return not _next_states.is_empty()
 
 
 ## Dequeues the next state from the spear's queue of upcoming animation states.
@@ -135,7 +135,7 @@ func has_next_state() -> bool:
 ## Returns:
 ## 	Enum from State for the spear's new state.
 func pop_next_state() -> int:
-	if _next_states.empty():
+	if _next_states.is_empty():
 		return NONE
 	
 	if _already_popped_state:
@@ -189,15 +189,15 @@ func tween_and_pop(target_x: float, squint_duration: float) -> void:
 	_ruffle_soil()
 	_face.squint(squint_duration)
 	_pop_tween.tween_property(spear_sprite, "position:x", target_x, pop_anim_duration) \
-			.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	_pop_tween.tween_callback(_dirt_particles_burst, "set", ["emitting", false]) \
-			.set_delay(pop_anim_duration)
-	_pop_tween.tween_callback(_dirt_particles_continuous, "set", ["emitting", false]) \
-			.set_delay(pop_anim_duration * 0.5)
+			super.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	_pop_tween.tween_callback(Callable(_dirt_particles_burst, "set").bind("emitting", false)) \
+			super.set_delay(pop_anim_duration)
+	_pop_tween.tween_callback(Callable(_dirt_particles_continuous, "set").bind("emitting", false)) \
+			super.set_delay(pop_anim_duration * 0.5)
 	
 	if target_x > UNPOPPED_SPEAR_SPRITE_X:
 		# if the spear is popping into view, we play a 'hello' sound effect
-		_pop_tween.tween_callback(sfx, "play_hello_voice").set_delay(0.1)
+		_pop_tween.tween_callback(Callable(sfx, "play_hello_voice")).set_delay(0.1)
 
 
 ## Emits particle properties based on the speared blocks.
@@ -217,12 +217,12 @@ func _ruffle_soil() -> void:
 		soil_sprite.visible = true
 		soil_sprite.frame = 0
 		
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 1]).set_delay(pop_anim_duration * 0.050)
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 2]).set_delay(pop_anim_duration * 0.080)
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 0]).set_delay(pop_anim_duration * 0.130)
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 1]).set_delay(pop_anim_duration * 0.210)
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 2]).set_delay(pop_anim_duration * 0.340)
-		_pop_tween.tween_callback(soil_sprite, "set", ["frame", 0]).set_delay(pop_anim_duration * 0.550)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 1)).set_delay(pop_anim_duration * 0.050)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 2)).set_delay(pop_anim_duration * 0.080)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 0)).set_delay(pop_anim_duration * 0.130)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 1)).set_delay(pop_anim_duration * 0.210)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 2)).set_delay(pop_anim_duration * 0.340)
+		_pop_tween.tween_callback(Callable(soil_sprite, "set").bind("frame", 0)).set_delay(pop_anim_duration * 0.550)
 
 
 ## Refreshes our visuals based on the 'side' property.
@@ -234,9 +234,9 @@ func _refresh_side() -> void:
 	
 	var new_child_scale := -1 if side == Side.RIGHT else 1
 	_soil_back.scale.x = new_child_scale
-	spear_holder.rect_scale.x = new_child_scale
+	spear_holder.scale.x = new_child_scale
 	_soil_front.scale.x = new_child_scale
-	_crumb_holder.rect_scale.x = new_child_scale
+	_crumb_holder.scale.x = new_child_scale
 	wait.position.x = abs(wait.position.x) * new_child_scale
 	poof.position.x = abs(poof.position.x) * new_child_scale
 

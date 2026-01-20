@@ -5,7 +5,7 @@ extends Node
 ## 	[Q]: Shows the screen with 25% completion.
 ## 	[W]: Shows the screen with 100% completion, including a grade.
 
-onready var _end_text := $EndText
+@onready var _end_text := $EndText
 
 
 func _input(event: InputEvent) -> void:

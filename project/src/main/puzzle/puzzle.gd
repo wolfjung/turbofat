@@ -5,9 +5,9 @@ extends Control
 ## Number of time the player has started the puzzle.
 var _start_puzzle_count := 0
 
-onready var _restaurant_view: RestaurantView = $Fg/RestaurantView
-onready var _settings_menu: SettingsMenu = $SettingsMenu
-onready var _night_mode_toggler: NightModeToggler = $NightModeToggler
+@onready var _restaurant_view: RestaurantView = $Fg/RestaurantView
+@onready var _settings_menu: SettingsMenu = $SettingsMenu
+@onready var _night_mode_toggler: NightModeToggler = $NightModeToggler
 
 func _ready() -> void:
 	if PlayerData.career.is_career_mode() and MusicPlayer.is_playing_boss_track():
@@ -16,9 +16,9 @@ func _ready() -> void:
 	else:
 		MusicPlayer.play_menu_track()
 	
-	PuzzleState.connect("game_started", self, "_on_PuzzleState_game_started")
-	PuzzleState.connect("game_ended", self, "_on_PuzzleState_game_ended")
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	PuzzleState.connect("game_started", Callable(self, "_on_PuzzleState_game_started"))
+	PuzzleState.connect("game_ended", Callable(self, "_on_PuzzleState_game_ended"))
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 	
 	$Fg/Playfield/TileMapClip/TileMap/ShadowViewport/ShadowMap.piece_tile_map = $Fg/PieceManager/TileMap
 	$Fg/Playfield/TileMapClip/TileMap/GhostPieceViewport/ShadowMap.piece_tile_map = $Fg/PieceManager/TileMap
@@ -43,7 +43,7 @@ func _ready() -> void:
 	if CurrentLevel.settings.other.skip_intro:
 		$PuzzleMusicManager.start_puzzle_music()
 		if is_inside_tree():
-			yield(get_tree().create_timer(0.8), "timeout")
+			await get_tree().create_timer(0.8).timeout
 		_start_puzzle()
 	else:
 		CurrentLevel.settings.triggers.run_triggers(LevelTrigger.BEFORE_START)
@@ -57,7 +57,7 @@ func _input(event: InputEvent) -> void:
 		# if the player presses the 'menu' button during a puzzle, we pop open the settings panel
 		_settings_menu.show()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 	
 	if event.is_action_pressed("retry"):
 		if not PuzzleState.game_active and not PuzzleState.game_ended:
@@ -130,7 +130,7 @@ func start_level_countdown() -> void:
 	$Hud/Center/PuzzleMessages.show_message(PuzzleMessage.NEUTRAL, tr("Ready?"))
 	$StartEndSfx.play_ready_sound()
 	if is_inside_tree():
-		yield(get_tree().create_timer(PuzzleState.READY_DURATION), "timeout")
+		await get_tree().create_timer(PuzzleState.READY_DURATION).timeout
 	$Hud/Center/PuzzleMessages.hide_message()
 	$Fg/PieceManager.set_physics_process(true)
 	$Fg/PieceManager.skip_prespawn()
@@ -187,7 +187,7 @@ func _restart() -> void:
 	
 	_start_puzzle()
 	if is_inside_tree():
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 	PuzzleState.retrying = false
 
 
@@ -401,7 +401,7 @@ func _on_Playfield_line_cleared(_y: int, total_lines: int, remaining_lines: int,
 	# They say something after clearing [6, 12, 18, 24...] lines.
 	if remaining_lines == 0 and PuzzleState.combo >= 6 and total_lines > PuzzleState.combo % 6:
 		if is_inside_tree():
-			yield(get_tree().create_timer(0.5), "timeout")
+			await get_tree().create_timer(0.5).timeout
 		customer.play_combo_voice()
 
 

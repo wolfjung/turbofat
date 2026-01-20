@@ -89,9 +89,9 @@ func _init() -> void:
 	_rule_parser.add_enum("line_clear_type", LineClearType)
 	_rule_parser.add_enum("pickup_type", PickupType)
 	_rule_parser.add_enum("shuffle_filled_lines", ShuffleLinesType) \
-			.implied(ShuffleLinesType.BAG)
+			super.implied(ShuffleLinesType.BAG)
 	_rule_parser.add_enum("shuffle_inserted_lines", ShuffleLinesType) \
-			.implied(ShuffleLinesType.BAG)
+			super.implied(ShuffleLinesType.BAG)
 	_rule_parser.add_enum("top_out_effect", TopOutEffect)
 
 

@@ -20,7 +20,7 @@ func run_triggers(phase: int, event_params: Dictionary = {}) -> void:
 		return
 	
 	var phase_triggers: Array = triggers.get(phase, []).duplicate()
-	phase_triggers.sort_custom(self, "_compare_by_priority")
+	phase_triggers.sort_custom(Callable(self, "_compare_by_priority"))
 	
 	for trigger in phase_triggers:
 		if trigger.should_run(phase, event_params):
@@ -49,7 +49,7 @@ func to_json_array() -> Array:
 
 
 func is_default() -> bool:
-	return triggers.empty()
+	return triggers.is_empty()
 
 
 ## Returns 'true' if this level contains a trigger with the specified effect.

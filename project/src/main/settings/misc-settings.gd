@@ -23,7 +23,7 @@ const SAVE_SLOT_PREFIXES := {
 }
 
 ## Current save slot for saving/loading progress
-var save_slot: int = SaveSlot.SLOT_A setget set_save_slot
+var save_slot: int = SaveSlot.SLOT_A: set = set_save_slot
 
 ## 'true' if the player should be shown the intro screen when starting Adventure mode
 var show_adventure_mode_intro: bool = true
@@ -36,7 +36,7 @@ var show_give_up_confirmation: bool = true
 
 ## Current locale. This is redundant with TranslationServer.locale, but exposing a setter lets us provide a signal
 ## to notify when the locale changes.
-var locale := "en" setget set_locale
+var locale := "en": set = set_locale
 
 ## Resets the miscellaneous settings to their default values.
 func reset() -> void:

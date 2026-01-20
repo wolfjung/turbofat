@@ -4,7 +4,7 @@ extends State
 ## The number of fingers held up is controlled by the 'anim_name' property.
 
 ## Animation name corresponding to the number of fingers the tomato is holding up.
-export (String) var anim_name: String
+@export var anim_name: String
 
 func enter(tomato: Tomato, prev_state_name: String) -> void:
 	# store information about the previous tomato animation

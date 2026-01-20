@@ -60,9 +60,9 @@ const SPEAR_CONFIG_SIZES := [
 ]
 
 ## local path to a json level resource to demo
-export (String, FILE, "*.json") var level_path: String
+@export var level_path: String # (String, FILE, "*.json")
 
-export (bool) var cache_resources := false
+@export var cache_resources := false
 
 var critter_type: int = CritterType.NONE
 
@@ -71,7 +71,7 @@ var _mole_config := MoleConfig.new()
 var _shark_config := SharkConfig.new()
 var _spear_config := SpearConfig.new()
 
-onready var _tutorial_hud: TutorialHud = $Puzzle/Hud/Center/TutorialHud
+@onready var _tutorial_hud: TutorialHud = $Puzzle/Hud/Center/TutorialHud
 
 func _ready() -> void:
 	if cache_resources:
@@ -80,7 +80,9 @@ func _ready() -> void:
 	var settings: LevelSettings = LevelSettings.new()
 	if level_path:
 		var json_text := FileUtils.get_file_as_text(level_path)
-		var json_dict: Dictionary = parse_json(json_text)
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(json_text)
+		var json_dict: Dictionary = test_json_conv.get_data()
 		var level_key := LevelSettings.level_key_from_path(level_path)
 		settings.from_json_dict(level_key, json_dict)
 		# Ignore the start_level property so we can test the middle parts of tutorials

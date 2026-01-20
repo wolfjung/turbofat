@@ -9,29 +9,29 @@
 [ext_resource path="res://src/main/career/CareerRewinder.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/main/world/environment/EmptyEnvironment.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/main/career/ui/ProgressBoard.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/main/ui/touch/menu.png" type="Texture" id=10]
-[ext_resource path="res://assets/main/ui/touch/menu-pressed.png" type="Texture" id=11]
+[ext_resource path="res://assets/main/ui/touch/menu.png" type="Texture2D" id=10]
+[ext_resource path="res://assets/main/ui/touch/menu-pressed.png" type="Texture2D" id=11]
 [ext_resource path="res://src/main/ui/ImageButton.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main/career/ui/career-distance-label.gd" type="Script" id=13]
 [ext_resource path="res://src/main/ui/settings/SettingsMenu.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/main/ui/level-select/HardcoreLevelSelectButton.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/main/career/ui/career-time-label.gd" type="Script" id=16]
 [ext_resource path="res://src/main/ui/level-select/HardcoreBossLevelSelectButton.tscn" type="PackedScene" id=17]
-[ext_resource path="res://assets/main/ui/font/blogger-sans-bold.otf" type="DynamicFontData" id=18]
+[ext_resource path="res://assets/main/ui/font/blogger-sans-bold.otf" type="FontFile" id=18]
 [ext_resource path="res://src/main/career/career-hint.gd" type="Script" id=19]
 [ext_resource path="res://src/main/career/hint-accent.gd" type="Script" id=20]
 [ext_resource path="res://src/main/ui/ButtonShortcutHelper.tscn" type="PackedScene" id=21]
 [ext_resource path="res://src/main/world/career-world.gd" type="Script" id=25]
 [ext_resource path="res://src/main/career/ui/career-map-level-select.gd" type="Script" id=28]
 [ext_resource path="res://src/main/ui/MoneyLabel.tscn" type="PackedScene" id=42]
-[ext_resource path="res://src/main/ui/money-font.tres" type="DynamicFont" id=43]
+[ext_resource path="res://src/main/ui/money-font.tres" type="FontFile" id=43]
 [ext_resource path="res://src/main/career/ui/career-map-ui.gd" type="Script" id=45]
-[ext_resource path="res://assets/main/career/ui/icon-distance.png" type="Texture" id=46]
-[ext_resource path="res://assets/main/career/ui/icon-time-of-day-sheet.png" type="Texture" id=47]
+[ext_resource path="res://assets/main/career/ui/icon-distance.png" type="Texture2D" id=46]
+[ext_resource path="res://assets/main/career/ui/icon-time-of-day-sheet.png" type="Texture2D" id=47]
 [ext_resource path="res://src/main/world/environment/MileMarker.tscn" type="PackedScene" id=48]
 [ext_resource path="res://src/main/world/career-camera.gd" type="Script" id=49]
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="FontFile" id=23]
 outline_size = 2
 outline_color = Color( 0.423529, 0.262745, 0.192157, 1 )
 use_filter = true
@@ -60,7 +60,7 @@ bg_color = Color( 0.423529, 0.262745, 0.192157, 1 )
 [sub_resource type="InputEventAction" id=22]
 action = "ui_cancel"
 
-[sub_resource type="ShortCut" id=14]
+[sub_resource type="Shortcut" id=14]
 shortcut = SubResource( 22 )
 
 [node name="CareerMap" type="Node"]
@@ -75,7 +75,7 @@ MileMarkerScene = ExtResource( 48 )
 
 [node name="Environment" parent="World" instance=ExtResource( 8 )]
 
-[node name="Camera" type="Camera2D" parent="World"]
+[node name="Camera3D" type="Camera2D" parent="World"]
 current = true
 zoom = Vector2( 0.8, 0.8 )
 script = ExtResource( 49 )
@@ -89,18 +89,18 @@ HardcoreBossLevelSelectButtonScene = ExtResource( 17 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelSelect"]
 anchor_right = 1.0
-margin_left = 32.0
-margin_top = 52.0
-margin_right = -32.0
-margin_bottom = 189.0
-rect_min_size = Vector2( 960, 0 )
+offset_left = 32.0
+offset_top = 52.0
+offset_right = -32.0
+offset_bottom = 189.0
+custom_minimum_size = Vector2( 960, 0 )
 mouse_filter = 0
 size_flags_vertical = 3
 
 [node name="LevelButtons" type="Control" parent="LevelSelect/VBoxContainer"]
-margin_right = 960.0
-margin_bottom = 130.0
-rect_min_size = Vector2( 0, 130 )
+offset_right = 960.0
+offset_bottom = 130.0
+custom_minimum_size = Vector2( 0, 130 )
 size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LevelSelect/VBoxContainer/LevelButtons"]
@@ -111,12 +111,12 @@ size_flags_vertical = 3
 [node name="GradeLabels" parent="LevelSelect/VBoxContainer/LevelButtons" instance=ExtResource( 1 )]
 
 [node name="Hint" type="Label" parent="LevelSelect/VBoxContainer"]
-margin_top = 134.0
-margin_right = 960.0
-margin_bottom = 151.0
-rect_min_size = Vector2( 84, 0 )
-custom_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
-custom_fonts/font = SubResource( 23 )
+offset_top = 134.0
+offset_right = 960.0
+offset_bottom = 151.0
+custom_minimum_size = Vector2( 84, 0 )
+theme_override_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
+theme_override_fonts/font = SubResource( 23 )
 text = "The left level is further from the goal. Choose carefully!"
 align = 1
 valign = 1
@@ -128,11 +128,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -209.5
-margin_top = -3.5
-margin_right = 209.5
-margin_bottom = 6.5
-custom_styles/panel = SubResource( 24 )
+offset_left = -209.5
+offset_top = -3.5
+offset_right = 209.5
+offset_bottom = 6.5
+theme_override_styles/panel = SubResource( 24 )
 script = ExtResource( 20 )
 
 [node name="ProgressBoardHolder" parent="." instance=ExtResource( 9 )]
@@ -149,9 +149,9 @@ mouse_filter = 2
 [node name="StatusBar" type="Panel" parent="Ui/Control"]
 self_modulate = Color( 1, 1, 1, 0.313726 )
 anchor_right = 1.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 0, 32 )
-custom_styles/panel = SubResource( 20 )
+offset_bottom = 32.0
+custom_minimum_size = Vector2( 0, 32 )
+theme_override_styles/panel = SubResource( 20 )
 
 [node name="Money" parent="Ui/Control/StatusBar" instance=ExtResource( 42 )]
 compact = true
@@ -159,53 +159,53 @@ compact = true
 [node name="Distance" type="Control" parent="Ui/Control/StatusBar"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -64.0
-margin_right = 64.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 0, 32 )
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+custom_minimum_size = Vector2( 0, 32 )
 mouse_filter = 2
 script = ExtResource( 13 )
 level_select_path = NodePath("../../../../LevelSelect")
 
 [node name="TextureRect" type="Control" parent="Ui/Control/StatusBar/Distance"]
-margin_right = 32.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
+offset_right = 32.0
+offset_bottom = 32.0
+custom_minimum_size = Vector2( 32, 32 )
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="IconSprite" type="Sprite" parent="Ui/Control/StatusBar/Distance/TextureRect"]
+[node name="IconSprite" type="Sprite2D" parent="Ui/Control/StatusBar/Distance/TextureRect"]
 position = Vector2( 16, 16 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 46 )
 
 [node name="Label" type="Label" parent="Ui/Control/StatusBar/Distance"]
-margin_left = 36.0
-margin_top = 2.5
-margin_right = 120.0
-margin_bottom = 34.5
-rect_min_size = Vector2( 84, 0 )
-custom_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
-custom_fonts/font = ExtResource( 43 )
+offset_left = 36.0
+offset_top = 2.5
+offset_right = 120.0
+offset_bottom = 34.5
+custom_minimum_size = Vector2( 84, 0 )
+theme_override_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
+theme_override_fonts/font = ExtResource( 43 )
 text = "999,999"
 valign = 1
 
 [node name="Time" type="Control" parent="Ui/Control/StatusBar"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -136.0
-margin_right = -136.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 136, 32 )
+offset_left = -136.0
+offset_right = -136.0
+offset_bottom = 32.0
+custom_minimum_size = Vector2( 136, 32 )
 mouse_filter = 2
 script = ExtResource( 16 )
 
 [node name="Icon" type="Control" parent="Ui/Control/StatusBar/Time"]
-margin_right = 32.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
+offset_right = 32.0
+offset_bottom = 32.0
+custom_minimum_size = Vector2( 32, 32 )
 
-[node name="IconSprite" type="Sprite" parent="Ui/Control/StatusBar/Time/Icon"]
+[node name="IconSprite" type="Sprite2D" parent="Ui/Control/StatusBar/Time/Icon"]
 position = Vector2( 16, 16 )
 scale = Vector2( 0.23, 0.23 )
 texture = ExtResource( 47 )
@@ -215,13 +215,13 @@ vframes = 3
 [node name="Label" type="Label" parent="Ui/Control/StatusBar/Time"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -124.0
-margin_top = 2.5
-margin_right = -4.0
-margin_bottom = 34.5
-rect_min_size = Vector2( 120, 32 )
-custom_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
-custom_fonts/font = ExtResource( 43 )
+offset_left = -124.0
+offset_top = 2.5
+offset_right = -4.0
+offset_bottom = 34.5
+custom_minimum_size = Vector2( 120, 32 )
+theme_override_colors/font_color = Color( 1, 0.942667, 0.92, 1 )
+theme_override_fonts/font = ExtResource( 43 )
 text = "12:05 am"
 align = 2
 valign = 1
@@ -230,15 +230,15 @@ valign = 1
 modulate = Color( 1, 1, 1, 0.627451 )
 anchor_left = 1.0
 anchor_top = 1.0
-margin_left = -120.0
-margin_top = -120.0
-margin_right = -20.0
-margin_bottom = -20.0
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/focus = SubResource( 11 )
-custom_styles/disabled = SubResource( 12 )
-custom_styles/normal = SubResource( 13 )
+offset_left = -120.0
+offset_top = -120.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_styles/hover = SubResource( 9 )
+theme_override_styles/pressed = SubResource( 10 )
+theme_override_styles/focus = SubResource( 11 )
+theme_override_styles/disabled = SubResource( 12 )
+theme_override_styles/normal = SubResource( 13 )
 shortcut = SubResource( 14 )
 icon = ExtResource( 10 )
 expand_icon = true

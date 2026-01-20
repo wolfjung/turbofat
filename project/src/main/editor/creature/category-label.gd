@@ -3,13 +3,13 @@ extends Label
 ##
 ## This script shifts the label and refreshes its text as the category changes.
 
-export (NodePath) var category_selector_path: NodePath
+@export var category_selector_path: NodePath
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _category_selector: CategorySelector = get_node(category_selector_path)
-onready var _accent := $MenuAccentH3
-onready var _creature_editor_library := Global.get_creature_editor_library()
+@onready var _category_selector: CategorySelector = get_node(category_selector_path)
+@onready var _accent := $MenuAccentH3
+@onready var _creature_editor_library := Global.get_creature_editor_library()
 
 func _ready() -> void:
 	# Workaround for Godot #20623 (https://github.com/godotengine/godot/issues/20623)
@@ -20,7 +20,7 @@ func _ready() -> void:
 	# frames can result in the label being positioned incorrectly.
 	#
 	# To avoid these issues, the label is preemptively widened.
-	rect_size.x = 1024
+	size.x = 1024
 
 
 func _on_CategorySelector_category_selected(category: int) -> void:
@@ -33,7 +33,7 @@ func _on_CategorySelector_category_selected(category: int) -> void:
 	# tween the x coordinate to its new value
 	var category_selector_relative_position: Vector2 = \
 			_category_selector.get_global_transform().origin - get_parent().get_global_transform().origin
-	var new_x := category_selector_relative_position.x + 212 + 40 * category - rect_size.x * 0.5
+	var new_x := category_selector_relative_position.x + 212 + 40 * category - size.x * 0.5
 	_tween = Utils.recreate_tween(self, _tween)
-	_tween.tween_property(self, "rect_position:x", new_x, 0.1) \
-			.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(self, "position:x", new_x, 0.1) \
+			super.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)

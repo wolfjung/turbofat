@@ -5,8 +5,8 @@ extends RichTextLabel
 const IMAGE_SIZE := Vector2(24, 24)
 
 func _ready() -> void:
-	InputManager.connect("input_mode_changed", self, "_on_InputManager_input_mode_changed")
-	SystemData.keybind_settings.connect("settings_changed", self, "_on_KeybindSettings_settings_changed")
+	InputManager.connect("input_mode_changed", Callable(self, "_on_InputManager_input_mode_changed"))
+	SystemData.keybind_settings.connect("changed", Callable(self, "_on_KeybindSettings_settings_changed"))
 	_refresh_message()
 
 
@@ -24,7 +24,7 @@ func _refresh_message() -> void:
 		text = tr("What have you done!? Go into 'Settings' and reconfigure your controls, you silly goose!")
 	
 	# shrink the label to its minimum vertical size
-	call_deferred("set", "rect_size", Vector2(238, 0))
+	call_deferred("set", "size", Vector2(238, 0))
 
 
 ## Appends a single keybind line to the message, like 'Left, Right: Move'
@@ -50,7 +50,7 @@ func _append_keybind_line(desc: String, action_names: Array) -> void:
 		match input_event_json.get("type"):
 			"joypad_button":
 				# append an image texture corresponding to a joypad button
-				var image: Texture = KeybindSettings.xbox_image_for_input_event(input_event_json)
+				var image: Texture2D = KeybindSettings.xbox_image_for_input_event(input_event_json)
 				if image:
 					if previous_item_was_text:
 						add_text(", ")
@@ -77,7 +77,7 @@ func _append_keybind_line(desc: String, action_names: Array) -> void:
 ## defined this will return an empty dictionary.
 func _input_event_json(action_name: String) -> Dictionary:
 	var result := {}
-	var action_list := InputMap.get_action_list(action_name)
+	var action_list := InputMap.action_get_events(action_name)
 	if action_list:
 		for input_event in action_list:
 			var input_event_json := KeybindManager.input_event_to_json(input_event)

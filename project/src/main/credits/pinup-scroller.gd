@@ -15,23 +15,23 @@ enum Side {
 	RIGHT
 }
 
-const SIDE_LEFT := Side.LEFT
-const SIDE_RIGHT := Side.RIGHT
+const MARGIN_LEFT := Side.LEFT
+const MARGIN_RIGHT := Side.RIGHT
 const FADE_DURATION := 0.5
 
 ## Height in units. Used for calculating the scroll speed.
-export (float) var line_height: float
+@export var line_height: float
 
 ## monitors whether the pinup is currently fading in or out
 var state: int = ScrollerState.VISIBLE
 
 var velocity := Vector2(0, -50)
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var pinup := $Pinup
+@onready var pinup := $Pinup
 
 func _physics_process(delta: float) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	
 	position += velocity * delta
@@ -54,10 +54,10 @@ func stop() -> void:
 	set_physics_process(true)
 	
 	_tween = Utils.recreate_tween(self, _tween)
-	_tween.tween_property(self, "modulate", Color.transparent, FADE_DURATION)
-	_tween.tween_callback(self, "set", ["state", ScrollerState.INVISIBLE])
-	_tween.tween_callback(self, "set", ["visible", false])
-	_tween.tween_callback(self, "set_physics_process", [false])
+	_tween.tween_property(self, "modulate", Color.TRANSPARENT, FADE_DURATION)
+	_tween.tween_callback(Callable(self, "set").bind("state", ScrollerState.INVISIBLE))
+	_tween.tween_callback(Callable(self, "set").bind("visible", false))
+	_tween.tween_callback(Callable(self, "set_physics_process").bind(false))
 
 
 ## Fades the pinup in and starts it moving.
@@ -67,7 +67,7 @@ func start() -> void:
 	set_physics_process(true)
 	
 	pinup.reset()
-	modulate = Color.transparent
+	modulate = Color.TRANSPARENT
 	_tween = Utils.recreate_tween(self, _tween)
-	_tween.tween_property(self, "modulate", Color.white, FADE_DURATION)
-	_tween.tween_callback(self, "set", ["state", ScrollerState.VISIBLE])
+	_tween.tween_property(self, "modulate", Color.WHITE, FADE_DURATION)
+	_tween.tween_callback(Callable(self, "set").bind("state", ScrollerState.VISIBLE))

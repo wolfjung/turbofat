@@ -5,7 +5,7 @@ class_name KeybindSettings
 ## these are ignored unless the player selects the 'Custom' preset.
 
 ## emitted if new settings are loaded, or the preset changes, or the player rebinds a key
-signal settings_changed
+signal changed
 
 enum KeybindPreset {
 	GUIDELINE,
@@ -96,7 +96,7 @@ const OVERWORLD_ACTION_NAMES := {
 }
 
 ## Player's selected keybind preset, or 'Custom' if they've defined their own
-var preset := GUIDELINE setget set_preset
+var preset := GUIDELINE: set = set_preset
 
 ## Json representation of the player's custom keybinds
 var custom_keybinds: Dictionary
@@ -107,7 +107,7 @@ func reset() -> void:
 
 func set_preset(new_preset: int) -> void:
 	preset = new_preset
-	emit_signal("settings_changed")
+	emit_signal("changed")
 
 
 ## Restore the default keybind for a specific action.
@@ -118,12 +118,14 @@ func set_preset(new_preset: int) -> void:
 ## 	'action_name': The action whose keybinds to restore
 func restore_default_keybinds(action_name: String) -> void:
 	var json_text := FileUtils.get_file_as_text(DEFAULT_CUSTOM_PATH)
-	var json_dict: Dictionary = parse_json(json_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(json_text)
+	var json_dict: Dictionary = test_json_conv.get_data()
 	
 	for i in range(json_dict[action_name].size()):
 		_set_custom_keybind_inner(action_name, i, json_dict[action_name][i])
 	
-	emit_signal("settings_changed")
+	emit_signal("changed")
 
 
 ## Updates the custom keybind for a specific action.
@@ -141,7 +143,7 @@ func restore_default_keybinds(action_name: String) -> void:
 ## 	'json': A json representation of a keyboard or joypad input
 func set_custom_keybind(action_name: String, index: int, json: Dictionary) -> void:
 	_set_custom_keybind_inner(action_name, index, json)
-	emit_signal("settings_changed")
+	emit_signal("changed")
 
 
 func _set_custom_keybind_inner(action_name: String, index: int, json: Dictionary) -> void:
@@ -179,22 +181,24 @@ func to_json_dict() -> Dictionary:
 func from_json_dict(json: Dictionary) -> void:
 	preset = int(json.get("preset", GUIDELINE))
 	custom_keybinds = json.get("custom_keybinds", {})
-	if custom_keybinds.empty():
+	if custom_keybinds.is_empty():
 		restore_default_custom_keybinds()
 	
 	if not valid_custom_ui_keybinds():
 		push_warning("Invalid custom ui keybinds; restoring defaults.")
 		restore_default_custom_keybinds()
 	
-	emit_signal("settings_changed")
+	emit_signal("changed")
 
 
 ## Resets the custom keybinds to a sensible set of defaults.
 func restore_default_custom_keybinds() -> void:
 	var json_text := FileUtils.get_file_as_text(DEFAULT_CUSTOM_PATH)
-	var json_dict: Dictionary = parse_json(json_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(json_text)
+	var json_dict: Dictionary = test_json_conv.get_data()
 	custom_keybinds = json_dict
-	emit_signal("settings_changed")
+	emit_signal("changed")
 
 
 ## Unbinds/rebinds any keybinds which conflict with the specified keybind.
@@ -285,7 +289,7 @@ func valid_custom_ui_keybinds() -> bool:
 		var action_scancode_count := 0
 		if custom_keybinds.has(menu_action_name):
 			for menu_index in range(custom_keybinds[menu_action_name].size()):
-				if custom_keybinds[menu_action_name][menu_index].has("scancode"):
+				if custom_keybinds[menu_action_name][menu_index].has("keycode"):
 					action_scancode_count += 1
 		if action_scancode_count == 0:
 			valid = false
@@ -294,13 +298,13 @@ func valid_custom_ui_keybinds() -> bool:
 		# detect whether any ui keybinds have duplicate keys
 		var duplicate_scancode := false
 		for menu_index in range(custom_keybinds[menu_action_name].size()):
-			if not custom_keybinds[menu_action_name][menu_index].has("scancode"):
+			if not custom_keybinds[menu_action_name][menu_index].has("keycode"):
 				continue
-			var scancode: int = custom_keybinds[menu_action_name][menu_index]["scancode"]
-			if scancodes.has(scancode):
+			var keycode: int = custom_keybinds[menu_action_name][menu_index]["keycode"]
+			if scancodes.has(keycode):
 				duplicate_scancode = true
 				break
-			scancodes[scancode] = true
+			scancodes[keycode] = true
 		if duplicate_scancode:
 			valid = false
 			break
@@ -315,5 +319,5 @@ func valid_custom_ui_keybinds() -> bool:
 ##
 ## Returns:
 ## 	An xbox input image texture showing a button or dpad input.
-static func xbox_image_for_input_event(input_event_json: Dictionary) -> Texture:
+static func xbox_image_for_input_event(input_event_json: Dictionary) -> Texture2D:
 	return XBOX_IMAGES_BY_BUTTON.get(int(input_event_json.get("button_index", -1)))

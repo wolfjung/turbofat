@@ -29,7 +29,7 @@ signal after_lines_deleted(lines)
 ## 1.0 = erase lines slowly one at a time, 0.0 = erase all lines immediately
 const LINE_ERASE_TIMING_PCT := 0.667
 
-export (NodePath) var tile_map_path: NodePath
+@export var tile_map_path: NodePath
 
 ## lines currently being cleared/erased/deleted as a part of _physics_process
 var lines_being_cleared := []
@@ -73,12 +73,12 @@ var _total_cleared_line_count := 0
 ## so we monitor their max score to ensure score triggers only fire once.
 var _max_trigger_score := 0
 
-onready var _tile_map: PuzzleTileMap = get_node(tile_map_path)
-onready var _line_fall_sound: AudioStreamPlayer = $LineFallSound
+@onready var _tile_map: PuzzleTileMap = get_node(tile_map_path)
+@onready var _line_fall_sound: AudioStreamPlayer = $LineFallSound
 
 func _ready() -> void:
 	set_physics_process(false)
-	PuzzleState.connect("finish_triggered", self, "_on_PuzzleState_finish_triggered")
+	PuzzleState.connect("finish_triggered", Callable(self, "_on_PuzzleState_finish_triggered"))
 
 
 func _physics_process(_delta: float) -> void:
@@ -189,7 +189,7 @@ func sort_lines_to_clear(lines_to_clear: Array) -> Array:
 	if sorted_lines:
 		match CurrentLevel.settings.blocks_during.filled_line_clear_order:
 			BlocksDuringRules.FilledLineClearOrder.OLDEST:
-				sorted_lines.sort_custom(self, "_compare_by_line_filled_age")
+				sorted_lines.sort_custom(Callable(self, "_compare_by_line_filled_age"))
 			BlocksDuringRules.FilledLineClearOrder.LOWEST:
 				sorted_lines.sort()
 				sorted_lines.invert()
@@ -373,7 +373,7 @@ func _delete_lines(old_lines_being_cleared: Array, _old_lines_being_erased: Arra
 			var line_being_deleted: int = lines_being_deleted_during_trigger[i]
 			_tile_map.erase_row(line_being_deleted)
 			
-			if lines_being_cleared_during_trigger.empty():
+			if lines_being_cleared_during_trigger.is_empty():
 				# If lines are being deleted because of a top out, we don't fire triggers.
 				pass
 			elif PuzzleState.finish_triggered:

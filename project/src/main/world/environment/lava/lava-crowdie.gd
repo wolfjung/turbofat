@@ -1,4 +1,4 @@
-tool
+@tool
 class_name LavaCrowdie
 extends OverworldObstacle
 ## Chocolava canyon crowdie which appears in the credits.
@@ -18,46 +18,46 @@ const CROWD_COLORS := [
 	Color("6c4331"),
 ]
 
-export (NodePath) var gaze_target_path: NodePath setget set_gaze_target_path
+@export var gaze_target_path: NodePath: set = set_gaze_target_path
 
 ## Current frame to display from the sprite sheet.
-export (int) var frame: int setget set_frame
+@export var frame: int: set = set_frame
 
 ## Editor toggle which randomizes the obstacle's appearance
-export (bool) var shuffle: bool setget set_shuffle
+@export var shuffle: bool: set = set_shuffle
 
-export (int, 0, 3) var crowd_color_index: int setget set_crowd_color_index
+@export var crowd_color_index: int: set = set_crowd_color_index
 
-export (bool) var collision_disabled: bool = false setget set_collision_disabled
+@export var collision_disabled: bool = false: set = set_collision_disabled
 
 ## 'true' if this crowdie should jump up and down with their arms raised.
-export (bool) var bouncing: bool setget set_bouncing
+@export var bouncing: bool: set = set_bouncing
 
 ## Node which this crowdie should orient towards.
 var _gaze_target: Node
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _sprite_holder := $SpriteHolder
-onready var _sprite := $SpriteHolder/Sprite
-onready var _cheer_sprite := $SpriteHolder/CheerSprite
-onready var _collision_shape := $CollisionShape2D
+@onready var _sprite_holder := $SpriteHolder
+@onready var _sprite := $SpriteHolder/Sprite2D
+@onready var _cheer_sprite := $SpriteHolder/CheerSprite
+@onready var _collision_shape := $CollisionShape2D
 
 ## Timer which makes the crowdie animate slightly, alternating between two frames
-onready var _wiggle_timer := $WiggleTimer
+@onready var _wiggle_timer := $WiggleTimer
 
-onready var _bounce_timer := $BounceTimer
+@onready var _bounce_timer := $BounceTimer
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# don't animate the crowdie in the editor, otherwise it randomizes the 'frame' and 'wait_time' fields
 		# polluting version control
 		pass
 	else:
-		_wiggle_timer.start(rand_range(0.0, 7.0))
+		_wiggle_timer.start(randf_range(0.0, 7.0))
 	
-	if not Engine.editor_hint and Global.get_overworld_ui():
-		Global.get_overworld_ui().connect("chat_event_meta_played", self, "_on_OverworldUi_chat_event_meta_played")
+	if not Engine.is_editor_hint() and Global.get_overworld_ui():
+		Global.get_overworld_ui().connect("chat_event_meta_played", Callable(self, "_on_OverworldUi_chat_event_meta_played"))
 	
 	_refresh()
 	_refresh_bouncing()
@@ -101,7 +101,7 @@ func set_shuffle(value: bool) -> void:
 	set_crowd_color_index(Utils.randi_range(0, CROWD_COLORS.size() - 1))
 	scale = Vector2.ONE
 	
-	property_list_changed_notify()
+	notify_property_list_changed()
 
 
 func set_bouncing(new_bouncing: bool) -> void:
@@ -116,7 +116,7 @@ func set_bouncing(new_bouncing: bool) -> void:
 ## Preemptively initializes onready variables to avoid null references.
 func _initialize_onready_variables() -> void:
 	_sprite_holder = $SpriteHolder
-	_sprite = $SpriteHolder/Sprite
+	_sprite = $SpriteHolder/Sprite2D
 	_cheer_sprite = $SpriteHolder/CheerSprite
 	_wiggle_timer = $WiggleTimer
 	_bounce_timer = $BounceTimer
@@ -185,7 +185,7 @@ func _on_WiggleTimer_timeout() -> void:
 		set_frame(frame - 1)
 	
 	# randomly vary the wiggle timer slightly
-	_wiggle_timer.start(rand_range(6.0, 7.0))
+	_wiggle_timer.start(randf_range(6.0, 7.0))
 
 
 ## When the BounceTimer times out, we animate the creature to bounce up and down.
@@ -197,12 +197,12 @@ func _on_BounceTimer_timeout() -> void:
 	
 	_tween = Utils.recreate_tween(self, _tween)
 	_sprite_holder.position = Vector2.ZERO
-	var bounce_position := Vector2(0, -BOUNCE_HEIGHT * rand_range(0.8, 1.2))
-	var bounce_duration := BOUNCE_DURATION * rand_range(0.8, 1.2)
+	var bounce_position := Vector2(0, -BOUNCE_HEIGHT * randf_range(0.8, 1.2))
+	var bounce_duration := BOUNCE_DURATION * randf_range(0.8, 1.2)
 	_tween.tween_property(_sprite_holder, "position", bounce_position, bounce_duration * 0.5) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		super.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_tween.tween_property(_sprite_holder, "position", Vector2.ZERO, bounce_duration * 0.5) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		super.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_tween.set_loops()
 
 

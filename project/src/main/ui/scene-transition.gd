@@ -28,7 +28,7 @@ const TYPE_PUZZLE := TransitionType.PUZZLE
 const TYPE_NONE := TransitionType.NONE
 
 ## Color to fade to during scene transitions.
-var fade_color: Color = ProjectSettings.get_setting("rendering/environment/default_clear_color")
+var fade_color: Color = ProjectSettings.get_setting("rendering/environment/defaults/default_clear_color")
 
 ## Scheduled breadcrumb method to invoke from the main thread.
 ##
@@ -38,9 +38,9 @@ var fade_color: Color = ProjectSettings.get_setting("rendering/environment/defau
 var _deferred_breadcrumb_method: FuncRef
 var _deferred_breadcrumb_arg_array: Array
 
-onready var _animation_player: AnimationPlayer = $AnimationPlayer
-onready var _audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-onready var _mask: Node = $MaskHolder/Mask
+@onready var _animation_player: AnimationPlayer = $AnimationPlayer
+@onready var _audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var _mask: Node = $MaskHolder/Mask
 
 func _physics_process(_delta: float) -> void:
 	if _deferred_breadcrumb_method:
@@ -93,14 +93,14 @@ func replace_trail(path: String, flags: Dictionary = {}) -> void:
 ##
 ## Parameters:
 ## 	'flags': Flags which affect the scene transition's duration and appearance
-func change_scene(flags: Dictionary = {}) -> void:
+func change_scene_to_file(flags: Dictionary = {}) -> void:
 	if not is_inside_tree():
 		return
 	if flags.get(FLAG_TYPE) == TransitionType.NONE \
 			or not get_tree().get_nodes_in_group("scene_transition_covers"):
-		Breadcrumb.change_scene()
+		Breadcrumb.change_scene_to_file()
 	else:
-		fade_out(flags, funcref(Breadcrumb, "change_scene"), [])
+		fade_out(flags, funcref(Breadcrumb, "change_scene_to_file"), [])
 
 
 ## Navigates back one level in the breadcrumb trail after a scene transition.
@@ -131,7 +131,7 @@ func fade_in(flags: Dictionary = {}) -> void:
 	
 	# play a random part of the scene transition sound effect so it's not as repetitive
 	var max_audio_start := max(0.0, _audio_stream_player.stream.get_length() - _fade_out_duration(flags))
-	_audio_stream_player.play(rand_range(0.0, max_audio_start))
+	_audio_stream_player.play(randf_range(0.0, max_audio_start))
 	
 	emit_signal("fade_in_started", _fade_in_duration(flags))
 	Global.print_verbose("Finished launching scene transition fade in effect")
@@ -150,11 +150,11 @@ func fade_out(flags: Dictionary = {}, breadcrumb_method: FuncRef = null, breadcr
 	
 	# play a random part of the scene transition sound effect so it's not as repetitive
 	var max_audio_start := max(0.0, _audio_stream_player.stream.get_length() - _fade_out_duration(flags))
-	_audio_stream_player.play(rand_range(0.0, max_audio_start))
+	_audio_stream_player.play(randf_range(0.0, max_audio_start))
 	
 	if _animation_player.is_connected(
 			"animation_finished", self, "_on_AnimationPlayer_animation_finished_change_scene"):
-		_animation_player.disconnect("animation_finished", self, "_on_AnimationPlayer_animation_finished_change_scene")
+		_animation_player.disconnect("animation_finished", Callable(self, "_on_AnimationPlayer_animation_finished_change_scene"))
 
 	_animation_player.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished_change_scene", \
 			[flags, breadcrumb_method, breadcrumb_arg_array])
@@ -177,7 +177,7 @@ func _on_AnimationPlayer_animation_finished_change_scene(
 	Global.print_verbose("Animation finished; disconnecting listeners")
 	if _animation_player.is_connected(
 			"animation_finished", self, "_on_AnimationPlayer_animation_finished_change_scene"):
-		_animation_player.disconnect("animation_finished", self, "_on_AnimationPlayer_animation_finished_change_scene")
+		_animation_player.disconnect("animation_finished", Callable(self, "_on_AnimationPlayer_animation_finished_change_scene"))
 	
 	if breadcrumb_method:
 		Global.print_verbose("Scheduling breadcrumb method: %s, %s" \

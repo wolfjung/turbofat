@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/chew2.wav-572f1ea6bda698029342036d49356a6e.sample"
+type="AudioStreamWAV"
+uid="uid://ckbuqiheopuyh"
+path="res://.godot/imported/chew2.wav-572f1ea6bda698029342036d49356a6e.sample"
 
 [deps]
 
 source_file="res://assets/main/world/creature/chew2.wav"
-dest_files=[ "res://.import/chew2.wav-572f1ea6bda698029342036d49356a6e.sample" ]
+dest_files=["res://.godot/imported/chew2.wav-572f1ea6bda698029342036d49356a6e.sample"]
 
 [params]
 

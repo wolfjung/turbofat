@@ -7,8 +7,8 @@ extends Node
 ## 	[X]: Report duplicate colors from our new palettes.
 ## 	[C]: Report creature colors not present in our new palettes.
 
-onready var _tab_container := $TabContainer
-onready var _text_edit := $TabContainer/ColorAnalysis/TextEdit
+@onready var _tab_container := $TabContainer
+@onready var _text_edit := $TabContainer/ColorAnalysis/TextEdit
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):
@@ -45,9 +45,9 @@ func _assign_color_presets(count: int) -> void:
 func color_presets(count: int) -> Array:
 	var result := []
 	if count >= 8:
-		result.append(Color.white)
-		result.append(Color.gray)
-		result.append(Color.black)
+		result.append(Color.WHITE)
+		result.append(Color.GRAY)
+		result.append(Color.BLACK)
 	while result.size() < count:
 		var random_color := Color(randf(), randf(), randf())
 		result.append(random_color)
@@ -215,7 +215,7 @@ func _find_missing_color_presets(color_presets: Array, dna_colors: Array) -> Arr
 ## 	'lines': List of String instances to show the user.
 func _show_color_analysis(lines: Array) -> void:
 	_tab_container.current_tab = 2
-	_text_edit.text = PoolStringArray(lines).join("\n")
+	_text_edit.text = "\n".join(PackedStringArray(lines))
 
 
 ## Returns any duplicate colors in a list of color presets.

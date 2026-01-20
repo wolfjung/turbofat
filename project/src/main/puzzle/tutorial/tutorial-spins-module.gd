@@ -38,9 +38,9 @@ var _prev_piece_orientation: int
 var _prev_piece_pos: Vector2
 
 func _ready() -> void:
-	PuzzleState.connect("after_game_prepared", self, "_on_PuzzleState_after_game_prepared")
-	PuzzleState.connect("after_piece_written", self, "_on_PuzzleState_after_piece_written")
-	PuzzleState.connect("topped_out", self, "_on_PuzzleState_topped_out")
+	PuzzleState.connect("after_game_prepared", Callable(self, "_on_PuzzleState_after_game_prepared"))
+	PuzzleState.connect("after_piece_written", Callable(self, "_on_PuzzleState_after_piece_written"))
+	PuzzleState.connect("topped_out", Callable(self, "_on_PuzzleState_topped_out"))
 	
 	hud.set_message(tr("Let's learn about spin moves!"
 			+ "\n\nMaybe you already figured out how they work, but I'll try to teach you something new."))
@@ -51,7 +51,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func prepare_tutorial_level() -> void:
-	.prepare_tutorial_level()
+	super.prepare_tutorial_level()
 	_last_piece_movement = PieceMovementType.NONE
 	
 	match CurrentLevel.settings.id:

@@ -1,4 +1,4 @@
-tool
+@tool
 class_name CreditsLetter
 extends Node2D
 ## A bubbly block letter which replaces the "Turbo Fat" header in the credits.
@@ -22,16 +22,16 @@ const PARTICLE_COLORS_BY_FRAME := [
 	Color("ff7afb"), # t (T-Block)
 ]
 
-export (int, 0, 7) var piece_index: int = 0 setget set_piece_index
+@export var piece_index: int = 0: set = set_piece_index
 
 ## Handles the letter's ongoing wobble animation
-var _spin_tween: SceneTreeTween
+var _spin_tween: Tween
 
 ## Handles the letter's initial squash and stretch animation
-onready var _animation_player: AnimationPlayer = $AnimationPlayer
+@onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
-onready var _sprite: Sprite = $Sprite
-onready var _particles: Particles2D = $Particles
+@onready var _sprite: Sprite2D = $Sprite2D
+@onready var _particles: GPUParticles2D = $Particles
 
 func _ready() -> void:
 	_refresh_piece_index()
@@ -39,18 +39,18 @@ func _ready() -> void:
 	_animation_player.play("pop-in")
 	
 	# launch the letter's ongoing wobble animation
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		_spin_tween = create_tween()
 		_spin_tween.set_loops()
-		var rotation_amount := ROTATION_AMOUNT * rand_range(0.8, 1.2)
+		var rotation_amount := ROTATION_AMOUNT * randf_range(0.8, 1.2)
 		rotation_amount *= -1 if randf() < 0.5 else 1
-		var rotation_period := ROTATION_PERIOD * rand_range(0.8, 1.2)
+		var rotation_period := ROTATION_PERIOD * randf_range(0.8, 1.2)
 		_spin_tween.tween_property(_sprite, "rotation_degrees",
 				rotation_amount * 0.5, rotation_period * 0.5) \
-				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				super.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		_spin_tween.tween_property(_sprite, "rotation_degrees",
 				rotation_amount * -0.5, rotation_period * 0.5) \
-				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				super.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Preemptively initializes onready variables to avoid null references.
@@ -74,7 +74,7 @@ func _refresh_piece_index() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _particles:
 			_initialize_onready_variables()
 	

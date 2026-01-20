@@ -24,8 +24,8 @@ const GRAVITY_FACTOR_BY_ENUM := {
 	DifficultyData.Speed.FASTESTEST: 100.0,
 }
 
-export (NodePath) var input_path: NodePath
-export (NodePath) var piece_mover_path: NodePath
+@export var input_path: NodePath
+@export var piece_mover_path: NodePath
 
 ## 'true' if the player hard dropped the piece this frame
 var did_hard_drop: bool
@@ -33,8 +33,8 @@ var did_hard_drop: bool
 ## Hard drop destination for the current piece. Used for drawing the ghost piece.
 var hard_drop_target_pos: Vector2
 
-onready var input: PieceInput = get_node(input_path)
-onready var piece_mover: PieceMover = get_node(piece_mover_path)
+@onready var input: PieceInput = get_node(input_path)
+@onready var piece_mover: PieceMover = get_node(piece_mover_path)
 
 func _physics_process(_delta: float) -> void:
 	did_hard_drop = false

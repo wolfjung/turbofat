@@ -50,7 +50,7 @@ func advance_clock(new_distance_earned: int, success: bool, lost: bool) -> void:
 			advance_calendar()
 		else:
 			# if they fail a boss level, they lose 1-2 days worth of progress
-			career_data.distance_earned = -int(max(region.length * rand_range(0.125, 0.25), 2))
+			career_data.distance_earned = -int(max(region.length * randf_range(0.125, 0.25), 2))
 	elif career_data.is_intro_level():
 		var region: CareerRegion = career_data.current_region()
 		if new_distance_earned > 0:

@@ -3,6 +3,6 @@
 [ext_resource path="res://assets/main/ui/button-click.wav" type="AudioStream" id=1]
 
 [node name="ClickSound" type="AudioStreamPlayer"]
-pause_mode = 2
+process_mode = 3
 stream = ExtResource( 1 )
 bus = "Sound Bus"

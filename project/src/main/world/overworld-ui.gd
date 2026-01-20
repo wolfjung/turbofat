@@ -22,7 +22,7 @@ signal visible_chatters_changed
 ## emitted when we present the player with a chat choice
 signal showed_chat_choices
 
-export (NodePath) var overworld_environment_path: NodePath setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath: set = set_overworld_environment_path
 
 ## Characters involved in the current conversation. This includes the player, sensei and any other participants. We
 ## try to keep them all in frame and facing each other.
@@ -31,7 +31,7 @@ var chatters := []
 ## true if there is an active chat tree
 var chatting := false
 
-var _show_version := true setget set_show_version, is_show_version
+var _show_version := true: get = is_show_version, set = set_show_version
 
 ## These two fields store details for the upcoming level. We store the level details during the chat sequence
 ## and launch the level when the chat window closes.
@@ -39,7 +39,7 @@ var _current_chat_tree: ChatTree
 
 var _overworld_environment: OverworldEnvironment
 
-onready var _chat_ui := $ChatUi
+@onready var _chat_ui := $ChatUi
 
 func _ready() -> void:
 	_refresh_overworld_environment_path()
@@ -184,8 +184,8 @@ func _apply_chat_event_meta(_chat_event: ChatEvent, meta_item: String) -> void:
 			var creature_id := meta_item_split[1]
 			var creature: Creature = _overworld_environment.get_creature_by_id(creature_id)
 			creature.fade_out()
-			if not creature.is_connected("fade_out_finished", self, "_on_Creature_fade_out_finished"):
-				creature.connect("fade_out_finished", self, "_on_Creature_fade_out_finished", [creature])
+			if not creature.is_connected("fade_out_finished", Callable(self, "_on_Creature_fade_out_finished")):
+				creature.connect("fade_out_finished", Callable(self, "_on_Creature_fade_out_finished").bind(creature))
 		"creature_mood":
 			var creature_id: String = meta_item_split[1]
 			var creature: Creature = _overworld_environment.get_creature_by_id(creature_id)
@@ -256,8 +256,8 @@ func _on_ChatUi_chat_event_played(chat_event: ChatEvent) -> void:
 
 
 func _on_Creature_fade_out_finished(_creature: Creature) -> void:
-	if _creature.is_connected("fade_out_finished", self, "_on_Creature_fade_out_finished"):
-		_creature.disconnect("fade_out_finished", self, "_on_Creature_fade_out_finished")
+	if _creature.is_connected("fade_out_finished", Callable(self, "_on_Creature_fade_out_finished")):
+		_creature.disconnect("fade_out_finished", Callable(self, "_on_Creature_fade_out_finished"))
 	emit_signal("visible_chatters_changed")
 
 

@@ -10,14 +10,14 @@ extends AudioStreamPlayer
 const CHUNK_SIZE := 6.0
 
 ## array of floats corresponding to good start positions in each track
-export (Array, float) var checkpoints: Array = []
+@export var checkpoints: Array = [] # (Array, float)
 
 ## track title and color shown in the toaster popup
-export var track_title: String
-export var track_color: Color
+@export var track_title: String
+@export var track_color: Color
 
 ## track id referenced by career-regions.json
-export var id: String
+@export var id: String
 
 ## array of ints corresponding to how much each 'chunk' of music has been played
 var _staleness_record: Array
@@ -42,13 +42,13 @@ func play(from_position: float = -1.0) -> void:
 	if from_position < 0:
 		# calculate the start position based on an algorithm
 		from_position = _freshest_start()
-	.play(from_position)
+	super.play(from_position)
 	$StalenessTimer.start()
 	_increase_staleness()
 
 
 func stop() -> void:
-	.stop()
+	super.stop()
 	$StalenessTimer.stop()
 
 

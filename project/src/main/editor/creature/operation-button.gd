@@ -12,7 +12,7 @@ const OPERATION_ICONS_BY_ID := {
 	"fatness_up": preload("res://assets/main/editor/creature/icon-fatness-up.png"),
 }
 
-var id: String setget set_id
+var id: String: set = set_id
 
 func set_id(new_id: String) -> void:
 	id = new_id

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/tomato-voice.wav-75f2d488429a8bc3115140eaccce55c2.sample"
+type="AudioStreamWAV"
+uid="uid://bfd0vyakwwgx2"
+path="res://.godot/imported/tomato-voice.wav-75f2d488429a8bc3115140eaccce55c2.sample"
 
 [deps]
 
 source_file="res://assets/main/puzzle/critter/tomato-voice.wav"
-dest_files=[ "res://.import/tomato-voice.wav-75f2d488429a8bc3115140eaccce55c2.sample" ]
+dest_files=["res://.godot/imported/tomato-voice.wav-75f2d488429a8bc3115140eaccce55c2.sample"]
 
 [params]
 

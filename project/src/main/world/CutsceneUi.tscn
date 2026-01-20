@@ -2,8 +2,8 @@
 
 [ext_resource path="res://src/main/world/cutscene-ui.gd" type="Script" id=1]
 [ext_resource path="res://src/main/world/overworld-buttons.gd" type="Script" id=2]
-[ext_resource path="res://assets/main/ui/touch/menu.png" type="Texture" id=3]
-[ext_resource path="res://assets/main/ui/touch/menu-pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/main/ui/touch/menu.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/main/ui/touch/menu-pressed.png" type="Texture2D" id=4]
 [ext_resource path="res://src/main/ui/theme/h4.theme" type="Theme" id=5]
 [ext_resource path="res://src/main/ui/ImageButton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/main/ui/settings/SettingsMenu.tscn" type="PackedScene" id=7]
@@ -26,7 +26,7 @@
 [sub_resource type="InputEventAction" id=15]
 action = "ui_cancel"
 
-[sub_resource type="ShortCut" id=21]
+[sub_resource type="Shortcut" id=21]
 shortcut = SubResource( 15 )
 
 [node name="CutsceneUi" type="CanvasLayer" groups=["overworld_ui"]]
@@ -41,10 +41,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -502.0
-margin_top = -290.0
-margin_right = -10.0
-margin_bottom = -10.0
+offset_left = -502.0
+offset_top = -290.0
+offset_right = -10.0
+offset_bottom = -10.0
 mouse_filter = 2
 theme = ExtResource( 5 )
 alignment = 2
@@ -55,20 +55,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 236.0
-margin_right = 492.0
-margin_bottom = 256.0
+offset_left = 0.0
+offset_top = 236.0
+offset_right = 492.0
+offset_bottom = 256.0
 
 [node name="VersionLabel" parent="Labels/SoutheastLabels" instance=ExtResource( 19 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 260.0
-margin_right = 492.0
-margin_bottom = 280.0
+offset_left = 0.0
+offset_top = 260.0
+offset_right = 492.0
+offset_bottom = 280.0
 
 [node name="ChatUi" parent="." instance=ExtResource( 15 )]
 visible = false
@@ -83,27 +83,27 @@ script = ExtResource( 2 )
 [node name="Northeast" type="HBoxContainer" parent="Buttons"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -512.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 100, 100 )
+offset_left = -512.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 110.0
+custom_minimum_size = Vector2( 100, 100 )
 mouse_filter = 2
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="SettingsButton" parent="Buttons/Northeast" groups=["cutscene_buttons"] instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 402.0
-margin_right = 502.0
-margin_bottom = 100.0
+offset_left = 402.0
+offset_right = 502.0
+offset_bottom = 100.0
 focus_mode = 2
-custom_styles/hover = SubResource( 16 )
-custom_styles/pressed = SubResource( 17 )
-custom_styles/focus = SubResource( 18 )
-custom_styles/disabled = SubResource( 19 )
-custom_styles/normal = SubResource( 20 )
+theme_override_styles/hover = SubResource( 16 )
+theme_override_styles/pressed = SubResource( 17 )
+theme_override_styles/focus = SubResource( 18 )
+theme_override_styles/disabled = SubResource( 19 )
+theme_override_styles/normal = SubResource( 20 )
 shortcut = SubResource( 21 )
 icon = ExtResource( 3 )
 expand_icon = true

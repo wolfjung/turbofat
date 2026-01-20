@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/button-click.wav-fe371c46ad2a5a32cba4af7ded099f29.sample"
+type="AudioStreamWAV"
+uid="uid://co3exajq6e548"
+path="res://.godot/imported/button-click.wav-fe371c46ad2a5a32cba4af7ded099f29.sample"
 
 [deps]
 
 source_file="res://assets/main/ui/button-click.wav"
-dest_files=[ "res://.import/button-click.wav-fe371c46ad2a5a32cba4af7ded099f29.sample" ]
+dest_files=["res://.godot/imported/button-click.wav-fe371c46ad2a5a32cba4af7ded099f29.sample"]
 
 [params]
 

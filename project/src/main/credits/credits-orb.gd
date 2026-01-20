@@ -1,5 +1,5 @@
 class_name CreditsOrb
-extends Sprite
+extends Sprite2D
 ## Orb which floats around the credits screen, launching puzzle pieces.
 ##
 ## The player can control the launched puzzle pieces with the direction/rotate buttons.
@@ -32,13 +32,13 @@ var _offscreen_position: Vector2
 ## A number from [0.0, 1.0] corresponding to whether the orb should be offscreen or onscreen.
 var _offscreen_amount: float
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 func _ready() -> void:
 	# start offscreen
 	_offscreen_position = Vector2(-500, 500)
 	_offscreen_amount = 1.0
-	modulate = Color.transparent
+	modulate = Color.TRANSPARENT
 	
 	_refresh()
 
@@ -113,14 +113,14 @@ func hide_offscreen(new_offscreen_position: Vector2) -> void:
 	_offscreen_position = new_offscreen_position
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.tween_property(self, "_offscreen_amount", 1.0, 3.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	_tween.parallel().tween_property(self, "modulate", Color.transparent, 1.0).set_delay(2.0)
+	_tween.parallel().tween_property(self, "modulate", Color.TRANSPARENT, 1.0).set_delay(2.0)
 
 
 ## Recalculates the orb's position, rotation and frame based on the elapsed time.
 func _refresh() -> void:
 	var time_with_offset := _total_time + _time_offset
 	
-	_onscreen_position = get_parent().rect_position + get_parent().rect_size * 0.5
+	_onscreen_position = get_parent().position + get_parent().size * 0.5
 	
 	# The orb's path follows a small circle within a big circle like a spirograph
 	_onscreen_position += Vector2(40 * sin(2.3 * time_with_offset), 40 * cos(2.3 * time_with_offset)) # small circle

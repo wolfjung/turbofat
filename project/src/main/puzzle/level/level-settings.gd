@@ -52,7 +52,7 @@ enum LevelIcon {
 var description := ""
 
 ## (optional) Level difficulty shown when selecting a level.
-var difficulty := "" setget ,get_difficulty
+var difficulty := "": get = get_difficulty
 
 ## Blocks/boxes which appear or disappear while the game is going on.
 var blocks_during := BlocksDuringRules.new()
@@ -218,7 +218,9 @@ func load_from_resource(new_id: String) -> void:
 
 
 func load_from_text(new_id: String, text: String) -> void:
-	var json: Dictionary = parse_json(text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(text)
+	var json: Dictionary = test_json_conv.get_data()
 	
 	if not json:
 		push_error("Level not found: %s" % [new_id])

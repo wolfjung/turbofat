@@ -13,15 +13,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -512.0
-margin_top = -217.0
-margin_right = 512.0
-margin_bottom = 217.0
+offset_left = -512.0
+offset_top = -217.0
+offset_right = 512.0
+offset_bottom = 217.0
 
 [node name="PressedCheckButton" type="CheckButton" parent="VBoxContainer"]
-margin_left = 361.0
-margin_right = 663.0
-margin_bottom = 40.0
+offset_left = 361.0
+offset_right = 663.0
+offset_bottom = 40.0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 text = "Signal: 'central_button_pressed'"
@@ -30,10 +30,10 @@ text = "Signal: 'central_button_pressed'"
 one_shot = true
 
 [node name="ChangedCheckButton" type="CheckButton" parent="VBoxContainer"]
-margin_left = 359.0
-margin_top = 44.0
-margin_right = 664.0
-margin_bottom = 84.0
+offset_left = 359.0
+offset_top = 44.0
+offset_right = 664.0
+offset_bottom = 84.0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 text = "Signal: 'central_button_changed'"
@@ -42,46 +42,46 @@ text = "Signal: 'central_button_changed'"
 one_shot = true
 
 [node name="Button" type="Button" parent="VBoxContainer"]
-margin_left = 462.0
-margin_top = 88.0
-margin_right = 562.0
-margin_bottom = 138.0
-rect_min_size = Vector2( 100, 50 )
+offset_left = 462.0
+offset_top = 88.0
+offset_right = 562.0
+offset_bottom = 138.0
+custom_minimum_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 theme = ExtResource( 2 )
 text = "Button"
 
 [node name="Button3" type="Button" parent="VBoxContainer"]
-margin_left = 462.0
-margin_top = 142.0
-margin_right = 562.0
-margin_bottom = 192.0
-rect_min_size = Vector2( 100, 50 )
+offset_left = 462.0
+offset_top = 142.0
+offset_right = 562.0
+offset_bottom = 192.0
+custom_minimum_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 theme = ExtResource( 2 )
 text = "Button"
 
 [node name="LevelButtonScroller" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 196.0
-margin_right = 1024.0
-margin_bottom = 326.0
+offset_top = 196.0
+offset_right = 1024.0
+offset_bottom = 326.0
 
 [node name="Button2" type="Button" parent="VBoxContainer"]
-margin_left = 462.0
-margin_top = 330.0
-margin_right = 562.0
-margin_bottom = 380.0
-rect_min_size = Vector2( 100, 50 )
+offset_left = 462.0
+offset_top = 330.0
+offset_right = 562.0
+offset_bottom = 380.0
+custom_minimum_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 theme = ExtResource( 2 )
 text = "Button"
 
 [node name="Button4" type="Button" parent="VBoxContainer"]
-margin_left = 462.0
-margin_top = 384.0
-margin_right = 562.0
-margin_bottom = 434.0
-rect_min_size = Vector2( 100, 50 )
+offset_left = 462.0
+offset_top = 384.0
+offset_right = 562.0
+offset_bottom = 434.0
+custom_minimum_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 theme = ExtResource( 2 )
 text = "Button"

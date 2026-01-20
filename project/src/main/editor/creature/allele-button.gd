@@ -107,7 +107,7 @@ const ALLELE_ICONS_BY_COMBO := {
 	"tail_7": preload("res://assets/main/editor/creature/icon-tail-7.png"),
 }
 
-var allele_combo: String setget set_allele_combo
+var allele_combo: String: set = set_allele_combo
 
 func set_allele_combo(new_allele_combo: String) -> void:
 	allele_combo = new_allele_combo

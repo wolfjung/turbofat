@@ -1,15 +1,15 @@
 extends Panel
 ## UI control for adding line pieces to all levels
 
-onready var _check_box := $CheckBox
+@onready var _check_box := $CheckBox
 
 func _ready() -> void:
-	PlayerData.difficulty.connect("line_piece_changed", self, "_on_DifficultyData_line_piece_changed")
+	PlayerData.difficulty.connect("line_piece_changed", Callable(self, "_on_DifficultyData_line_piece_changed"))
 	_refresh()
 
 
 func _refresh() -> void:
-	_check_box.pressed = PlayerData.difficulty.line_piece
+	_check_box.button_pressed = PlayerData.difficulty.line_piece
 
 
 func _on_CheckBox_toggled(_button_pressed: bool) -> void:

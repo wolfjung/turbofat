@@ -4,10 +4,10 @@ extends Label
 var _max_width: float
 
 func _ready() -> void:
-	PuzzleState.connect("game_prepared", self, "_on_PuzzleState_game_prepared")
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	PuzzleState.connect("game_prepared", Callable(self, "_on_PuzzleState_game_prepared"))
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 	
-	_max_width = rect_size.x
+	_max_width = size.x
 	
 	_refresh_text()
 
@@ -21,7 +21,7 @@ func _refresh_text() -> void:
 	var name_to_show := tr(CurrentLevel.settings.name)
 	
 	# truncate long level names to something like "Lorum ipsum dol..."
-	var font: DynamicFont = get_theme_default_font()
+	var font: FontFile = get_theme_default_font()
 	if font.get_string_size("“%s”" % [name_to_show]).x > _max_width:
 		name_to_show = name_to_show.substr(0, name_to_show.length() - 3).strip_edges()
 		while name_to_show and font.get_string_size("“%s...”" % [name_to_show]).x > _max_width:

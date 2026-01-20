@@ -7,7 +7,7 @@ func _ready() -> void:
 	_refresh_scale()
 
 
-func get_drag_data(_pos: Vector2) -> Object:
+func _get_drag_data(_pos: Vector2) -> Object:
 	var data: BlockLevelChunk = BlockLevelChunk.new()
 	for cell in $TileMap.get_used_cells():
 		var tile: int = $TileMap.get_cellv(cell)

@@ -13,12 +13,12 @@ const SPOT_FRAMES_START := [8, 9, 10, 11]
 ## Frames in the sprite sheet for the spot at the end of the trail.
 const SPOT_FRAMES_FINISH := [12]
 
-export (PackedScene) var spot_scene: PackedScene
+@export var spot_scene: PackedScene
 
-var path2d: Path2D setget set_path2d
+var path2d: Path2D: set = set_path2d
 
 ## Number of spots on the trail, including the start and ending spot.
-var spot_count: int = 0 setget set_spot_count
+var spot_count: int = 0: set = set_spot_count
 
 ## If 'true', the ending spot will be decorated with a star.
 var has_goal: bool = true
@@ -26,12 +26,12 @@ var has_goal: bool = true
 ## True if the number of spots on the board is truncated. Normally the player's start space is bigger, but when
 ## truncated the start space looks like just another spot. This way it looks like the player's already travelled a
 ## great distance.
-var spots_truncated: bool = false setget set_spots_truncated
+var spots_truncated: bool = false: set = set_spots_truncated
 
 ## If 'true', the spots flash different colors. Used when the player reaches a goal.
-var cycle_colors: bool setget set_cycle_colors
+var cycle_colors: bool: set = set_cycle_colors
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 ## Colors used for progress board spots when cycle_colors is true. The first array entry is used to color the first
 ## spot.
@@ -108,7 +108,7 @@ func _refresh_cycle_colors() -> void:
 		_tween.set_loops()
 		_rainbow_colors = ProgressBoard.RAINBOW_CHALK_COLORS.duplicate()
 		_rainbow_colors.shuffle()
-		_tween.tween_callback(self, "_change_rainbow")
+		_tween.tween_callback(Callable(self, "_change_rainbow"))
 		_tween.tween_interval(ProgressBoard.RAINBOW_INTERVAL)
 	else:
 		# reset to our default color
@@ -126,14 +126,14 @@ func _refresh_spots() -> void:
 	# position children
 	if path2d != null:
 		for point_index in spot_count:
-			var spot: ProgressBoardSpot = spot_scene.instance()
-			spot.rect_position = get_spot_position(point_index)
+			var spot: ProgressBoardSpot = spot_scene.instantiate()
+			spot.position = get_spot_position(point_index)
 			add_child(spot)
 	
 	# calculate minimum distance between two adjacent spots
 	var min_dist := 999999.0
 	for child_index in range(1, get_child_count()):
-		var dist: float = get_child(child_index - 1).rect_position.distance_to(get_child(child_index).rect_position)
+		var dist: float = get_child(child_index - 1).position.distance_to(get_child(child_index).position)
 		min_dist = min(dist, min_dist)
 	
 	# assign frames; make each spot a circle, dot, or star

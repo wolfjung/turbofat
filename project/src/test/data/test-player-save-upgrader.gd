@@ -13,19 +13,19 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.remove(TEMP_FILENAME)
 	dir.remove(TEMP_LEGACY_FILENAME)
 
 
 func load_legacy_player_data(filename: String) -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.copy("res://assets/test/data/%s" % filename, TEMP_LEGACY_FILENAME)
 	PlayerSave.load_player_data()
 
 
 func load_player_data(filename: String) -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.copy("res://assets/test/data/%s" % filename, TEMP_FILENAME)
 	PlayerSave.load_player_data()
 

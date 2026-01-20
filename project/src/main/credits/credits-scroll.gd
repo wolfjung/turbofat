@@ -31,90 +31,90 @@ const LINES_POSITION_LEFT := Vector2.ZERO
 const LINES_POSITION_CENTER := Vector2(256, 0)
 const LINES_POSITION_RIGHT := Vector2(512, 0)
 
-export (PackedScene) var CreditsEndTextScene: PackedScene
-export (PackedScene) var CreditsWallOfTextScene: PackedScene
-export (PackedScene) var GodotCreditsLineScene: PackedScene
-export (PackedScene) var TextCreditsLineScene: PackedScene
-export (PackedScene) var TextCreditsIndentLineScene: PackedScene
-export (PackedScene) var TurboFatCreditsLineScene: PackedScene
+@export var CreditsEndTextScene: PackedScene
+@export var CreditsWallOfTextScene: PackedScene
+@export var GodotCreditsLineScene: PackedScene
+@export var TextCreditsLineScene: PackedScene
+@export var TextCreditsIndentLineScene: PackedScene
+@export var TurboFatCreditsLineScene: PackedScene
 
 ## Position of the scrolling part of the credits.
-export (Credits.CreditsPosition) var credits_position := Credits.CreditsPosition.CENTER_BOTTOM \
+@export var credits_position := Credits.CreditsPosition.CENTER_BOTTOM \ # (Credits.CreditsPosition)
 		setget set_credits_position
 
 var velocity: Vector2 = Vector2(0, -50)
 
 ## 'true' if the credits movie should be playing onscreen. The credits movie will still not be visible if the credits
 ## position is CENTER_BOTTOM or CENTER_TOP, since the lines will be in the way.
-var movie_visible: bool = false setget set_movie_visible
+var movie_visible: bool = false: set = set_movie_visible
 
-var _movie_tween_x: SceneTreeTween
+var _movie_tween_x: Tween
 
-var _lines_tween_x: SceneTreeTween
-var _lines_tween_y: SceneTreeTween
+var _lines_tween_x: Tween
+var _lines_tween_y: Tween
 
 ## Header which says 'Turbo Fat' over the scrolling lines.
-onready var header: CreditsHeader = $FixedContainer/ScrollingContainer/Header
+@onready var header: CreditsHeader = $FixedContainer/ScrollingContainer/Header
 
 ## Orb which floats around the credits screen, launching puzzle pieces.
-onready var orb: CreditsOrb = $FixedContainer/OrbHolder/Orb
+@onready var orb: CreditsOrb = $FixedContainer/OrbHolder/Orb
 
 ## A point near the top of the screen where lines fade out.
-onready var _fade_out_point := $FixedContainer/FadeOutPoint
+@onready var _fade_out_point := $FixedContainer/FadeOutPoint
 ## A point near the bottom of the screen where lines fade in.
-onready var _fade_in_point := $FixedContainer/FadeInPoint
+@onready var _fade_in_point := $FixedContainer/FadeInPoint
 
 ## Scrolling area with lines, header and the orb
-onready var _scrolling_container := $FixedContainer/ScrollingContainer
-onready var _left_transformation_target := $FixedContainer/ScrollingContainer/LeftTransformationTarget
-onready var _right_transformation_target := $FixedContainer/ScrollingContainer/RightTransformationTarget
+@onready var _scrolling_container := $FixedContainer/ScrollingContainer
+@onready var _left_transformation_target := $FixedContainer/ScrollingContainer/LeftTransformationTarget
+@onready var _right_transformation_target := $FixedContainer/ScrollingContainer/RightTransformationTarget
 
 ## Container for scrolling lines.
-onready var _lines := $FixedContainer/ScrollingContainer/Lines
+@onready var _lines := $FixedContainer/ScrollingContainer/Lines
 
 ## Puzzle pieces which fly out of the floating orb.
-onready var _credits_pieces: CreditsPieces = $FixedContainer/OrbHolder/Pieces
+@onready var _credits_pieces: CreditsPieces = $FixedContainer/OrbHolder/Pieces
 
 ## Movie which plays alongside the credits lines.
-onready var _movie: Control = $FixedContainer/Movie
+@onready var _movie: Control = $FixedContainer/Movie
 
 func _ready() -> void:
-	_movie.rect_position = MOVIE_POSITION_OFFSCREEN_LEFT
+	_movie.position = MOVIE_POSITION_OFFSCREEN_LEFT
 	
 	# initialize the movie to visible but transparent; this way the tweens don't have to toggle the 'visible' property
 	_movie.visible = true
-	_movie.modulate = Color.transparent
+	_movie.modulate = Color.TRANSPARENT
 
 
 ## Adds a text line like 'Directed by:'
 func add_line(text: String) -> void:
-	var line: TextCreditsLine = TextCreditsLineScene.instance()
+	var line: TextCreditsLine = TextCreditsLineScene.instantiate()
 	line.text = text
 	_initialize_line(line)
 
 
 ## Adds an indented line like 'John Doe'
 func add_indent_line(text: String) -> void:
-	var indent_line: TextCreditsLine = TextCreditsIndentLineScene.instance()
+	var indent_line: TextCreditsLine = TextCreditsIndentLineScene.instantiate()
 	indent_line.text = text
 	_initialize_line(indent_line)
 
 
 ## Adds a 'Proudly made with Godot' line.
 func add_godot_line() -> void:
-	var godot_line: CreditsLine = GodotCreditsLineScene.instance()
+	var godot_line: CreditsLine = GodotCreditsLineScene.instantiate()
 	_initialize_line(godot_line)
 
 
 ## Adds a centered 'Turbo Fat' line.
 func add_turbo_fat_line() -> void:
-	var turbo_fat_line: CreditsLine = TurboFatCreditsLineScene.instance()
+	var turbo_fat_line: CreditsLine = TurboFatCreditsLineScene.instantiate()
 	_initialize_line(turbo_fat_line)
 
 
 ## Shows a non-scrolling wall of text which remains on screen for a few seconds.
 func show_wall_of_text(text: String, duration: float) -> void:
-	var wall_of_text: CreditsWallOfText = CreditsWallOfTextScene.instance()
+	var wall_of_text: CreditsWallOfText = CreditsWallOfTextScene.instantiate()
 	wall_of_text.duration = duration
 	wall_of_text.text = text
 	wall_of_text.position = Vector2(20, _fade_in_point.position.y * 0.5 + _fade_out_point.position.y * 0.5)
@@ -123,7 +123,7 @@ func show_wall_of_text(text: String, duration: float) -> void:
 
 ## Shows a non-scrolling status message at the end of the credits.
 func show_end_text() -> void:
-	var end_text: CreditsEndText = CreditsEndTextScene.instance()
+	var end_text: CreditsEndText = CreditsEndTextScene.instantiate()
 	end_text.position = Vector2(20, _fade_in_point.position.y * 0.5 + _fade_out_point.position.y * 0.5)
 	_lines.add_child(end_text)
 	
@@ -251,43 +251,43 @@ func _shift_movie(old_movie_visible: bool, new_movie_visible: bool, \
 	
 	if tweening_out:
 		_movie_tween_x = Utils.recreate_tween(self, _movie_tween_x)
-		_movie_tween_x.tween_property(_movie, "modulate", Color.transparent, 0.1).set_delay(0.2)
+		_movie_tween_x.tween_property(_movie, "modulate", Color.TRANSPARENT, 0.1).set_delay(0.2)
 		var new_movie_position: Vector2
 		if Credits.is_position_left(old_credits_position):
 			new_movie_position = MOVIE_POSITION_OFFSCREEN_RIGHT
 		else:
 			new_movie_position = MOVIE_POSITION_OFFSCREEN_LEFT
-		_movie_tween_x.parallel().tween_property(_movie, "rect_position", new_movie_position, 0.5) \
-				.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+		_movie_tween_x.parallel().tween_property(_movie, "position", new_movie_position, 0.5) \
+				super.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
 	
 	if tweening_in:
 		if not tweening_out:
 			_movie_tween_x = Utils.recreate_tween(self, _movie_tween_x)
 		
 		# Set the movie position so that it swoops in from the correct direction offscreen
-		if tweening_out or _movie.rect_position in [MOVIE_POSITION_OFFSCREEN_LEFT, MOVIE_POSITION_OFFSCREEN_RIGHT]:
+		if tweening_out or _movie.position in [MOVIE_POSITION_OFFSCREEN_LEFT, MOVIE_POSITION_OFFSCREEN_RIGHT]:
 			var new_source_movie_position: Vector2
 			if Credits.is_position_right(new_credits_position):
 				new_source_movie_position = MOVIE_POSITION_OFFSCREEN_LEFT
 			else:
 				new_source_movie_position = MOVIE_POSITION_OFFSCREEN_RIGHT
-			_movie_tween_x.tween_callback(_movie, "set", ["rect_position", new_source_movie_position])
+			_movie_tween_x.tween_callback(Callable(_movie, "set").bind("position", new_source_movie_position))
 		
-		_movie_tween_x.tween_property(_movie, "modulate", Color.white, 0.1).set_delay(0.2)
+		_movie_tween_x.tween_property(_movie, "modulate", Color.WHITE, 0.1).set_delay(0.2)
 		var new_movie_position: Vector2
 		if Credits.is_position_left(new_credits_position):
 			new_movie_position = MOVIE_POSITION_RIGHT
 		else:
 			new_movie_position = MOVIE_POSITION_LEFT
-		_movie_tween_x.parallel().tween_property(_movie, "rect_position", new_movie_position, 0.5) \
-				.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+		_movie_tween_x.parallel().tween_property(_movie, "position", new_movie_position, 0.5) \
+				super.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Adjusts the fade_out_point and shows or hides the header.
 func _shift_lines_vertically(header_visible: bool) -> void:
 	_lines_tween_y = Utils.recreate_tween(self, _lines_tween_y).set_parallel(true)
 	_lines_tween_y.tween_property(header, "modulate", \
-			Color.white if header_visible else Color.transparent, 0.3).set_delay(0.7)
+			Color.WHITE if header_visible else Color.TRANSPARENT, 0.3).set_delay(0.7)
 	_lines_tween_y.tween_property(_fade_out_point, "position", \
 			FADE_OUT_POINT_POSITION_BOTTOM if header_visible else FADE_OUT_POINT_POSITION_TOP, 1.5)
 
@@ -295,8 +295,8 @@ func _shift_lines_vertically(header_visible: bool) -> void:
 ## Smoothly moves the credits horizontally to a new position.
 func _shift_lines_horizontally(new_lines_position: Vector2) -> void:
 	_lines_tween_x = Utils.recreate_tween(self, _lines_tween_x) \
-			.set_parallel(true).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
-	_lines_tween_x.tween_property(_scrolling_container, "rect_position", new_lines_position, 0.5)
+			super.set_parallel(true).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+	_lines_tween_x.tween_property(_scrolling_container, "position", new_lines_position, 0.5)
 
 
 func _initialize_line(credits_line: CreditsLine) -> void:

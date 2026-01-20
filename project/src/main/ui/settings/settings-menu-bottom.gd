@@ -5,10 +5,10 @@ signal ok_pressed
 signal quit_pressed
 signal other_quit_pressed
 
-export (NodePath) var tab_input_enabler_path: NodePath
+@export var tab_input_enabler_path: NodePath
 
 ## Text on the menu's quit button
-var quit_type: int setget set_quit_type
+var quit_type: int: set = set_quit_type
 
 ## UI control which was focused before this settings menu popped up
 var _old_focus_owner: Control
@@ -19,16 +19,16 @@ var _custom_keybind_button_awaiting := false
 ## True if input should be blocked because a dialog is visible.
 var _dialog_visible := false
 
-onready var _ok_button := $HBoxContainer/VBoxContainer2/Holder/Ok
-onready var _ok_shortcut_helper := $HBoxContainer/VBoxContainer2/Holder/Ok/ShortcutHelper
-onready var _quit_button := $HBoxContainer/VBoxContainer1/Holder2/Quit2
-onready var _other_quit_button := $HBoxContainer/VBoxContainer1/Holder1/Quit1
-onready var _tab_input_enabler := get_node(tab_input_enabler_path)
+@onready var _ok_button := $HBoxContainer/VBoxContainer2/Holder/Ok
+@onready var _ok_shortcut_helper := $HBoxContainer/VBoxContainer2/Holder/Ok/ShortcutHelper
+@onready var _quit_button := $HBoxContainer/VBoxContainer1/Holder2/Quit2
+@onready var _other_quit_button := $HBoxContainer/VBoxContainer1/Holder1/Quit1
+@onready var _tab_input_enabler := get_node(tab_input_enabler_path)
 
 func _ready() -> void:
 	var custom_keybind_buttons := get_tree().get_nodes_in_group("custom_keybind_buttons")
 	for keybind_button in custom_keybind_buttons:
-		keybind_button.connect("awaiting_changed", self, "_on_CustomKeybindButton_awaiting_changed")
+		keybind_button.connect("awaiting_changed", Callable(self, "_on_CustomKeybindButton_awaiting_changed"))
 	
 	_refresh_quit_type()
 
@@ -58,14 +58,14 @@ func _refresh_quit_type() -> void:
 	_other_quit_button.text = other_quit_text
 	
 	if other_quit_text:
-		rect_min_size.y = 100
-		rect_size.y = 100
+		custom_minimum_size.y = 100
+		size.y = 100
 		$HBoxContainer/VBoxContainer1/Holder1.visible = true
 		$HBoxContainer/VBoxContainer2/Spacer.visible = true
 		$HBoxContainer/VBoxContainer3/Spacer.visible = true
 	else:
-		rect_min_size.y = 50
-		rect_size.y = 50
+		custom_minimum_size.y = 50
+		size.y = 50
 		$HBoxContainer/VBoxContainer1/Holder1.visible = false
 		$HBoxContainer/VBoxContainer2/Spacer.visible = false
 		$HBoxContainer/VBoxContainer3/Spacer.visible = false
@@ -108,7 +108,7 @@ func _on_Dialogs_dialog_visibility_changed(value: bool) -> void:
 
 
 func _on_SettingsMenu_show() -> void:
-	_old_focus_owner = _ok_button.get_focus_owner()
+	_old_focus_owner = _ok_button.get_viewport().gui_get_focus_owner()
 	_ok_button.grab_focus()
 
 

@@ -3,5 +3,5 @@
 [ext_resource path="res://src/test/utils/autopilot.gd" type="Script" id=1]
 
 [node name="Autopilot" type="Node"]
-pause_mode = 2
+process_mode = 3
 script = ExtResource( 1 )

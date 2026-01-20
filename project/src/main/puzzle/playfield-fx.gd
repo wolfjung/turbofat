@@ -8,17 +8,17 @@ extends Node2D
 const RAINBOW_COLOR_COUNT := 7
 
 ## Lights change color based on the lines the player clears.
-const VEGETABLE_LIGHT_COLOR := Color("6074a320")
+const VEGETABLE_LIGHT_COLOR := Color("#74a32060")
 const FOOD_LIGHT_COLORS := [
-	Color("c0f47700"), # brown
-	Color("b0ff5d68"), # pink
-	Color("c0ffc357"), # bread
-	Color("a0fff69b"), # white
-	Color("a0fff69b"), # cheese
+	Color("#f47700c0"), # brown
+	Color("#ff5d68b0"), # pink
+	Color("#ffc357c0"), # bread
+	Color("#fff69ba0"), # white
+	Color("#fff69ba0"), # cheese
 ]
 
 ## Rainbows are modulated white, because the tiles themselves have a color to them.
-const RAINBOW_LIGHT_COLOR := Color("50ffffff")
+const RAINBOW_LIGHT_COLOR := Color("#ffffff50")
 
 ## Light pattern shown when the player clears a line or continues their combo.
 const ON_PATTERN := [
@@ -49,7 +49,7 @@ const OFF_PATTERN := [
 	".........",
 ]
 
-export (NodePath) var combo_tracker_path: NodePath
+@export var combo_tracker_path: NodePath
 
 ## light pattern being shown.
 var _pattern := OFF_PATTERN
@@ -72,7 +72,7 @@ var _pulse_amount := 0.0
 var _glow_duration := 0.0
 
 ## current background light color
-var _color := Color.transparent
+var _color := Color.TRANSPARENT
 
 ## key: (Color) Food/vegetable color
 ## value: (int) Index of a tile in light_map or glow_map
@@ -82,24 +82,24 @@ var _tile_index_by_color: Dictionary
 var _rainbow_tile_indexes := []
 
 ## gradually dims the glowiness
-var _glow_tween: SceneTreeTween
+var _glow_tween: Tween
 
 ## lights which turn on and off
-onready var light_map: TileMap = $LightMap
+@onready var light_map: TileMap = $LightMap
 
 ## glowy effect around the lights
-onready var glow_map: TileMap = $GlowMap
+@onready var glow_map: TileMap = $GlowMap
 
 ## bright flash when the player clears a line
-onready var bg_strobe: ColorRect = $BgStrobe
+@onready var bg_strobe: ColorRect = $BgStrobe
 
-onready var _combo_tracker: ComboTracker = get_node(combo_tracker_path)
+@onready var _combo_tracker: ComboTracker = get_node(combo_tracker_path)
 
 func _ready() -> void:
-	PuzzleState.connect("game_prepared", self, "_on_PuzzleState_game_prepared")
-	_combo_tracker.connect("combo_break_changed", self, "_on_ComboTracker_combo_break_changed")
-	PuzzleState.connect("combo_changed", self, "_on_PuzzleState_combo_changed")
-	PuzzleState.connect("added_pickup_score", self, "_on_PuzzleState_added_pickup_score")
+	PuzzleState.connect("game_prepared", Callable(self, "_on_PuzzleState_game_prepared"))
+	_combo_tracker.connect("combo_break_changed", Callable(self, "_on_ComboTracker_combo_break_changed"))
+	PuzzleState.connect("combo_changed", Callable(self, "_on_PuzzleState_combo_changed"))
+	PuzzleState.connect("added_pickup_score", Callable(self, "_on_PuzzleState_added_pickup_score"))
 	_init_tile_set()
 	_init_tile_index_by_color()
 	reset()
@@ -113,8 +113,8 @@ func _process(delta: float) -> void:
 func reset() -> void:
 	_pattern = OFF_PATTERN
 	_color = RAINBOW_LIGHT_COLOR
-	light_map.modulate = Color.transparent
-	glow_map.modulate = Color.transparent
+	light_map.modulate = Color.TRANSPARENT
+	glow_map.modulate = Color.TRANSPARENT
 	_calculate_brightness(0)
 	_refresh_tile_maps()
 
@@ -133,7 +133,7 @@ func _init_tile_set() -> void:
 	_init_tile(VEGETABLE_LIGHT_COLOR)
 	
 	for i in range(RAINBOW_COLOR_COUNT):
-		var rainbow_color := Utils.to_transparent(Color.red, 0.60)
+		var rainbow_color := Utils.to_transparent(Color.RED, 0.60)
 		rainbow_color.h += i / float(RAINBOW_COLOR_COUNT)
 		var rainbow_tile_index := _init_tile(rainbow_color)
 		_rainbow_tile_indexes.append(rainbow_tile_index)
@@ -182,7 +182,7 @@ func _start_glow_tween() -> void:
 
 ## Calculates the light color for a row in the playfield.
 func _calculate_line_color(box_ints: Array) -> void:
-	if box_ints.empty():
+	if box_ints.is_empty():
 		# vegetable
 		_color = VEGETABLE_LIGHT_COLOR
 	elif PuzzleTileMap.has_cake_box(box_ints):

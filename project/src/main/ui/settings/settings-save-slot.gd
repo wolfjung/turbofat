@@ -4,10 +4,10 @@ extends HBoxContainer
 
 signal delete_pressed
 
-onready var _option_button := $HBoxContainer/OptionButton
+@onready var _option_button := $HBoxContainer/OptionButton
 
 func _ready() -> void:
-	SystemSave.connect("save_slot_deleted", self, "_on_SystemSave_save_slot_deleted")
+	SystemSave.connect("save_slot_deleted", Callable(self, "_on_SystemSave_save_slot_deleted"))
 
 
 func get_selected_save_slot() -> int:

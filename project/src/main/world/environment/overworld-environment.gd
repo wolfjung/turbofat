@@ -4,24 +4,24 @@ extends Node
 
 const SCENE_EMPTY_ENVIRONMENT := "res://src/main/world/environment/EmptyEnvironment.tscn"
 
-export (NodePath) var environment_shadows_path: NodePath
-export (NodePath) var obstacles_path: NodePath
-export (PackedScene) var CreatureScene: PackedScene
+@export var environment_shadows_path: NodePath
+@export var obstacles_path: NodePath
+@export var CreatureScene: PackedScene
 
 ## Player's sprite
 ## virtual property; value is only exposed through getters/setters
-var player: Creature setget ,get_player
+var player: Creature: get = get_player
 
 ## Sensei's sprite
 ## virtual property; value is only exposed through getters/setters
-var sensei: Creature setget ,get_sensei
+var sensei: Creature: get = get_sensei
 
-onready var _obstacles: Node2D = get_node(obstacles_path)
-onready var _environment_shadows: EnvironmentShadows = get_node(environment_shadows_path)
+@onready var _obstacles: Node2D = get_node(obstacles_path)
+@onready var _environment_shadows: EnvironmentShadows = get_node(environment_shadows_path)
 
 ## Adds a new obstacle. The obstacle is placed below the given node in the list of children.
 func add_obstacle_below_node(node: Node2D, child_node: Node2D) -> void:
-	_obstacles.add_child_below_node(node, child_node)
+	_obstacles.add_sibling(node, child_node)
 	process_new_obstacle(child_node)
 
 
@@ -58,7 +58,7 @@ func move_creature_to_spawn(creature: Creature, spawn_id: String) -> void:
 ##
 ## 	'_chattable': Unused.
 func add_creature(creature_id: String = "") -> Creature:
-	var creature: Creature = CreatureScene.instance()
+	var creature: Creature = CreatureScene.instantiate()
 	creature.creature_id = creature_id
 	_obstacles.add_child(creature)
 	process_new_obstacle(creature)
@@ -83,7 +83,7 @@ func get_creature_by_id(creature_id: String) -> Creature:
 	var creature: Creature
 	
 	for creature_node in get_tree().get_nodes_in_group("creatures"):
-		if is_a_parent_of(creature_node) and creature_node.creature_id == creature_id:
+		if is_ancestor_of(creature_node) and creature_node.creature_id == creature_id:
 			creature = creature_node
 			break
 	

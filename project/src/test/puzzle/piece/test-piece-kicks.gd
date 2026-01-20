@@ -144,7 +144,7 @@ func _kick_piece() -> Vector2:
 	_initialize_analyzers()
 	
 	_detect_analyzer_mismatch()
-	if valid and not _mismatch_message.empty():
+	if valid and not _mismatch_message.is_empty():
 		result = ANALYZER_MISMATCH
 		valid = false
 	
@@ -182,11 +182,11 @@ func _detect_analyzer_mismatch() -> void:
 	_mismatch_message = ""
 	var from_size := Vector2.ZERO
 	from_size.y = _from_analyzer.ascii_grid.size()
-	from_size.x = 0 if _from_analyzer.ascii_grid.empty() else _from_analyzer.ascii_grid[0].length()
+	from_size.x = 0 if _from_analyzer.ascii_grid.is_empty() else _from_analyzer.ascii_grid[0].length()
 	
 	var to_size := Vector2.ZERO
 	to_size.y = _to_analyzer.ascii_grid.size()
-	to_size.x = 0 if _to_analyzer.ascii_grid.empty() else _to_analyzer.ascii_grid[0].length()
+	to_size.x = 0 if _to_analyzer.ascii_grid.is_empty() else _to_analyzer.ascii_grid[0].length()
 	
 	if not _mismatch_message and from_size != to_size:
 		_mismatch_message = "Piece grid size mismatch; from=%s to=%s" % [from_size, to_size]

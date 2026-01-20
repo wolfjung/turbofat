@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/main/world/environment/lava/lava-crowdie.gd" type="Script" id=1]
-[ext_resource path="res://assets/main/world/environment/lava/lava-crowd-sheet.png" type="Texture" id=2]
-[ext_resource path="res://assets/main/world/environment/lava/lava-crowd-laugh-sheet.png" type="Texture" id=3]
+[ext_resource path="res://assets/main/world/environment/lava/lava-crowd-sheet.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/main/world/environment/lava/lava-crowd-laugh-sheet.png" type="Texture2D" id=3]
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 13
@@ -25,14 +25,14 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 28, 14 )
 
-[node name="Crowdie" type="KinematicBody2D" groups=["lava_crowdies"]]
+[node name="Crowdie" type="CharacterBody2D" groups=["lava_crowdies"]]
 position = Vector2( 561.443, 360.624 )
 script = ExtResource( 1 )
 shadow_scale = 0.4
 
 [node name="SpriteHolder" type="Node2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="SpriteHolder"]
+[node name="Sprite2D" type="Sprite2D" parent="SpriteHolder"]
 modulate = Color( 0.239216, 0.160784, 0.121569, 1 )
 scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 2 )
@@ -41,7 +41,7 @@ offset = Vector2( -195, -410 )
 hframes = 8
 vframes = 5
 
-[node name="CheerSprite" type="AnimatedSprite" parent="SpriteHolder"]
+[node name="CheerSprite" type="AnimatedSprite2D" parent="SpriteHolder"]
 visible = false
 position = Vector2( 45, -85 )
 scale = Vector2( 0.3, 0.3 )

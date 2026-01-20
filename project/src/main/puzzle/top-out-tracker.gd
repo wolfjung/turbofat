@@ -2,14 +2,14 @@ extends Node
 
 const LINES_CLEARED_ON_TOP_OUT := 10
 
-onready var _game_over_voices := [$GameOverVoice0, $GameOverVoice1, $GameOverVoice2, $GameOverVoice3, $GameOverVoice4]
-onready var _puzzle: Puzzle = $".."
-onready var _playfield: Playfield = _puzzle.get_playfield()
+@onready var _game_over_voices := [$GameOverVoice0, $GameOverVoice1, $GameOverVoice2, $GameOverVoice3, $GameOverVoice4]
+@onready var _puzzle: Puzzle = $".."
+@onready var _playfield: Playfield = _puzzle.get_playfield()
 
 func _ready() -> void:
-	PuzzleState.connect("topped_out", self, "_on_PuzzleState_topped_out")
-	_playfield.connect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
-	_playfield.connect("after_lines_filled", self, "_on_Playfield_after_lines_filled")
+	PuzzleState.connect("topped_out", Callable(self, "_on_PuzzleState_topped_out"))
+	_playfield.connect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
+	_playfield.connect("after_lines_filled", Callable(self, "_on_Playfield_after_lines_filled"))
 
 
 func _on_PuzzleState_topped_out() -> void:

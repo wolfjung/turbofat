@@ -10,8 +10,8 @@ line_height = 30.0
 [node name="Label" type="Label" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_top = -15.0
-margin_right = 472.0
-margin_bottom = 15.0
+offset_top = -15.0
+offset_right = 472.0
+offset_bottom = 15.0
 theme = ExtResource( 2 )
 valign = 1

@@ -10,7 +10,7 @@ const MAX_CREATURE_SHORT_NAME_LENGTH := 15
 ## excessively long names are truncated.
 static func sanitize_name(name: String) -> String:
 	var result := ""
-	var utf8 := name.to_lower().to_utf8()
+	var utf8 := name.to_lower().to_utf8_buffer()
 	
 	# sanitize characters we don't want in names
 	for i in range(name.length()):
@@ -37,7 +37,7 @@ static func sanitize_name(name: String) -> String:
 ## In GDScript this requires an internal class because of Godot #25252
 ## (https://github.com/godotengine/godot/issues/25252).
 static func sort_by_length(strings: Array) -> void:
-	strings.sort_custom(LengthSorter, '_compare_by_length')
+	strings.sort_custom(Callable(LengthSorter, '_compare_by_length'))
 
 
 class LengthSorter:

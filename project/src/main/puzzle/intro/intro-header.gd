@@ -8,10 +8,10 @@ const IMAGE_MARATHON := preload("res://assets/main/puzzle/intro/receipt-header-m
 const IMAGE_VIP := preload("res://assets/main/puzzle/intro/receipt-header-vip.png")
 
 ## Label containing the title text
-onready var _title := $Title
+@onready var _title := $Title
 
 func _ready() -> void:
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 	
 	_refresh()
 

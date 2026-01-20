@@ -3,19 +3,19 @@ extends Node2D
 ## Script which updates the size and position of a shadow beneath a creature.
 
 ## Direction of this shadow relative to the creature. Used for creatures sitting on restaurant stools.
-export (Vector2) var shadow_offset: Vector2
+@export var shadow_offset: Vector2
 
-export (NodePath) var creature_path: NodePath setget set_creature_path
-export (Vector2) var shadow_scale := Vector2.ONE
+@export var creature_path: NodePath: set = set_creature_path
+@export var shadow_scale := Vector2.ONE
 
 ## Creature this shadow is for
 var _creature: Creature
 
 ## Oval shadow sprite
-onready var _sprite: Sprite = $Sprite
+@onready var _sprite: Sprite2D = $Sprite2D
 
 ## Scales the shadow based on the creature's fatness
-onready var _fat_player: AnimationPlayer = $FatPlayer
+@onready var _fat_player: AnimationPlayer = $FatPlayer
 
 func _ready() -> void:
 	visible = false
@@ -38,17 +38,17 @@ func _refresh_creature_path() -> void:
 	if not (is_inside_tree() and not creature_path.is_empty()):
 		return
 	
-	if _creature and _creature.is_connected("visual_fatness_changed", self, "_on_Creature_visual_fatness_changed"):
-		_creature.disconnect("visual_fatness_changed", self, "_on_Creature_visual_fatness_changed")
-		_creature.disconnect("dna_loaded", self, "_on_Creature_dna_loaded")
+	if _creature and _creature.is_connected("visual_fatness_changed", Callable(self, "_on_Creature_visual_fatness_changed")):
+		_creature.disconnect("visual_fatness_changed", Callable(self, "_on_Creature_visual_fatness_changed"))
+		_creature.disconnect("dna_loaded", Callable(self, "_on_Creature_dna_loaded"))
 	_creature = get_node(creature_path)
-	_creature.connect("visual_fatness_changed", self, "_on_Creature_visual_fatness_changed")
-	_creature.connect("dna_loaded", self, "_on_Creature_dna_loaded")
+	_creature.connect("visual_fatness_changed", Callable(self, "_on_Creature_visual_fatness_changed"))
+	_creature.connect("dna_loaded", Callable(self, "_on_Creature_dna_loaded"))
 	
 	position = _creature.position + shadow_offset
 	if not _creature.creature_visuals:
 		# wait a frame for the creature's fields to be populated
-		yield(get_tree(), "idle_frame")
+		await get_tree().idle_frame
 	if _creature.creature_visuals:
 		_sprite.scale = Vector2(0.17, 0.17) * shadow_scale * _creature.creature_visuals.scale.y
 		_refresh_creature_shadow_scale()

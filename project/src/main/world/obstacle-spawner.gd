@@ -1,21 +1,21 @@
 class_name ObstacleSpawner
-extends Sprite
+extends Sprite2D
 ## Conditionally spawns an obstacle on the overworld.
 ##
 ## The decision to spawn the obstacle is controlled by the 'spawn_if' property.
 ##
 ## The obstacle's properties and groups can be managed by the target_properties and target_groups fields.
 
-export (NodePath) var overworld_environment_path: NodePath = NodePath("../..") setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath = NodePath("../.."): set = set_overworld_environment_path
 
 ## PackedScene of the spawned obstacle
-export (PackedScene) var TargetScene: PackedScene
+@export var TargetScene: PackedScene
 
 ## properties of the spawned obstacle
-export (Dictionary) var target_properties: Dictionary
+@export var target_properties: Dictionary
 
 ## boolean expression which, if evaluated to 'true', will result in the obstacle being spawned
-export (String) var spawn_if: String
+@export var spawn_if: String
 
 ## spawned object, or 'null' if the object has not yet spawned
 var spawned_object: Node2D
@@ -23,10 +23,10 @@ var spawned_object: Node2D
 var _overworld_environment: OverworldEnvironment
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# Don't spawn/free nodes in the editor. (Some of our children are tool scripts.)
 		pass
-	elif spawn_if.empty() or BoolExpressionEvaluator.evaluate(spawn_if):
+	elif spawn_if.is_empty() or BoolExpressionEvaluator.evaluate(spawn_if):
 		# Spawn the obstacle, and remove the spawner from the scene tree.
 		# This call is deferred to avoid a 'Parent node is busy setting up children' error.
 		call_deferred("spawn_target")
@@ -56,7 +56,7 @@ func spawn_target() -> void:
 	name = "ObstacleSpawner"
 	
 	# create the object and assign its properties
-	spawned_object = TargetScene.instance()
+	spawned_object = TargetScene.instantiate()
 	spawned_object.name = old_name
 	spawned_object.position = position
 	for key in target_properties:

@@ -19,7 +19,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 95.2876, 52.8645, 0, 0, 0, 0, 144.008, 58.0739, 0, 0, 0, 0, 194.45, 64.7984, 0, 0, 0, 0, 224.274, 52.1219, 0, 0, 0, 0, 260.499, 53.5568, 0, 0, 0, 0, 336.114, 51.7751, 0, 0, 0, 0, 369.634, 54.3364, 0, 0, 0, 0, 415.46, 61.6862 )
+"points": PackedVector2Array( 0, 0, 0, 0, 95.2876, 52.8645, 0, 0, 0, 0, 144.008, 58.0739, 0, 0, 0, 0, 194.45, 64.7984, 0, 0, 0, 0, 224.274, 52.1219, 0, 0, 0, 0, 260.499, 53.5568, 0, 0, 0, 0, 336.114, 51.7751, 0, 0, 0, 0, 369.634, 54.3364, 0, 0, 0, 0, 415.46, 61.6862 )
 }
 
 [node name="EndText" type="Node2D"]
@@ -29,35 +29,35 @@ script = ExtResource( 1 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = -24.694
-margin_top = -160.0
-margin_right = 447.306
-margin_bottom = 140.0
+offset_left = -24.694
+offset_top = -160.0
+offset_right = 447.306
+offset_bottom = 140.0
 mouse_filter = 2
 size_flags_vertical = 4
 theme = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 472.0
-margin_bottom = 64.0
+offset_right = 472.0
+offset_bottom = 64.0
 
 [node name="CompletionContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_right = 234.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 0, 63 )
+offset_right = 234.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 0, 63 )
 mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/CompletionContainer"]
-margin_right = 234.0
-margin_bottom = 30.0
+offset_right = 234.0
+offset_bottom = 30.0
 text = "Completion:"
 align = 1
 
 [node name="Value" type="Label" parent="VBoxContainer/HBoxContainer/CompletionContainer"]
-margin_top = 34.0
-margin_right = 234.0
-margin_bottom = 64.0
+offset_top = 34.0
+offset_right = 234.0
+offset_bottom = 64.0
 text = "100%"
 align = 1
 
@@ -68,23 +68,23 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [node name="GradeContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 238.0
-margin_right = 472.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 0, 63 )
+offset_left = 238.0
+offset_right = 472.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 0, 63 )
 mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/GradeContainer"]
-margin_right = 234.0
-margin_bottom = 30.0
+offset_right = 234.0
+offset_bottom = 30.0
 text = "Overall grade:"
 align = 1
 
 [node name="Value" type="Label" parent="VBoxContainer/HBoxContainer/GradeContainer"]
-margin_top = 34.0
-margin_right = 234.0
-margin_bottom = 64.0
+offset_top = 34.0
+offset_right = 234.0
+offset_bottom = 64.0
 text = "S+"
 align = 1
 
@@ -95,15 +95,15 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [node name="Spacer" type="Control" parent="VBoxContainer"]
-margin_top = 68.0
-margin_right = 472.0
-margin_bottom = 88.0
-rect_min_size = Vector2( 0, 20 )
+offset_top = 68.0
+offset_right = 472.0
+offset_bottom = 88.0
+custom_minimum_size = Vector2( 0, 20 )
 
 [node name="CongratulationsLabel" type="Label" parent="VBoxContainer"]
-margin_top = 92.0
-margin_right = 472.0
-margin_bottom = 188.0
+offset_top = 92.0
+offset_right = 472.0
+offset_bottom = 188.0
 text = "Congratulations!
 
 You are a super player."

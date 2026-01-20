@@ -5,8 +5,8 @@ extends Control
 ## These translucent hint diagrams go behind the playfield, showing the player where to drop their pieces.
 
 func _ready() -> void:
-	PuzzleState.connect("game_prepared", self, "_on_PuzzleState_game_prepared")
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	PuzzleState.connect("game_prepared", Callable(self, "_on_PuzzleState_game_prepared"))
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 
 
 ## Adds a new hint diagram to the playfield.
@@ -17,7 +17,7 @@ func _ready() -> void:
 ## Parameters:
 ## 	'hint_scene': The hint diagram scene to instantiate and add behind the playfield.
 func add_hint(hint_scene: PackedScene) -> void:
-	add_child(hint_scene.instance())
+	add_child(hint_scene.instantiate())
 
 
 func _prepare_level_blocks() -> void:

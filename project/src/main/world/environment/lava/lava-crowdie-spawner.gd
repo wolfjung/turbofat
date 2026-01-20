@@ -3,10 +3,10 @@ extends Node2D
 ##
 ## This spawner can be activated with the 'lava_crowd spawn' chatscript flag.
 
-export (NodePath) var overworld_environment_path: NodePath = NodePath("../..") setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath = NodePath("../.."): set = set_overworld_environment_path
 
 ## PackedScene of the spawned crowd
-export (PackedScene) var LavaCrowdieScene: PackedScene
+@export var LavaCrowdieScene: PackedScene
 
 ## spawned crowd, or 'null' if the crowd has not yet spawned
 var spawned_lava_crowdie: LavaCrowdie
@@ -16,7 +16,7 @@ var _overworld_environment: OverworldEnvironment
 func _ready() -> void:
 	_refresh_overworld_environment_path()
 	if Global.get_overworld_ui():
-		Global.get_overworld_ui().connect("chat_event_meta_played", self, "_on_OverworldUi_chat_event_meta_played")
+		Global.get_overworld_ui().connect("chat_event_meta_played", Callable(self, "_on_OverworldUi_chat_event_meta_played"))
 
 
 func set_overworld_environment_path(new_overworld_environment_path: NodePath) -> void:
@@ -38,7 +38,7 @@ func _spawn_target() -> void:
 	name = "LavaCrowdieSpawner"
 	
 	# create the crowd and assign its properties
-	spawned_lava_crowdie = LavaCrowdieScene.instance()
+	spawned_lava_crowdie = LavaCrowdieScene.instantiate()
 	spawned_lava_crowdie.name = old_name
 	spawned_lava_crowdie.position = position
 	

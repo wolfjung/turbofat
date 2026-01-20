@@ -7,4 +7,4 @@ func _ready() -> void:
 
 ## When the label is resized, we move it to the bottom-right corner.
 func _on_resized() -> void:
-	set_global_position(get_viewport_rect().size - rect_size - Vector2(10, 10))
+	set_global_position(get_viewport_rect().size - size - Vector2(10, 10))

@@ -1,4 +1,4 @@
-tool
+@tool
 class_name HsvSlider
 extends HBoxContainer
 ## A slider within the candy color picker which adjusts either the hue, saturation or value
@@ -6,13 +6,13 @@ extends HBoxContainer
 signal value_changed(value)
 
 ## Text shown to the left of the slider, such as 'H' for hue
-export (String) var text: String setget set_text
+@export var text: String: set = set_text
 
-export (int, 0, 255) var value: int setget set_value
+@export var value: int: set = set_value
 
-onready var _text_label := $TextLabel
-onready var _slider := $HSlider
-onready var _value_label := $ValueLabel
+@onready var _text_label := $TextLabel
+@onready var _slider := $HSlider
+@onready var _value_label := $ValueLabel
 
 func _ready() -> void:
 	_refresh()

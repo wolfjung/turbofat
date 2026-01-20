@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/spear-voice-warn.wav-ddea0264cd44533690ac783c8d32a489.sample"
+type="AudioStreamWAV"
+uid="uid://dulvyh7c47yeo"
+path="res://.godot/imported/spear-voice-warn.wav-ddea0264cd44533690ac783c8d32a489.sample"
 
 [deps]
 
 source_file="res://assets/main/puzzle/critter/spear-voice-warn.wav"
-dest_files=[ "res://.import/spear-voice-warn.wav-ddea0264cd44533690ac783c8d32a489.sample" ]
+dest_files=["res://.godot/imported/spear-voice-warn.wav-ddea0264cd44533690ac783c8d32a489.sample"]
 
 [params]
 

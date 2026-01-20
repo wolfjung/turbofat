@@ -16,11 +16,11 @@ func _force_cutscene() -> bool:
 	if region.cutscene_path:
 		# find a region-specific cutscene
 		chat_key_pair = CareerCutsceneLibrary.next_interlude_chat_key_pair([region.cutscene_path])
-	if chat_key_pair.empty():
+	if chat_key_pair.is_empty():
 		# no region-specific cutscene available; find a general cutscene
 		chat_key_pair = CareerCutsceneLibrary.next_interlude_chat_key_pair(
 				[CareerCutsceneLibrary.general_chat_key_root])
-	if chat_key_pair.empty():
+	if chat_key_pair.is_empty():
 		# no general cutscene available; make one available
 		var chat_keys := CareerCutsceneLibrary.chat_keys([CareerCutsceneLibrary.general_chat_key_root])
 		var min_chat_age := ChatHistory.CHAT_AGE_NEVER
@@ -36,7 +36,7 @@ func _force_cutscene() -> bool:
 	
 	if chat_key_pair:
 		# reload the CareerMap scene
-		SceneTransition.change_scene()
+		SceneTransition.change_scene_to_file()
 	
 	return true if chat_key_pair else false
 
@@ -87,7 +87,7 @@ func _force_boss_level() -> bool:
 		PlayerData.level_history.delete_results(new_region.boss_level.level_id)
 		
 		# reload the CareerMap scene
-		SceneTransition.change_scene()
+		SceneTransition.change_scene_to_file()
 	
 	return true if new_region else false
 
@@ -99,12 +99,12 @@ func _force_boss_level() -> bool:
 ## Returns:
 ## 	'true' if the we successfully made a hardcore level available, 'false' if we failed
 func _force_hardcore_level() -> bool:
-	if PlayerData.career.forced_hardcore_level_hours.empty():
+	if PlayerData.career.forced_hardcore_level_hours.is_empty():
 		PlayerData.career.randomize_forced_hardcore_level_hours()
 	PlayerData.career.hours_passed = PlayerData.career.forced_hardcore_level_hours[0]
 	
 	# reload the CareerMap scene
-	SceneTransition.change_scene()
+	SceneTransition.change_scene_to_file()
 	
 	return true
 
@@ -179,7 +179,7 @@ func _force_epilogue_level() -> bool:
 ## This works by adjusting the daily earnings which affects the random seed.
 func _cycle_levels() -> void:
 	PlayerData.career.money += 1
-	SceneTransition.change_scene()
+	SceneTransition.change_scene_to_file()
 
 
 func _on_SettingsButton_pressed() -> void:

@@ -5,16 +5,16 @@
 [ext_resource path="res://src/main/ui/candy-button/ClickSound.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/main/ui/candy-button/HoverSound.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/main/editor/creature/creature-name-button.gd" type="Script" id=5]
-[ext_resource path="res://assets/main/ui/candy-button/c3-shine.png" type="Texture" id=6]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=7]
-[ext_resource path="res://assets/main/editor/creature/icon-name.png" type="Texture" id=8]
-[ext_resource path="res://assets/main/ui/candy-button/c3-focused.png" type="Texture" id=9]
-[ext_resource path="res://assets/main/ui/candy-button/c3-blank.png" type="Texture" id=10]
+[ext_resource path="res://assets/main/ui/candy-button/c3-shine.png" type="Texture2D" id=6]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=7]
+[ext_resource path="res://assets/main/editor/creature/icon-name.png" type="Texture2D" id=8]
+[ext_resource path="res://assets/main/ui/candy-button/c3-focused.png" type="Texture2D" id=9]
+[ext_resource path="res://assets/main/ui/candy-button/c3-blank.png" type="Texture2D" id=10]
 [ext_resource path="res://src/main/ui/candy-button/ShineTextureRect.tscn" type="PackedScene" id=11]
-[ext_resource path="res://assets/main/ui/candy-button/c3-blank-pressed.png" type="Texture" id=12]
-[ext_resource path="res://src/main/utils/icon-outline.shader" type="Shader" id=13]
-[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="DynamicFontData" id=14]
-[ext_resource path="res://assets/main/ui/candy-button/c3-shine-pressed.png" type="Texture" id=15]
+[ext_resource path="res://assets/main/ui/candy-button/c3-blank-pressed.png" type="Texture2D" id=12]
+[ext_resource path="res://src/main/utils/icon-outline.gdshader" type="Shader" id=13]
+[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="FontFile" id=14]
+[ext_resource path="res://assets/main/ui/candy-button/c3-shine-pressed.png" type="Texture2D" id=15]
 [ext_resource path="res://src/main/ui/candy-button/gradient-helper.gd" type="Script" id=16]
 [ext_resource path="res://src/main/ui/candy-button/collapsible-candy-glow.gd" type="Script" id=17]
 [ext_resource path="res://src/main/ui/candy-button/CandyGlow.tscn" type="PackedScene" id=18]
@@ -37,7 +37,7 @@ shader_param/white = Color( 1, 1, 1, 1 )
 shader_param/black = Color( 0.149412, 0.135882, 0.15, 1 )
 shader_param/sample_count = 24
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="FontFile" id=10]
 resource_local_to_scene = true
 size = 14
 outline_size = 2
@@ -47,11 +47,11 @@ font_data = ExtResource( 14 )
 
 [node name="CreatureNameButton" type="TextureButton"]
 material = SubResource( 8 )
-margin_left = 235.173
-margin_top = 84.7441
-margin_right = 315.173
-margin_bottom = 148.744
-rect_min_size = Vector2( 80, 64 )
+offset_left = 235.173
+offset_top = 84.7441
+offset_right = 315.173
+offset_bottom = 148.744
+custom_minimum_size = Vector2( 80, 64 )
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 12 )
@@ -64,18 +64,18 @@ icon = ExtResource( 8 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_right = -5.0
-custom_constants/separation = 0
+offset_left = 5.0
+offset_right = -5.0
+theme_override_constants/separation = 0
 alignment = 1
 
 [node name="Icon" type="TextureRect" parent="VBoxContainer"]
 material = SubResource( 7 )
-margin_left = 10.0
-margin_top = 7.0
-margin_right = 60.0
-margin_bottom = 57.0
-rect_min_size = Vector2( 50, 50 )
+offset_left = 10.0
+offset_top = 7.0
+offset_right = 60.0
+offset_bottom = 57.0
+custom_minimum_size = Vector2( 50, 50 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource( 8 )
@@ -83,11 +83,11 @@ expand = true
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 visible = false
-margin_top = 17.0
-margin_right = 70.0
-margin_bottom = 47.0
+offset_top = 17.0
+offset_right = 70.0
+offset_bottom = 47.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 10 )
+theme_override_fonts/font = SubResource( 10 )
 align = 1
 valign = 1
 clip_text = true

@@ -8,18 +8,18 @@ extends Control
 ## pinup which is still visible.
 const PINUP_POOL_SIZE := 4
 
-export (PackedScene) var PinupScrollerScene: PackedScene
+@export var PinupScrollerScene: PackedScene
 
 var velocity := Vector2(0, -60)
 
 ## Queue of PinupScroller instances to reuse.
 var _pinup_scroller_pool := []
 
-onready var _pinup_holder := $PinupHolder
+@onready var _pinup_holder := $PinupHolder
 
 func _ready() -> void:
 	for _i in range(PINUP_POOL_SIZE):
-		var pinup_scroller: PinupScroller = PinupScrollerScene.instance()
+		var pinup_scroller: PinupScroller = PinupScrollerScene.instantiate()
 		pinup_scroller.reset()
 		_pinup_holder.add_child(pinup_scroller)
 		_pinup_scroller_pool.append(pinup_scroller)
@@ -43,13 +43,13 @@ func add_pinup(creature_id: String, pinup_side: int, bg_color: Color) -> void:
 	
 	# initialize it to the correct side
 	scroller.position = Vector2(-128, 750)
-	if pinup_side == PinupScroller.SIDE_RIGHT:
+	if pinup_side == PinupScroller.MARGIN_RIGHT:
 		 scroller.position.x = 512 - scroller.position.x
 	
 	# initialize it to the correct creature ID
 	scroller.pinup.creature_id = creature_id
 	scroller.pinup.orientation = \
-			Creatures.SOUTHEAST if pinup_side == PinupScroller.SIDE_LEFT else Creatures.SOUTHWEST
+			Creatures.SOUTHEAST if pinup_side == PinupScroller.MARGIN_LEFT else Creatures.SOUTHWEST
 	scroller.pinup.bg_color = bg_color
 	
 	# initialize velocity

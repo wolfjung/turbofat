@@ -31,12 +31,12 @@ extends Node
 ## 	[Ctrl + 1]: Change the creature's demographic to 'squirrel'
 
 ## local path to a json creature resource to demo
-export (String, FILE, "*.json") var creature_path: String
+@export var creature_path: String # (String, FILE, "*.json")
 
 var _creature_type: int = Creatures.Type.DEFAULT
 
-onready var _creature := $Creature
-onready var _creature_animations: CreatureAnimations = $Creature.creature_visuals.get_node("Animations")
+@onready var _creature := $Creature
+@onready var _creature_animations: CreatureAnimations = $Creature.creature_visuals.get_node("Animations")
 
 func _ready() -> void:
 	PlayerData.creature_library.clear_all_fatness()
@@ -54,7 +54,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if Input.is_key_pressed(KEY_CONTROL):
+	if Input.is_key_pressed(KEY_CTRL):
 		match Utils.key_scancode(event):
 			KEY_0: _change_demographic(Creatures.Type.DEFAULT)
 			KEY_1: _change_demographic(Creatures.Type.SQUIRREL)
@@ -69,7 +69,7 @@ func _input(event: InputEvent) -> void:
 			KEY_D: _creature_animations.play_idle_animation("idle-ear-wiggle0")
 			KEY_F: _creature_animations.play_idle_animation("idle-ear-wiggle1")
 			KEY_T: _creature.talk()
-			KEY_SLASH: print(to_json(_creature.dna))
+			KEY_SLASH: print(JSON.new().stringify(_creature.dna))
 	else:
 		match Utils.key_scancode(event):
 			KEY_BRACKETLEFT, KEY_BRACKETRIGHT:
@@ -107,7 +107,7 @@ func _input(event: InputEvent) -> void:
 			KEY_PERIOD: _creature.play_mood(Creatures.Mood.YES1)
 			KEY_SPACE: _creature.feed(Foods.FoodType.BROWN_0)
 			KEY_MINUS:
-				_creature.set_comfort(rand_range(-1.00, 1.00))
+				_creature.set_comfort(randf_range(-1.00, 1.00))
 				_creature.feed(Foods.FoodType.BROWN_0)
 			KEY_EQUAL: _creature.fatness = 3
 			KEY_RIGHT:

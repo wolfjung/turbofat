@@ -6,24 +6,24 @@ extends Node
 var _dig_index := 0
 
 ## AudioStreamPlayers to use for dig sound effects. We cycle between multiple players to handle concurrent sounds
-onready var _digs := [$Dig0, $Dig1]
+@onready var _digs := [$Dig0, $Dig1]
 
-onready var _found := $Found
-onready var _poof := $Poof
+@onready var _found := $Found
+@onready var _poof := $Poof
 
 func play_poof_sound() -> void:
-	_poof.pitch_scale = rand_range(0.95, 1.05)
+	_poof.pitch_scale = randf_range(0.95, 1.05)
 	_poof.play()
 
 
 func play_dig_sound() -> void:
 	var dig: AudioStreamPlayer = _digs[_dig_index]
-	dig.volume_db = rand_range(0.0, -4.0)
-	dig.pitch_scale = rand_range(0.95, 1.05)
+	dig.volume_db = randf_range(0.0, -4.0)
+	dig.pitch_scale = randf_range(0.95, 1.05)
 	dig.play()
 	_dig_index = (_dig_index + 1) % _digs.size()
 
 
 func play_found_sound() -> void:
-	_found.pitch_scale = rand_range(0.95, 1.05)
+	_found.pitch_scale = randf_range(0.95, 1.05)
 	_found.play()

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/main/ui/candy-button/gradient-none.tres" type="Gradient" id=1]
 [ext_resource path="res://src/main/editor/creature/CreatureNameButton.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=3]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=3]
 
 [sub_resource type="GradientTexture2D" id=1]
 resource_local_to_scene = true
@@ -63,26 +63,26 @@ anchor_bottom = 1.0
 [node name="CreatureNameButton" type="Control" parent="TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="ButtonTopLeft" parent="TabContainer/CreatureNameButton" instance=ExtResource( 2 )]
 material = SubResource( 2 )
-margin_left = 46.0
-margin_top = 18.0
-margin_right = 126.0
-margin_bottom = 82.0
+offset_left = 46.0
+offset_top = 18.0
+offset_right = 126.0
+offset_bottom = 82.0
 
 [node name="ButtonTopRight" parent="TabContainer/CreatureNameButton" instance=ExtResource( 2 )]
 material = SubResource( 4 )
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -126.0
-margin_top = 18.0
-margin_right = -46.0
-margin_bottom = 82.0
+offset_left = -126.0
+offset_top = 18.0
+offset_right = -46.0
+offset_bottom = 82.0
 
 [node name="ButtonCenter" parent="TabContainer/CreatureNameButton" instance=ExtResource( 2 )]
 material = SubResource( 6 )
@@ -90,19 +90,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -40.0
-margin_top = -46.0
-margin_right = 40.0
-margin_bottom = 18.0
+offset_left = -40.0
+offset_top = -46.0
+offset_right = 40.0
+offset_bottom = 18.0
 
 [node name="ButtonBottomLeft" parent="TabContainer/CreatureNameButton" instance=ExtResource( 2 )]
 material = SubResource( 8 )
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 46.0
-margin_top = -110.0
-margin_right = 126.0
-margin_bottom = -46.0
+offset_left = 46.0
+offset_top = -110.0
+offset_right = 126.0
+offset_bottom = -46.0
 
 [node name="ButtonBottomRight" parent="TabContainer/CreatureNameButton" instance=ExtResource( 2 )]
 material = SubResource( 10 )
@@ -110,27 +110,27 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -126.0
-margin_top = -110.0
-margin_right = -46.0
-margin_bottom = -46.0
+offset_left = -126.0
+offset_top = -110.0
+offset_right = -46.0
+offset_bottom = -46.0
 
 [node name="ColorPickerButton" type="Control" parent="TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="ButtonTopLeft" type="ColorPickerButton" parent="TabContainer/ColorPickerButton"]
 material = SubResource( 2 )
-margin_left = 46.0
-margin_top = 18.0
-margin_right = 126.0
-margin_bottom = 82.0
-rect_min_size = Vector2( 80, 64 )
+offset_left = 46.0
+offset_top = 18.0
+offset_right = 126.0
+offset_bottom = 82.0
+custom_minimum_size = Vector2( 80, 64 )
 toggle_mode = false
 shortcut_in_tooltip = false
 
@@ -138,11 +138,11 @@ shortcut_in_tooltip = false
 material = SubResource( 4 )
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -126.0
-margin_top = 18.0
-margin_right = -46.0
-margin_bottom = 82.0
-rect_min_size = Vector2( 80, 64 )
+offset_left = -126.0
+offset_top = 18.0
+offset_right = -46.0
+offset_bottom = 82.0
+custom_minimum_size = Vector2( 80, 64 )
 toggle_mode = false
 shortcut_in_tooltip = false
 
@@ -152,11 +152,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -40.0
-margin_top = -46.0
-margin_right = 40.0
-margin_bottom = 18.0
-rect_min_size = Vector2( 80, 64 )
+offset_left = -40.0
+offset_top = -46.0
+offset_right = 40.0
+offset_bottom = 18.0
+custom_minimum_size = Vector2( 80, 64 )
 toggle_mode = false
 shortcut_in_tooltip = false
 
@@ -164,11 +164,11 @@ shortcut_in_tooltip = false
 material = SubResource( 8 )
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 46.0
-margin_top = -110.0
-margin_right = 126.0
-margin_bottom = -46.0
-rect_min_size = Vector2( 80, 64 )
+offset_left = 46.0
+offset_top = -110.0
+offset_right = 126.0
+offset_bottom = -46.0
+custom_minimum_size = Vector2( 80, 64 )
 toggle_mode = false
 shortcut_in_tooltip = false
 
@@ -178,10 +178,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -126.0
-margin_top = -110.0
-margin_right = -46.0
-margin_bottom = -46.0
-rect_min_size = Vector2( 80, 64 )
+offset_left = -126.0
+offset_top = -110.0
+offset_right = -46.0
+offset_bottom = -46.0
+custom_minimum_size = Vector2( 80, 64 )
 toggle_mode = false
 shortcut_in_tooltip = false

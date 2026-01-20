@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/main/world/environment/credits/confetti-floor-particles.gd" type="Script" id=1]
-[ext_resource path="res://assets/main/world/environment/credits/confetti-floor-sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/main/world/environment/credits/confetti-floor-sheet.png" type="Texture2D" id=2]
 
 [sub_resource type="CanvasItemMaterial" id=2]
 particles_animation = true
@@ -24,7 +24,7 @@ flags = 0
 image = SubResource( 5 )
 size = Vector2( 2048, 11 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticleProcessMaterial" id=1]
 emission_shape = 3
 emission_point_texture = SubResource( 4 )
 emission_point_count = 20867
@@ -37,7 +37,7 @@ scale_random = 0.2
 anim_offset = 1.0
 anim_offset_random = 1.0
 
-[node name="ConfettiFloorParticles" type="Particles2D"]
+[node name="ConfettiFloorParticles" type="GPUParticles2D"]
 material = SubResource( 2 )
 emitting = false
 amount = 300

@@ -15,7 +15,7 @@ const MAP_SCENE_PATHS_BY_REGION_ID := {
 	"lava": "res://src/main/career/ui/ProgressBoardMapLava.tscn",
 }
 
-export (String) var region_id: String setget set_region_id
+@export var region_id: String: set = set_region_id
 
 ## Exposes the map's path2d for the progress board trail.
 var path2d: Path2D
@@ -40,11 +40,11 @@ func _refresh() -> void:
 	# instance new map node
 	var map_scene_path: String = MAP_SCENE_PATHS_BY_REGION_ID.get(region_id, DEFAULT_MAP_SCENE_PATH)
 	var map_scene: PackedScene = load(map_scene_path)
-	var map_node: Control = map_scene.instance()
+	var map_node: Control = map_scene.instantiate()
 	
 	# add new map node to tree
-	map_node.margin_right = 0
-	map_node.margin_bottom = 0
+	map_node.offset_right = 0
+	map_node.offset_bottom = 0
 	map_node.name = "Map"
 	add_child(map_node)
 	path2d = map_node.get_node("Path2D")

@@ -34,37 +34,37 @@ const RAINBOW_CHALK_COLORS := [
 const RAINBOW_INTERVAL := 0.16667
 
 ## If 'true', the board will not hide itself. Used for demos/debugging.
-export (bool) var suppress_hide := false
+@export var suppress_hide := false
 
 ## Backdrop which darkens parts of the scene behind the progress board.
-onready var _backdrop := $Backdrop
+@onready var _backdrop := $Backdrop
 
 ## Analog clock and digital text which appear above the progress board.
-onready var _clock := $Clock
+@onready var _clock := $Clock
 
 ## Timer which hides the progress board.
-onready var _hide_timer := $HideTimer
+@onready var _hide_timer := $HideTimer
 
 ## Timer which triggers the animation of the player advancing and clock moving forward.
-onready var _animate_start_timer := $AnimateStartTimer
+@onready var _animate_start_timer := $AnimateStartTimer
 
 ## Spots and lines drawn to show a trail across the progress board.
-onready var _trail := $ChalkboardRegion/Swoosher/Trail
+@onready var _trail := $ChalkboardRegion/Swoosher/Trail
 
 ## Title at the top of the progress board.
-onready var _title := $ChalkboardRegion/Swoosher/Title
+@onready var _title := $ChalkboardRegion/Swoosher/Title
 
 ## Player's chalk graphics on the progress board.
-onready var _player := $ChalkboardRegion/Swoosher/Player
+@onready var _player := $ChalkboardRegion/Swoosher/Player
 
 ## Goal text which shows up over the progress board destination
-onready var _goal := $ChalkboardRegion/Swoosher/GoalLabel
+@onready var _goal := $ChalkboardRegion/Swoosher/GoalLabel
 
 ## Chalk drawing of the region.
-onready var _map_holder := $ChalkboardRegion/Swoosher/MapHolder
+@onready var _map_holder := $ChalkboardRegion/Swoosher/MapHolder
 
 ## Animation player which makes the progress board 'pop in' and 'pop out' animations.
-onready var _show_animation_player := $ShowAnimationPlayer
+@onready var _show_animation_player := $ShowAnimationPlayer
 
 func _ready() -> void:
 	if SystemData.misc_settings.show_adventure_mode_intro:

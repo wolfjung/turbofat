@@ -56,7 +56,9 @@ func _upgrade_levels() -> void:
 ## 	'path': Path to a json resource containing level data to upgrade.
 func _upgrade_settings(path: String) -> void:
 	var old_text := FileUtils.get_file_as_text(path)
-	var old_json: Dictionary = parse_json(old_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(old_text)
+	var old_json: Dictionary = test_json_conv.get_data()
 	
 	if _upgrader.needs_upgrade(old_json):
 		var level_id := LevelSettings.level_key_from_path(path)
@@ -122,7 +124,7 @@ func _find_level_paths(dirs: Array) -> Array:
 	var dir_queue := dirs.duplicate()
 	
 	# recursively look for json files under the specified paths
-	var dir: Directory
+	var dir: DirAccess
 	var file: String
 	while true:
 		if file:
@@ -134,12 +136,12 @@ func _find_level_paths(dirs: Array) -> Array:
 		else:
 			if dir:
 				dir.list_dir_end()
-			if dir_queue.empty():
+			if dir_queue.is_empty():
 				break
 			# there are more directories. open the next directory
-			dir = Directory.new()
+			dir = DirAccess.new()
 			dir.open(dir_queue.pop_front())
-			dir.list_dir_begin(true, true)
+			dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		file = dir.get_next()
 	
 	return result
@@ -224,16 +226,18 @@ func _report_level_icons() -> void:
 	
 	for level_id in level_ids:
 		var text := FileUtils.get_file_as_text(LevelSettings.path_from_level_key(level_id))
-		var json: Dictionary = parse_json(text)
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(text)
+		var json: Dictionary = test_json_conv.get_data()
 		for icon_string in json.get("icons", []):
 			if not LevelSettings.LevelIcon.has(icon_string.to_upper()):
 				bad_icons.append("%s/%s" % [level_id, icon_string])
 	
 	if missing_icons_level_ids:
-		_report_problem("Levels missing icons: %s" % [PoolStringArray(missing_icons_level_ids).join(", ")])
+		_report_problem("Levels missing icons: %s" % [", ".join(PackedStringArray(missing_icons_level_ids))])
 	
 	if bad_icons:
-		_report_problem("Levels with bad icons: %s" % [PoolStringArray(bad_icons).join(", ")])
+		_report_problem("Levels with bad icons: %s" % [", ".join(PackedStringArray(bad_icons))])
 
 
 ## Report levels where line pieces will cause a top out.
@@ -262,7 +266,7 @@ func _report_vertical_line_piece_levels() -> void:
 	
 	if bad_line_piece_level_ids:
 		_report_problem("Levels which need 'vertical_line_pieces' setting: %s"
-				% [PoolStringArray(bad_line_piece_level_ids).join(", ")])
+				% [", ".join(PackedStringArray(bad_line_piece_level_ids))])
 
 
 ## Alphabetizes the levels in 'career-regions.json'
@@ -270,12 +274,14 @@ func _alphabetize_career_levels() -> void:
 	var sorted_region_ids := {}
 	
 	var old_text := FileUtils.get_file_as_text(CareerLevelLibrary.DEFAULT_REGIONS_PATH)
-	var old_json: Dictionary = parse_json(old_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(old_text)
+	var old_json: Dictionary = test_json_conv.get_data()
 	var new_json := old_json.duplicate(true)
 	for region in new_json.get("regions", []):
 		var old_levels: Array = region.get("levels", [])
 		var new_levels := old_levels.duplicate()
-		new_levels.sort_custom(self, "_compare_by_id")
+		new_levels.sort_custom(Callable(self, "_compare_by_id"))
 		if not new_levels == old_levels:
 			sorted_region_ids[region.get("id", "(unknown)")] = true
 			region["levels"] = new_levels
@@ -283,7 +289,7 @@ func _alphabetize_career_levels() -> void:
 	if sorted_region_ids:
 		var new_text := Utils.print_json(new_json)
 		FileUtils.write_file(CareerLevelLibrary.DEFAULT_REGIONS_PATH, new_text)
-		_report_problem("Sorted career level ids: %s" % [PoolStringArray(sorted_region_ids.keys()).join(", ")])
+		_report_problem("Sorted career level ids: %s" % [PackedStringArray(sorted_region_ids.", ".join(keys()))])
 
 
 ## Updates the grade criteria for the specified intro levels, to make the grade easier to attain.

@@ -1,3 +1,4 @@
+@tool
 ## Prevents Controls used by AnimationPlayers from randomly changing their position and size.
 ##
 ## Workaround for Godot #90079 (https://github.com/godotengine/godot/issues/90079). Godot has an exciting feature
@@ -6,16 +7,15 @@
 ## node can be added to an AnimationPlayer to forcibly reset the control to reset its position.
 ##
 ## To use this node, add it as the child of an AnimationPlayer.
-tool
 extends Node
 
 ## Manually reset Control nodes affected by our parent AnimationPlayer.
-export (bool) var _unscrewup: bool setget unscrewup
+@export var _unscrewup: bool: set = unscrewup
 
-onready var animation_player: AnimationPlayer = get_parent()
+@onready var animation_player: AnimationPlayer = get_parent()
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		unscrewup()
 
 
@@ -25,5 +25,5 @@ func _enter_tree() -> void:
 
 
 func unscrewup(_value: bool = false) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		animation_player.play("RESET")

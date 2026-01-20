@@ -1,31 +1,31 @@
-tool
+@tool
 extends Node
 ## Adds puddle tiles to an overworld terrain map.
 ##
 ## Puddle tiles are added to a random selection of goopless cake tiles.
 
-export (NodePath) var ground_map_path: NodePath
+@export var ground_map_path: NodePath
 
 ## Percent of cake tiles which should have puddles
-export (float, 0.0, 1.0) var puddle_density := 0.03
+@export var puddle_density := 0.03 # (float, 0.0, 1.0)
 
 ## Ground tilemap's tile ID for goopless cells
-export (int) var ground_no_goop_tile_index: int
+@export var ground_no_goop_tile_index: int
 
 ## Terrain tilemap's tile ID for puddle tiles
-export (int) var puddle_tile_index: int
+@export var puddle_tile_index: int
 
 ## Editor toggle which adds puddles to a random selection of goopy/goopless cake tiles
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, removing all puddles
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 ## Terrain tilemap with puddle tiles to place
-onready var _tile_map := get_parent()
+@onready var _tile_map := get_parent()
 
 ## Ground tilemap containing data on which cells should have puddles on top of them
-onready var _ground_map: TileMap = get_node(ground_map_path)
+@onready var _ground_map: TileMap = get_node(ground_map_path)
 
 ## Preemptively initializes onready variables to avoid null references
 func _enter_tree() -> void:
@@ -40,7 +40,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -55,7 +55,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

@@ -7,10 +7,10 @@ extends Node
 ## 	[=/-]: Increase/decrease the number of crowdie.
 ## 	Space: Toggle the crowd bouncing and cheering.
 
-export (PackedScene) var LavaCrowdieScene: PackedScene
+@export var LavaCrowdieScene: PackedScene
 
-onready var _crowd_container := $CrowdContainer
-onready var _gaze_target := $GazeTarget
+@onready var _crowd_container := $CrowdContainer
+@onready var _gaze_target := $GazeTarget
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):
@@ -28,12 +28,12 @@ func _input(event: InputEvent) -> void:
 ## Adds more crowdies.
 func _add_crowds(count: int) -> void:
 	for _i in range(count):
-		var crowd: LavaCrowdie = LavaCrowdieScene.instance()
+		var crowd: LavaCrowdie = LavaCrowdieScene.instantiate()
 		crowd.shuffle = true
 		var target_rect := Rect2(0, 0, 1024, 600).grow(-50)
 		target_rect.position += Vector2(0, 50)
-		crowd.position.x = rand_range(target_rect.position.x, target_rect.end.x)
-		crowd.position.y = rand_range(target_rect.position.y, target_rect.end.y)
+		crowd.position.x = randf_range(target_rect.position.x, target_rect.end.x)
+		crowd.position.y = randf_range(target_rect.position.y, target_rect.end.y)
 		_crowd_container.add_child(crowd)
 		
 		crowd.gaze_target_path = crowd.get_path_to(_gaze_target)

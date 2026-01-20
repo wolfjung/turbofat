@@ -8,8 +8,8 @@ extends Node
 ## Number of seconds the demo has been running, shown on the time label
 var _total_time := 0.0
 
-onready var _director: CrowdSurfDirector = $ViewportContainer/Viewport/Cutscene/Environment/CrowdSurfDirector
-onready var _time_label := $TimeLabel
+@onready var _director: CrowdSurfDirector = $SubViewportContainer/SubViewport/Cutscene/Environment/CrowdSurfDirector
+@onready var _time_label := $TimeLabel
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):

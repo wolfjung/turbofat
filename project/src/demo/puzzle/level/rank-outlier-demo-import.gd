@@ -8,22 +8,22 @@ signal text_changed(score_text)
 ## number follows a 'ymdh' hex date format which is documented in issue #234.
 const SCORE_DATA_VERSION := "59d3"
 
-export (NodePath) var dialogs_path: NodePath
+@export var dialogs_path: NodePath
 
 var _import_json_dialog: FileDialog
 var _export_score_dialog: FileDialog
 var _error_dialog: AcceptDialog
 
-onready var _dialogs: Control = get_node(dialogs_path)
-onready var _text_edit := $VBoxContainer/TextEdit
+@onready var _dialogs: Control = get_node(dialogs_path)
+@onready var _text_edit := $VBoxContainer/TextEdit
 
 func _ready() -> void:
 	_import_json_dialog = _dialogs.get_node("ImportJson")
 	_export_score_dialog = _dialogs.get_node("ExportScore")
 	_error_dialog = _dialogs.get_node("Error")
 	
-	_import_json_dialog.connect("file_selected", self, "_on_ImportJsonDialog_file_selected")
-	_export_score_dialog.connect("file_selected", self, "_on_ExportScoreDialog_file_selected")
+	_import_json_dialog.connect("file_selected", Callable(self, "_on_ImportJsonDialog_file_selected"))
+	_export_score_dialog.connect("file_selected", Callable(self, "_on_ExportScoreDialog_file_selected"))
 	
 	_refresh_text_edit()
 
@@ -38,7 +38,7 @@ func _refresh_text_edit() -> void:
 	var header := {}
 	header["version"] = SCORE_DATA_VERSION
 	header["id"] = _score_id()
-	new_text += to_json(header) + "\n\n"
+	new_text += JSON.new().stringify(header) + "\n\n"
 	
 	var level_ids := PlayerData.level_history.finished_levels.keys()
 	level_ids.sort()

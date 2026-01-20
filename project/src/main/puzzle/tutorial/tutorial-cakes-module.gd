@@ -7,12 +7,12 @@ const CAKES_DIAGRAM_0 := preload("res://assets/main/puzzle/tutorial/cakes-diagra
 const CAKES_DIAGRAM_1 := preload("res://assets/main/puzzle/tutorial/cakes-diagram-1.png")
 
 ## Hint diagrams which show the player where to drop their pieces.
-export (PackedScene) var HintTileMapJjoQuvScene: PackedScene
-export (PackedScene) var HintTileMapJloScene: PackedScene
-export (PackedScene) var HintTileMapJttLloScene: PackedScene
-export (PackedScene) var HintTileMapLttScene: PackedScene
-export (PackedScene) var HintTileMapPqvScene: PackedScene
-export (PackedScene) var HintTileMapPuvScene: PackedScene
+@export var HintTileMapJjoQuvScene: PackedScene
+@export var HintTileMapJloScene: PackedScene
+@export var HintTileMapJttLloScene: PackedScene
+@export var HintTileMapLttScene: PackedScene
+@export var HintTileMapPqvScene: PackedScene
+@export var HintTileMapPuvScene: PackedScene
 
 ## player statistics for the current tutorial section
 var _cakes_built := 0
@@ -25,17 +25,17 @@ var _did_build_cake := false
 var _level_finished := false
 
 func _ready() -> void:
-	PuzzleState.connect("after_game_prepared", self, "_on_PuzzleState_after_game_prepared")
-	PuzzleState.connect("after_piece_written", self, "_on_PuzzleState_after_piece_written")
-	PuzzleState.connect("topped_out", self, "_on_PuzzleState_topped_out")
-	playfield.connect("box_built", self, "_on_Playfield_box_built")
-	piece_manager.connect("piece_spawned", self, "_on_PieceManager_piece_spawned")
+	PuzzleState.connect("after_game_prepared", Callable(self, "_on_PuzzleState_after_game_prepared"))
+	PuzzleState.connect("after_piece_written", Callable(self, "_on_PuzzleState_after_piece_written"))
+	PuzzleState.connect("topped_out", Callable(self, "_on_PuzzleState_topped_out"))
+	playfield.connect("box_built", Callable(self, "_on_Playfield_box_built"))
+	piece_manager.connect("piece_spawned", Callable(self, "_on_PieceManager_piece_spawned"))
 	
 	hud.set_message(tr("Today we'll learn about cake boxes!\n\nDo you remember how boxes work?"))
 
 
 func prepare_tutorial_level() -> void:
-	.prepare_tutorial_level()
+	super.prepare_tutorial_level()
 	
 	_cakes_built = 0
 	_level_finished = false
@@ -285,7 +285,7 @@ func _on_PuzzleState_after_game_prepared() -> void:
 
 
 func _on_PuzzleState_game_ended() -> void:
-	._on_PuzzleState_game_ended()
+	super._on_PuzzleState_game_ended()
 	
 	if not PuzzleState.level_performance.lost and CurrentLevel.settings.id == "tutorial/cakes_9":
 		# show end-of-tutorial message

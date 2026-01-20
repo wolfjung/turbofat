@@ -1,14 +1,14 @@
 extends NametagPanel
 ## Shows the player's name in the creature editor.
 
-export (NodePath) var overworld_environment_path: NodePath
+@export var overworld_environment_path: NodePath
 
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
 
 func _ready() -> void:
 	for creature in [_player(), _player_swap()]:
-		creature.connect("creature_name_changed", self, "_on_Creature_creature_name_changed", [creature])
-		creature.connect("dna_loaded", self, "_on_Creature_dna_loaded", [creature])
+		creature.connect("creature_name_changed", Callable(self, "_on_Creature_creature_name_changed").bind(creature))
+		creature.connect("dna_loaded", Callable(self, "_on_Creature_dna_loaded").bind(creature))
 	_refresh()
 
 

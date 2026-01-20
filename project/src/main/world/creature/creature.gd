@@ -1,6 +1,6 @@
 #tool #uncomment to view creature in editor
 class_name Creature
-extends KinematicBody2D
+extends CharacterBody2D
 ## Script for representing a creature in the 2D overworld.
 
 signal fatness_changed
@@ -37,36 +37,36 @@ const MAX_RUN_ACCELERATION := 2250
 const CREATURE_FADE_IN_DURATION := 0.6
 const CREATURE_FADE_OUT_DURATION := 0.3
 
-export (String) var creature_id: String setget set_creature_id
-export (Dictionary) var dna: Dictionary setget set_dna
+@export var creature_id: String: set = set_creature_id
+@export var dna: Dictionary: set = set_dna
 
 ## 'true' if the creature should not make any sounds when walking/loading. Used for the creature editor.
-export (bool) var suppress_sfx: bool = false setget set_suppress_sfx
+@export var suppress_sfx: bool = false: set = set_suppress_sfx
 
 ## if 'true' the creature will only use the fatness in the creature definition,
 ## ignoring any accrued fatness from puzzles
-export (bool) var suppress_fatness: bool = false
+@export var suppress_fatness: bool = false
 
 ## how high the creature's torso is from the floor, such as when they're sitting on a stool or standing up
-export (float) var elevation: float setget set_elevation
+@export var elevation: float: set = set_elevation
 
 ## virtual property; value is not kept up-to-date and should only be accessed through getters/setters
-export (Creatures.Orientation) var orientation: int setget set_orientation, get_orientation
+@export var orientation: int: get = get_orientation, set = set_orientation # (Creatures.Orientation)
 
 ## virtual property; value is only exposed through getters/setters
-var creature_def: CreatureDef setget set_creature_def, get_creature_def
+var creature_def: CreatureDef: get = get_creature_def, set = set_creature_def
 
 ## dictionaries containing metadata for which chat sequences should be launched in which order
-var chat_selectors: Array setget set_chat_selectors
+var chat_selectors: Array: set = set_chat_selectors
 
-var creature_name: String setget set_creature_name
+var creature_name: String: set = set_creature_name
 var creature_short_name: String
-var chat_theme := ChatTheme.new() setget set_chat_theme
-var chat_extents: Vector2 setget ,get_chat_extents
+var chat_theme := ChatTheme.new(): set = set_chat_theme
+var chat_extents: Vector2: get = get_chat_extents
 
 ## direction the creature wants to move, in isometric and non-isometric coordinates
 var iso_walk_direction := Vector2.ZERO
-var non_iso_walk_direction := Vector2.ZERO setget set_non_iso_walk_direction
+var non_iso_walk_direction := Vector2.ZERO: set = set_non_iso_walk_direction
 
 ## number of times the creature was fed during this puzzle
 var feed_count := 0
@@ -89,7 +89,7 @@ var base_fatness := 1.0
 var creature_visuals: CreatureVisuals
 
 ## Virtual property; value is only exposed through getters/setters
-var fatness: float setget set_fatness, get_fatness
+var fatness: float: get = get_fatness, set = set_fatness
 
 ## If 'true', the 'refresh_creature_id' method will have no effect, and changing the creature's id will not update
 ## their appearance.
@@ -100,7 +100,7 @@ var suppress_refresh_creature_id: bool = false
 var suppress_refresh_dna: bool = false
 
 ## Virtual property; value is only exposed through getters/setters
-var visual_fatness: float setget set_visual_fatness, get_visual_fatness
+var visual_fatness: float: get = get_visual_fatness, set = set_visual_fatness
 
 ## 'true' if the creature is being slowed by friction while stopping or turning
 var _friction := false
@@ -112,41 +112,41 @@ var _non_iso_velocity := Vector2.ZERO
 ## handles animations and audio/visual effects for a creature
 var _creature_outline: CreatureOutline
 
-var _fade_tween: SceneTreeTween
+var _fade_tween: Tween
 
-onready var _creature_sfx: CreatureSfx = $CreatureSfx
-onready var _collision_shape: CollisionShape2D = $CollisionShape2D
-onready var _mouth_hook: Node2D = $MouthHook
+@onready var _creature_sfx: CreatureSfx = $CreatureSfx
+@onready var _collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var _mouth_hook: Node2D = $MouthHook
 
 func _ready() -> void:
 	var creature_outline_scene_path := "res://src/main/world/creature/ViewportCreatureOutline.tscn"
-	if not Engine.editor_hint \
+	if not Engine.is_editor_hint() \
 			and SystemData.graphics_settings.creature_detail == GraphicsSettings.CreatureDetail.LOW:
 		creature_outline_scene_path = "res://src/main/world/creature/FastCreatureOutline.tscn"
 	var creature_outline_scene: PackedScene
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# ResourceCache is not available in tool scripts
 		creature_outline_scene = load(creature_outline_scene_path)
 	else:
 		creature_outline_scene = ResourceCache.get_resource(creature_outline_scene_path)
-	_creature_outline = creature_outline_scene.instance()
+	_creature_outline = creature_outline_scene.instantiate()
 	add_child(_creature_outline)
 	
 	creature_visuals = _creature_outline.creature_visuals
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		_mouth_hook.creature_visuals = creature_visuals
 		_collision_shape.creature_visuals = creature_visuals
 	creature_visuals.creature_sfx = _creature_sfx
 	
-	creature_visuals.connect("dna_loaded", self, "_on_CreatureVisuals_dna_loaded")
-	creature_visuals.connect("fatness_changed", self, "_on_CreatureVisuals_fatness_changed")
-	creature_visuals.connect("food_eaten", self, "_on_CreatureVisuals_food_eaten")
-	creature_visuals.connect("landed", self, "_on_CreatureVisuals_landed")
-	creature_visuals.connect("movement_mode_changed", self, "_on_CreatureVisuals_movement_mode_changed")
-	creature_visuals.connect("talking_changed", self, "_on_CreatureVisuals_talking_changed")
-	creature_visuals.connect("visual_fatness_changed", self, "_on_CreatureVisuals_visual_fatness_changed")
+	creature_visuals.connect("dna_loaded", Callable(self, "_on_CreatureVisuals_dna_loaded"))
+	creature_visuals.connect("fatness_changed", Callable(self, "_on_CreatureVisuals_fatness_changed"))
+	creature_visuals.connect("food_eaten", Callable(self, "_on_CreatureVisuals_food_eaten"))
+	creature_visuals.connect("landed", Callable(self, "_on_CreatureVisuals_landed"))
+	creature_visuals.connect("movement_mode_changed", Callable(self, "_on_CreatureVisuals_movement_mode_changed"))
+	creature_visuals.connect("talking_changed", Callable(self, "_on_CreatureVisuals_talking_changed"))
+	creature_visuals.connect("visual_fatness_changed", Callable(self, "_on_CreatureVisuals_visual_fatness_changed"))
 	
-	SceneTransition.connect("fade_in_started", self, "_on_SceneTransition_fade_in_started")
+	SceneTransition.connect("fade_in_started", Callable(self, "_on_SceneTransition_fade_in_started"))
 	
 	if creature_id:
 		_refresh_creature_id()
@@ -162,19 +162,21 @@ func _ready() -> void:
 ## tries to create scene tree tweens when the creature is not in the scene tree. These errors are caused by
 ## Breadcrumb's Godot #85692 workaround which delays the freeing of nodes in the previous scene.
 func _exit_tree() -> void:
-	if SceneTransition.is_connected("fade_in_started", self, "_on_SceneTransition_fade_in_started"):
-		SceneTransition.disconnect("fade_in_started", self, "_on_SceneTransition_fade_in_started")
+	if SceneTransition.is_connected("fade_in_started", Callable(self, "_on_SceneTransition_fade_in_started")):
+		SceneTransition.disconnect("fade_in_started", Callable(self, "_on_SceneTransition_fade_in_started"))
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	
 	_apply_friction()
 	_apply_walk(delta)
 	_update_animation()
 	var old_non_iso_velocity := _non_iso_velocity
-	set_iso_velocity(move_and_slide(_iso_velocity))
+	set_velocity(_iso_velocity)
+	move_and_slide()
+	set_iso_velocity(velocity)
 	_maybe_play_bonk_sound(old_non_iso_velocity)
 
 
@@ -317,7 +319,7 @@ func get_orientation() -> int:
 ## 	'stored_fatness': The fatness to save in the creature library. This can be higher than the creature's current
 ## 		fatness if they're still eating.
 func save_fatness(stored_fatness: float) -> void:
-	if creature_id.empty():
+	if creature_id.is_empty():
 		# randomly-generated creatures have no creature id; their fatness isn't stored
 		return
 	
@@ -419,7 +421,7 @@ func get_class() -> String:
 
 ## Workaround for Godot #21789 (https://github.com/godotengine/godot/issues/21789) to make is_class match class_name
 func is_class(name: String) -> bool:
-	return name == "Creature" or .is_class(name)
+	return name == "Creature" or super.is_class(name)
 
 
 func get_movement_mode() -> int:
@@ -507,7 +509,7 @@ func fatness_to_score(in_fatness: float) -> float:
 ## Returns:
 ## 	A coordinate relative to the creature's body.
 func body_pos_from_head_pos(v: Vector2) -> Vector2:
-	return _mouth_hook.get_global_transform_with_canvas().xform(v * creature_visuals.scale.y)
+	return _mouth_hook.get_global_transform_with_canvas() * (v * creature_visuals.scale.y)
 
 
 func get_run_speed() -> float:
@@ -518,7 +520,7 @@ func get_run_speed() -> float:
 func _launch_fade_tween(new_alpha: float, duration: float) -> void:
 	_fade_tween = Utils.recreate_tween(self, _fade_tween)
 	_fade_tween.tween_property(self, "modulate", Utils.to_transparent(modulate, new_alpha), duration)
-	_fade_tween.tween_callback(self, "_on_Tween_completed")
+	_fade_tween.tween_callback(Callable(self, "_on_Tween_completed"))
 
 
 func _refresh_creature_id() -> void:
@@ -535,7 +537,7 @@ func _refresh_creature_id() -> void:
 func _refresh_elevation() -> void:
 	if not is_inside_tree():
 		return
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# MouthHook.set_elevation is not available in tool scripts
 		return
 	_creature_outline.set_elevation(elevation)

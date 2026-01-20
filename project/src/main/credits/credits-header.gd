@@ -8,16 +8,16 @@ extends Control
 ## z indexes to assign each bubbly letter sprite for an aesthetically pleasing overlap
 const LETTER_SPRITE_Z_INDEXES := [0, 0, 0, 0, 0, 2, 1, 0]
 
-export (PackedScene) var CreditsLetterScene: PackedScene
+@export var CreditsLetterScene: PackedScene
 
-onready var _label := $Label
+@onready var _label := $Label
 
 ## Defines coordinates for the center of each letter. This defines the target of projectiles which want to hit the
 ## letter, and is also the center point of the bubbly letter sprites which replace the label.
-onready var _letter_center_path := $LetterCenterPath
+@onready var _letter_center_path := $LetterCenterPath
 
 ## Container for bubbly letter sprites which replace the label
-onready var _letter_sprites := $LetterSprites
+@onready var _letter_sprites := $LetterSprites
 
 func _ready() -> void:
 	# initialize the text; this text changes as letters are replaced with bubbly block letters
@@ -54,7 +54,7 @@ func _remove_next_label_letter() -> void:
 ## Adds a bubbly block letter.
 func _add_letter_sprite() -> void:
 	var sprite_index := _letter_sprites.get_child_count()
-	var credits_letter: CreditsLetter = CreditsLetterScene.instance()
+	var credits_letter: CreditsLetter = CreditsLetterScene.instantiate()
 	credits_letter.position = get_visible_letter_position(sprite_index)
 	credits_letter.scale = Vector2(0.25, 0.25)
 	credits_letter.z_index = LETTER_SPRITE_Z_INDEXES[sprite_index]

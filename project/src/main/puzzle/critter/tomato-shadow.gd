@@ -1,5 +1,5 @@
 class_name TomatoShadow
-extends Sprite
+extends Sprite2D
 ## Shadow which appears behind tomatoes, obscuring a playfield row with a dark red glow.
 
 ## States the shadow goes through when showing/hiding
@@ -22,7 +22,7 @@ const FADE_OUT_DURATION := 0.25
 const LOOP_DURATION := 5.0
 
 var _state: int = State.NONE
-var _tween: SceneTreeTween
+var _tween: Tween
 
 func _ready() -> void:
 	visible = false
@@ -41,7 +41,7 @@ func start() -> void:
 	
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.tween_property(self, "modulate", Utils.to_transparent(Color("630000"), 0.6), FADE_IN_DURATION)
-	_tween.tween_callback(self, "_schedule_looped_tween")
+	_tween.tween_callback(Callable(self, "_schedule_looped_tween"))
 
 
 ## Starts the 'fade in/fade out' loop animation.
@@ -49,9 +49,9 @@ func _schedule_looped_tween() -> void:
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.set_loops()
 	_tween.tween_property(self, "modulate", Utils.to_transparent(Color("630000"), 0.3), LOOP_DURATION / 2) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			super.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_tween.tween_property(self, "modulate", Utils.to_transparent(Color("630000"), 0.6), LOOP_DURATION / 2) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			super.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Makes the shadow invisible and stops its animation.
@@ -63,4 +63,4 @@ func stop() -> void:
 	
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.tween_property(self, "modulate", Utils.to_transparent(Color("630000"), 0.0), FADE_OUT_DURATION)
-	_tween.tween_callback(self, "set", ["visible", false])
+	_tween.tween_callback(Callable(self, "set").bind("visible", false))

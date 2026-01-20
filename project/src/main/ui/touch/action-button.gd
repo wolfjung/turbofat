@@ -57,16 +57,16 @@ const PRESSED_TEXTURES := {
 }
 
 ## action activated by this button. also affects its appearance
-export (String) var action: String setget set_action
+@export var action: String: set = set_action
 
 ## if false, pressing the button won't emit any actions.
-export (bool) var emit_actions: bool = true
+@export var emit_actions: bool = true
 
-var pressed := false setget set_pressed
+var pressed := false: set = set_pressed
 
 ## current textures this button toggles between when pressed/unpressed
-var _normal_texture: Texture
-var _pressed_texture: Texture
+var _normal_texture: Texture2D
+var _pressed_texture: Texture2D
 
 func _ready() -> void:
 	_refresh()
@@ -90,7 +90,7 @@ func set_pressed(new_pressed: bool) -> void:
 		# fire the appropriate events
 		var ev := InputEventAction.new()
 		ev.action = action
-		ev.pressed = pressed
+		ev.button_pressed = pressed
 		Input.parse_input_event(ev)
 	emit_signal("pressed")
 

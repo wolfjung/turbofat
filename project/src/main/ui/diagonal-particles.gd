@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 ## Emits a burst of particles in four diagonal directions.
 ##
@@ -9,7 +9,7 @@ extends Control
 ## Total amount of particles to split amongst all four directions.
 ##
 ## A value of 8 will result in 2 particles being fired in all four directions.
-export (int, 4, 200) var amount := 8 setget set_amount
+@export var amount := 8: set = set_amount
 
 func _ready() -> void:
 	_refresh_amount()
@@ -18,7 +18,7 @@ func _ready() -> void:
 ## Emits a burst of particles in four diagonal directions.
 func emit() -> void:
 	for particles_2d_node in get_children():
-		var particles_2d: Particles2D = particles_2d_node
+		var particles_2d: GPUParticles2D = particles_2d_node
 		particles_2d.restart()
 		particles_2d.emitting = true
 
@@ -43,7 +43,7 @@ func _refresh_amount() -> void:
 	children.shuffle()
 	
 	while children:
-		var particles_2d: Particles2D = children.front()
+		var particles_2d: GPUParticles2D = children.front()
 		
 		## give the next child an equal share of the remaining particles, rounding up
 		particles_2d.amount = int(ceil(float(amount_left) / children.size()))

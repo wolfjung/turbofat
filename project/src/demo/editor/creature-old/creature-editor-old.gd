@@ -26,10 +26,10 @@ var _next_line_color_index := 0
 var _recent_tweaked_allele_values := {}
 
 ## creature the player is editing
-onready var center_creature: Creature = $World/Creatures/CenterCreature
+@onready var center_creature: Creature = $World/Creatures/CenterCreature
 
 ## alternative creatures the player can choose
-onready var outer_creatures := [
+@onready var outer_creatures := [
 	$World/Creatures/NwCreature,
 	$World/Creatures/NeCreature,
 	$World/Creatures/WCreature,
@@ -39,8 +39,8 @@ onready var outer_creatures := [
 ]
 
 ## UI which monitors things like mutagen level and locked/unlocked alleles
-onready var _mutate_ui := $Ui/TabContainer/Mutate
-onready var _reroll_ui := $Ui/Reroll
+@onready var _mutate_ui := $Ui/TabContainer/Mutate
+@onready var _reroll_ui := $Ui/Reroll
 
 func _ready() -> void:
 	for allele in DnaUtils.BODY_PART_ALLELES:
@@ -179,7 +179,7 @@ func _palette(color_mode: int = THEME_COLORS) -> Dictionary:
 		var horn := Color(randf(), randf(), randf())
 		
 		# blend the belly color with the body color
-		belly = lerp(belly, body, rand_range(0.0, 1.0))
+		belly = lerp(belly, body, randf_range(0.0, 1.0))
 		if randf() < 0.5:
 			# light belly
 			belly.s -= _rng.randfn(0.3, 0.15)

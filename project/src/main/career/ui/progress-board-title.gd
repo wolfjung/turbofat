@@ -29,10 +29,10 @@ const SKULL := IconType.SKULL
 const VOLCANO := IconType.VOLCANO
 
 ## Text of the label showing the region name.
-var text: String setget set_text
+var text: String: set = set_text
 
 ## Enum from IconType for the type of icon to show alongside the title.
-var icon_type: int setget set_icon_type
+var icon_type: int: set = set_icon_type
 
 var _icon_resources_by_type := {
 	NONE: null,
@@ -48,11 +48,11 @@ var _icon_resources_by_type := {
 }
 
 ## Label which shows the region name.
-onready var _label := $HBoxContainer/Label
+@onready var _label := $HBoxContainer/Label
 
 ## Icons which change with the region.
-onready var _left_icon := $HBoxContainer/Control1/TextureRect
-onready var _right_icon := $HBoxContainer/Control2/TextureRect
+@onready var _left_icon := $HBoxContainer/Control1/TextureRect
+@onready var _right_icon := $HBoxContainer/Control2/TextureRect
 
 func _ready() -> void:
 	_refresh()

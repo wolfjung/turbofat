@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/medal-bang.wav-cc2a7740ad318c1a6e436087ea370bf4.sample"
+type="AudioStreamWAV"
+uid="uid://dssdml1l75sem"
+path="res://.godot/imported/medal-bang.wav-cc2a7740ad318c1a6e436087ea370bf4.sample"
 
 [deps]
 
 source_file="res://assets/main/puzzle/result/medal-bang.wav"
-dest_files=[ "res://.import/medal-bang.wav-cc2a7740ad318c1a6e436087ea370bf4.sample" ]
+dest_files=["res://.godot/imported/medal-bang.wav-cc2a7740ad318c1a6e436087ea370bf4.sample"]
 
 [params]
 

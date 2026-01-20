@@ -4,7 +4,7 @@ extends OverworldEnvironment
 signal midair_changed(value)
 
 ## 'true' if the player and Fat Sensei are soaring through the air.
-var midair: bool setget set_midair
+var midair: bool: set = set_midair
 
 func set_midair(new_midair: bool) -> void:
 	if midair == new_midair:

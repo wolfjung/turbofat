@@ -5,7 +5,7 @@ extends Node
 const MIN_FATNESS := 1.0
 const MAX_FATNESS := 2.5
 
-export (NodePath) var overworld_environment_path: NodePath
+@export var overworld_environment_path: NodePath
 
 ## The currently shown 'fatness_down' button, or 'null' if none is currently shown.
 var fatness_down_button: OperationButton
@@ -13,11 +13,11 @@ var fatness_down_button: OperationButton
 ## The currently shown 'fatness_up' button, or 'null' if none is currently shown.
 var fatness_up_button: OperationButton
 
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
-onready var _fatness_change_sound := $FatnessChangeSound
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _fatness_change_sound := $FatnessChangeSound
 
 func _ready() -> void:
-	_player().connect("fatness_changed", self, "_on_Creature_fatness_changed")
+	_player().connect("fatness_changed", Callable(self, "_on_Creature_fatness_changed"))
 
 
 func _player() -> Creature:

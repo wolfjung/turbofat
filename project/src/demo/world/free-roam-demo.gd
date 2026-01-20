@@ -2,7 +2,7 @@ extends Node
 ## Lets the player freely run around, talk to creatures and interact with objects.
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	
 	if not Breadcrumb.trail:

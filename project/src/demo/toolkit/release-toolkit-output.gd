@@ -15,4 +15,4 @@ func add_line(line: String) -> void:
 		text = text.substr(text.find("\n") + 1)
 	
 	# scroll to the bottom of the TextEdit
-	cursor_set_line(get_line_count())
+	set_caret_line(get_line_count())

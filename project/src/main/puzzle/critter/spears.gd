@@ -9,12 +9,12 @@ extends Node2D
 ## but I'm leaving this toggleable in case I change my mind later.
 const COVER_NEXT_QUEUE := true
 
-export (NodePath) var critter_manager_path: NodePath
-export (PackedScene) var SpearScene: PackedScene
-export (PackedScene) var SpearWideScene: PackedScene
+@export var critter_manager_path: NodePath
+@export var SpearScene: PackedScene
+@export var SpearWideScene: PackedScene
 
-var piece_manager_path: NodePath setget set_piece_manager_path
-var playfield_path: NodePath setget set_playfield_path
+var piece_manager_path: NodePath: set = set_piece_manager_path
+var playfield_path: NodePath: set = set_playfield_path
 
 ## Queue of calls to defer until after line clears are finished
 var _call_queue: CallQueue = CallQueue.new()
@@ -37,8 +37,8 @@ var _veg_cells_by_spear := {}
 var _dimensions_by_spear := {}
 
 ## node which contains all of the child spear nodes
-onready var _spear_holder: Node2D = $SpearHolder
-onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
+@onready var _spear_holder: Node2D = $SpearHolder
+@onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
 
 func _ready() -> void:
 	_refresh_playfield_path()
@@ -123,9 +123,9 @@ func _add_spear(config: SpearConfig, spear_y: int, spear_wide: bool, spear_lengt
 	
 	# initialize the spear scene
 	if spear_wide:
-		spear = SpearWideScene.instance()
+		spear = SpearWideScene.instantiate()
 	else:
-		spear = SpearScene.instance()
+		spear = SpearScene.instantiate()
 	spear.z_index = 5
 	spear.scale = _playfield.tile_map.scale
 	spear.pop_anim_duration = PieceSpeeds.current_speed.lock_delay / 60.0
@@ -133,7 +133,7 @@ func _add_spear(config: SpearConfig, spear_y: int, spear_wide: bool, spear_lengt
 	
 	# calculate spear position and length
 	var cell := Vector2(0 if spear_side == Spear.LEFT else PuzzleTileMap.COL_COUNT - 1, spear_y)
-	spear.position = _playfield.tile_map.map_to_world(cell + Vector2(0, -3))
+	spear.position = _playfield.tile_map.map_to_local(cell + Vector2(0, -3))
 	spear.position += _playfield.tile_map.cell_size * Vector2(0.0 if spear_side == Spear.LEFT else 1.0, 0.0)
 	spear.position += _playfield.tile_map.cell_size * Vector2(0.0, 1.0 if spear_wide else 0.5)
 	spear.position *= _playfield.tile_map.scale
@@ -529,20 +529,20 @@ func _refresh_playfield_path() -> void:
 		return
 	
 	if _playfield:
-		_playfield.disconnect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.disconnect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.disconnect("line_inserted", self, "_on_Playfield_line_inserted")
-		_playfield.disconnect("line_deleted", self, "_on_Playfield_line_deleted")
-		_playfield.disconnect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.disconnect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.disconnect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.disconnect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
+		_playfield.disconnect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
+		_playfield.disconnect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 	
 	_playfield = get_node(playfield_path) if playfield_path else null
 	
 	if _playfield:
-		_playfield.connect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.connect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.connect("line_inserted", self, "_on_Playfield_line_inserted")
-		_playfield.connect("line_deleted", self, "_on_Playfield_line_deleted")
-		_playfield.connect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.connect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.connect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.connect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
+		_playfield.connect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
+		_playfield.connect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 
 
 ## Shifts a group of spears up or down.
@@ -598,7 +598,7 @@ func _detect_and_resolve_spear_conflicts() -> void:
 			
 			# Calculate which spear is larger; the larger spear wins the conflict.
 			var _spears_by_size := [spear, conflicting_spear]
-			_spears_by_size.sort_custom(self, "_compare_spears_by_size")
+			_spears_by_size.sort_custom(Callable(self, "_compare_spears_by_size"))
 			var large_spear: Spear = _spears_by_size[0]
 			var small_spear: Spear = _spears_by_size[1]
 			

@@ -3,14 +3,14 @@
 [ext_resource path="res://src/main/ui/candy-button/HoverSound.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/ui/candy-button/gradient-none.tres" type="Gradient" id=2]
 [ext_resource path="res://src/main/ui/candy-button/candy-button-collapsible.gd" type="Script" id=3]
-[ext_resource path="res://src/main/utils/icon-outline.shader" type="Shader" id=4]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=5]
-[ext_resource path="res://assets/main/ui/candy-button/c3-focused.png" type="Texture" id=6]
-[ext_resource path="res://assets/main/ui/candy-button/c3-blank.png" type="Texture" id=7]
-[ext_resource path="res://assets/main/ui/candy-button/c3-blank-pressed.png" type="Texture" id=8]
-[ext_resource path="res://assets/main/ui/candy-button/c3-shine.png" type="Texture" id=9]
+[ext_resource path="res://src/main/utils/icon-outline.gdshader" type="Shader" id=4]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=5]
+[ext_resource path="res://assets/main/ui/candy-button/c3-focused.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/main/ui/candy-button/c3-blank.png" type="Texture2D" id=7]
+[ext_resource path="res://assets/main/ui/candy-button/c3-blank-pressed.png" type="Texture2D" id=8]
+[ext_resource path="res://assets/main/ui/candy-button/c3-shine.png" type="Texture2D" id=9]
 [ext_resource path="res://src/main/ui/candy-button/ClickSound.tscn" type="PackedScene" id=10]
-[ext_resource path="res://assets/main/ui/candy-button/c3-shine-pressed.png" type="Texture" id=11]
+[ext_resource path="res://assets/main/ui/candy-button/c3-shine-pressed.png" type="Texture2D" id=11]
 [ext_resource path="res://src/main/ui/candy-button/ShineTextureRect.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main/ui/candy-button/gradient-helper.gd" type="Script" id=13]
 [ext_resource path="res://src/main/ui/candy-button/CandyGlow.tscn" type="PackedScene" id=14]
@@ -37,26 +37,26 @@ shader_param/sample_count = 24
 [sub_resource type="Animation" id=10]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:rect_size")
+tracks/0/path = NodePath("Icon:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 50, 50 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Icon:rect_min_size")
+tracks/1/path = NodePath("Icon:custom_minimum_size")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 50, 50 ) ]
 }
@@ -65,26 +65,26 @@ tracks/1/keys = {
 resource_name = "collapse"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_min_size")
+tracks/0/path = NodePath(".:custom_minimum_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 80, 64 ), Vector2( 30, 64 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_size")
+tracks/1/path = NodePath(".:size")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 80, 64 ), Vector2( 30, 64 ) ]
 }
@@ -95,8 +95,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "assign_uncollapsed_textures"
@@ -106,26 +106,26 @@ tracks/2/keys = {
 } ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Icon:rect_size")
+tracks/3/path = NodePath("Icon:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 50, 50 ), Vector2( 25, 25 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Icon:rect_min_size")
+tracks/4/path = NodePath("Icon:custom_minimum_size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 50, 50 ), Vector2( 25, 25 ) ]
 }
@@ -134,26 +134,26 @@ tracks/4/keys = {
 resource_name = "uncollapse"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_min_size")
+tracks/0/path = NodePath(".:custom_minimum_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 30, 64 ), Vector2( 80, 64 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_size")
+tracks/1/path = NodePath(".:size")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 30, 64 ), Vector2( 80, 64 ) ]
 }
@@ -164,45 +164,45 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "assign_uncollapsed_textures"
 } ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Icon:rect_min_size")
+tracks/3/path = NodePath("Icon:custom_minimum_size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 25, 25 ), Vector2( 50, 50 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Icon:rect_size")
+tracks/4/path = NodePath("Icon:size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array( 0, 0.1 ),
+"transitions": PackedFloat32Array( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 25, 25 ), Vector2( 50, 50 ) ]
 }
 
 [node name="CandyButton" type="TextureButton" groups=["candy_button_collapsibles"]]
 material = SubResource( 8 )
-margin_left = 235.173
-margin_top = 84.7441
-margin_right = 315.173
-margin_bottom = 148.744
-rect_min_size = Vector2( 80, 64 )
+offset_left = 235.173
+offset_top = 84.7441
+offset_right = 315.173
+offset_bottom = 148.744
+custom_minimum_size = Vector2( 80, 64 )
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 8 )
@@ -218,11 +218,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -25.0
-margin_top = -25.0
-margin_right = 25.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 50, 50 )
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+custom_minimum_size = Vector2( 50, 50 )
 size_flags_vertical = 4
 expand = true
 

@@ -134,8 +134,8 @@ const MAX_VOLUME := 0.0
 
 const FADE_SFX_DURATION := 0.08
 
-export (NodePath) var creature_visuals_path: NodePath setget set_creature_visuals_path
-export (NodePath) var creature_animations_path: NodePath setget set_creature_animations_path
+@export var creature_visuals_path: NodePath: set = set_creature_visuals_path
+@export var creature_animations_path: NodePath: set = set_creature_animations_path
 
 ## stores the previous mood so that we can apply mood transitions.
 var _prev_mood: int
@@ -149,15 +149,15 @@ var _creature_animations: CreatureAnimations
 ## specific sprites manipulated frequently when emoting
 var _emote_eye_z0: PackedSprite
 var _emote_eye_z1: PackedSprite
-var _head_bobber: Sprite
+var _head_bobber: Sprite2D
 
 ## list of sprites to reset when unemoting
 var _emote_sprites: Array
 
-var _reset_tween: SceneTreeTween
-var _volume_db_tween: SceneTreeTween
+var _reset_tween: Tween
+var _volume_db_tween: Tween
 
-onready var _emote_sfx := $EmoteSfx
+@onready var _emote_sfx := $EmoteSfx
 
 func _ready() -> void:
 	_refresh_creature_visuals_path()
@@ -165,7 +165,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# don't trigger animations in editor
 		return
 	
@@ -206,7 +206,7 @@ func set_creature_animations_path(new_creature_animations_path: NodePath) -> voi
 ## Stops and emits an 'animation_stopped' signal.
 func stop(reset: bool = true) -> void:
 	var old_anim := current_animation
-	.stop(reset)
+	super.stop(reset)
 	emit_signal("animation_stopped", old_anim)
 
 
@@ -257,12 +257,12 @@ func eat() -> void:
 		var discomfort_amount := inverse_lerp(-0.2, -0.6, _creature_visuals.comfort)
 		
 		# wavy lines become more pronounced
-		var brain_color := Utils.to_transparent(Color.white, lerp(0.5, 1.0, discomfort_amount))
+		var brain_color := Utils.to_transparent(Color.WHITE, lerp(0.5, 1.0, discomfort_amount))
 		_update_animation_keys("eat-sweat0", "Neck0/HeadBobber/EmoteBrain:modulate", [1, 2], brain_color)
 		_update_animation_keys("eat-again-sweat0", "Neck0/HeadBobber/EmoteBrain:modulate", [0, 1], brain_color)
 		
 		# gradually become bluer and bluer
-		var glow_color := Utils.to_transparent(Color("800000bc"), lerp(0.25, 0.50, discomfort_amount))
+		var glow_color := Utils.to_transparent(Color("#0000bc80"), lerp(0.25, 0.50, discomfort_amount))
 		_update_animation_keys("eat-sweat0", "Neck0/HeadBobber/EmoteGlow:modulate", [1, 2], glow_color)
 		_update_animation_keys("eat-again-sweat0", "Neck0/HeadBobber/EmoteGlow:modulate", [0, 1], glow_color)
 	elif _creature_visuals.comfort > -1.00:
@@ -311,14 +311,14 @@ func emote(mood: int) -> void:
 		else:
 			# reset to the default mood, and wait for the tween to complete
 			unemote()
-			_reset_tween.chain().tween_callback(self, "_post_unemote")
+			_reset_tween.chain().tween_callback(Callable(self, "_post_unemote"))
 	else:
 		# initialize eye frames in case the eyes were previously invisible, such as for north-facing creatures
 		_creature_visuals.reset_eye_frames()
 	
 	if _reset_tween and _reset_tween.is_running() and _reset_tween.get_total_elapsed_time() == 0:
 		# We just launched a reset tween. Transition to the new mood after the creature's appearance resets.
-		_reset_tween.chain().tween_callback(self, "_transition_to_new_mood", [mood])
+		_reset_tween.chain().tween_callback(Callable(self, "_transition_to_new_mood").bind(mood))
 	else:
 		# transition to the new mood; the creature's appearance has already been reset
 		_transition_to_new_mood(mood)
@@ -371,7 +371,7 @@ func unemote_immediate() -> void:
 	_head_bobber.rotation_degrees = 0
 	for emote_sprite in _emote_sprites:
 		emote_sprite.rotation_degrees = 0
-		emote_sprite.modulate = Color.transparent
+		emote_sprite.modulate = Color.TRANSPARENT
 	_head_bobber.reset_head_bob()
 	_prev_mood = Creatures.Mood.DEFAULT
 	_post_unemote()
@@ -433,22 +433,22 @@ func _update_animation_keys(anim_name: String, track_path: String, key_indexes: 
 func _post_unemote() -> void:
 	for emote_sprite in _emote_sprites:
 		emote_sprite.frame = 0
-		emote_sprite.modulate = Color.transparent
+		emote_sprite.modulate = Color.TRANSPARENT
 		emote_sprite.rotation_degrees = 0.0
 		emote_sprite.scale = Vector2(2.0, 2.0)
 		emote_sprite.position = Vector2.ZERO
 		if emote_sprite.material:
 			if emote_sprite.material.get("blend_mode"):
-				emote_sprite.material.blend_mode = SpatialMaterial.BLEND_MODE_MIX
-			if emote_sprite.material.has_method("set_shader_param") and Engine.editor_hint:
+				emote_sprite.material.blend_mode = StandardMaterial3D.BLEND_MODE_MIX
+			if emote_sprite.material.has_method("set_shader_parameter") and Engine.is_editor_hint():
 				# In the editor, we reset shader parameters to known values to avoid unnecessary churn in our scene
 				# files. At runtime, this behavior would be destructive since some of these values are only
 				# initialized when the creature is first loaded.
-				emote_sprite.material.set_shader_param("red", Color.black)
-				emote_sprite.material.set_shader_param("green", Color.black)
-				emote_sprite.material.set_shader_param("blue", Color.black)
-				emote_sprite.material.set_shader_param("black", Color.black)
-	_creature_visuals.get_node("Neck0/HeadBobber/EmoteBrain").material.set_shader_param("red", Color.white)
+				emote_sprite.material.set_shader_parameter("red", Color.BLACK)
+				emote_sprite.material.set_shader_parameter("green", Color.BLACK)
+				emote_sprite.material.set_shader_parameter("blue", Color.BLACK)
+				emote_sprite.material.set_shader_parameter("black", Color.BLACK)
+	_creature_visuals.get_node("Neck0/HeadBobber/EmoteBrain").material.set_shader_parameter("red", Color.WHITE)
 	_creature_visuals.get_node("EmoteBody").scale = Vector2(0.836, 0.836)
 	_creature_visuals.get_node("Neck0/HeadBobber/EmoteHead").position = Vector2( 0, 256 )
 	_creature_visuals.get_node("Neck0").scale = Vector2.ONE
@@ -504,7 +504,7 @@ func _transition_laugh1_smile1() -> void:
 	_creature_animations.emote_arm_frame = 0
 	_head_bobber.reset_head_bob()
 	# We do not use a tween because 'smile1' uses EmoteBrain for its heart bubble
-	_creature_visuals.get_node("Neck0/HeadBobber/EmoteBrain").modulate = Color.transparent
+	_creature_visuals.get_node("Neck0/HeadBobber/EmoteBrain").modulate = Color.TRANSPARENT
 
 
 ## Transitions from 'love0' to 'love1', lowering the arms
@@ -564,7 +564,7 @@ func _transition_sweat1_sweat0() -> void:
 func _tween_nodes_to_transparent(paths: Array) -> void:
 	for path in paths:
 		var node: Node2D = _creature_visuals.get_node(path)
-		_reset_tween.parallel().tween_property(node, "modulate", Color.transparent, UNEMOTE_DURATION)
+		_reset_tween.parallel().tween_property(node, "modulate", Color.TRANSPARENT, UNEMOTE_DURATION)
 
 
 ## This function manually assigns fields which Godot would ideally assign automatically by calling _ready. It is a
@@ -583,12 +583,12 @@ func _refresh_creature_visuals_path() -> void:
 		return
 	
 	if _creature_visuals:
-		_creature_visuals.disconnect("orientation_changed", self, "_on_CreatureVisuals_orientation_changed")
+		_creature_visuals.disconnect("orientation_changed", Callable(self, "_on_CreatureVisuals_orientation_changed"))
 	
 	root_node = creature_visuals_path
 	_creature_visuals = get_node(creature_visuals_path)
 	
-	_creature_visuals.connect("orientation_changed", self, "_on_CreatureVisuals_orientation_changed")
+	_creature_visuals.connect("orientation_changed", Callable(self, "_on_CreatureVisuals_orientation_changed"))
 	_emote_eye_z0 = _creature_visuals.get_node("Neck0/HeadBobber/EmoteEyeZ0")
 	_emote_eye_z1 = _creature_visuals.get_node("Neck0/HeadBobber/EmoteEyeZ1")
 	_head_bobber = _creature_visuals.get_node("Neck0/HeadBobber")
@@ -613,7 +613,7 @@ func _on_animation_finished(anim_name: String) -> void:
 		play("...%s..." % [anim_name.trim_suffix("...")])
 	elif _prev_mood in EMOTE_ANIMS or anim_name in EAT_SMILE_ANIMS or anim_name in EAT_SWEAT_ANIMS:
 		unemote(anim_name)
-		_reset_tween.chain().tween_callback(self, "_post_unemote")
+		_reset_tween.chain().tween_callback(Callable(self, "_post_unemote"))
 
 
 func _on_IdleTimer_idle_animation_started(anim_name: String) -> void:

@@ -10,4 +10,4 @@ mouse_filter = 2
 script = ExtResource( 2 )
 
 [node name="MoneyLabel" parent="." instance=ExtResource( 1 )]
-margin_top = -32.0
+offset_top = -32.0

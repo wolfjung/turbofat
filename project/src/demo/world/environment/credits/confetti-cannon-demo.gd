@@ -5,7 +5,7 @@ extends Node
 ## 	[F]: Fire the cannon
 ## 	Arrows: Change the cannon's orientation
 
-onready var _cannon := $ConfettiCannon
+@onready var _cannon := $ConfettiCannon
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):

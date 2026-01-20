@@ -9,15 +9,15 @@ var _boxes_label_value := 0
 var _combos_label_value := 0
 var _extra_label_value := 0
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 var _blueprint: ResultsHudBlueprint
 
-onready var _boxes_label := $BoxesLabel
-onready var _combos_label := $CombosLabel
-onready var _extra_label := $ExtraLabel
+@onready var _boxes_label := $BoxesLabel
+@onready var _combos_label := $CombosLabel
+@onready var _extra_label := $ExtraLabel
 
-onready var _label_refresh_timer := $LabelRefreshTimer
+@onready var _label_refresh_timer := $LabelRefreshTimer
 
 ## Plays an animation building up the values in the table.
 func play(new_blueprint: ResultsHudBlueprint) -> void:
@@ -72,7 +72,7 @@ func _schedule_table_growth() -> void:
 			_tween.tween_property(self, "_extra_label_value", _blueprint.extra_score(), _blueprint.extra_duration())
 			_tween.tween_interval(ResultsHudBlueprint.PAUSE_DURATION)
 		
-		_tween.tween_callback(_label_refresh_timer, "stop")
+		_tween.tween_callback(Callable(_label_refresh_timer, "stop"))
 
 
 ## Updates the contents of the table labels.

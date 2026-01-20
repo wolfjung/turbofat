@@ -14,22 +14,22 @@ const TRANSFORMED_SPRITES_BY_CREATURE_ID := {
 	"tunathy": preload("res://assets/main/credits/pinup-tunathy.png"),
 }
 
-export (Color) var bg_color := Color("6c4331") setget set_bg_color
+@export var bg_color := Color("6c4331"): set = set_bg_color
 
-var creature_id: String setget set_creature_id
-var orientation: int = Creatures.SOUTHEAST setget set_orientation
+var creature_id: String: set = set_creature_id
+var orientation: int = Creatures.SOUTHEAST: set = set_orientation
 
 ## The velocity that the pinup moves up the screen.
 var velocity := Vector2(0, -50)
 
-onready var creature := $Untransformed/View/Viewport/Creature
+@onready var creature := $Untransformed/View/SubViewport/Creature
 
-onready var _bg_color_rect := $Untransformed/View/Viewport/Bg/ColorRect
-onready var _nametag_panel := $Nametag/Panel
-onready var _transformed := $Transformed
-onready var _transformed_player := $Transformed/AnimationPlayer
-onready var _transformed_sprite := $Transformed/Sprite
-onready var _untransformed := $Untransformed
+@onready var _bg_color_rect := $Untransformed/View/SubViewport/Bg/ColorRect
+@onready var _nametag_panel := $Nametag/Panel
+@onready var _transformed := $Transformed
+@onready var _transformed_player := $Transformed/AnimationPlayer
+@onready var _transformed_sprite := $Transformed/Sprite2D
+@onready var _untransformed := $Untransformed
 
 func _ready() -> void:
 	_refresh()
@@ -73,7 +73,7 @@ func transform(flip_h: bool = false) -> void:
 	_transformed_player.play("play")
 	
 	# initialize the mix_color shader param, otherwise there will be one non-white frame visible
-	_transformed_sprite.material.set_shader_param("mix_color", Color.white)
+	_transformed_sprite.material.set_shader_parameter("mix_color", Color.WHITE)
 	
 	if creature_id in TRANSFORMED_SPRITES_BY_CREATURE_ID:
 		_transformed_sprite.texture = TRANSFORMED_SPRITES_BY_CREATURE_ID[creature_id]

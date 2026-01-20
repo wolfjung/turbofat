@@ -44,8 +44,8 @@ func _upgrade_37b3(_old_save_items: Array, save_item: SaveItem) -> SaveItem:
 	match save_item.type:
 		"keybind_settings":
 			if save_item.value.get("custom_keybinds") is Dictionary:
-				save_item.value["custom_keybinds"]["next_tab"] = [{"type": "key", "scancode": 88}, {}, {}]
-				save_item.value["custom_keybinds"]["prev_tab"] = [{"type": "key", "scancode": 90}, {}, {}]
+				save_item.value["custom_keybinds"]["next_tab"] = [{"type": "key", "keycode": 88}, {}, {}]
+				save_item.value["custom_keybinds"]["prev_tab"] = [{"type": "key", "keycode": 90}, {}, {}]
 	return save_item
 
 

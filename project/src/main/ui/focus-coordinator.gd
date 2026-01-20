@@ -20,10 +20,10 @@ class_name FocusCoordinator
 ## key: (Vector2) Unit vector for a cardinal direction.
 ## value: (String) Focus neighbour control property for the specified cardinal direction.
 const FOCUS_NEIGHBOUR_PROPERTY_BY_DIRECTION := {
-	Vector2.LEFT: "focus_neighbour_left",
-	Vector2.UP: "focus_neighbour_top",
-	Vector2.RIGHT: "focus_neighbour_right",
-	Vector2.DOWN: "focus_neighbour_bottom",
+	Vector2.LEFT: "focus_neighbor_left",
+	Vector2.UP: "focus_neighbor_top",
+	Vector2.RIGHT: "focus_neighbor_right",
+	Vector2.DOWN: "focus_neighbor_bottom",
 }
 
 ## Controls to manage focus neighbours for.

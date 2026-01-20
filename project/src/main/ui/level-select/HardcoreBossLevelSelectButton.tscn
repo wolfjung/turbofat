@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://assets/main/fuzzy-circle-256.png" type="Texture" id=1]
+[ext_resource path="res://assets/main/fuzzy-circle-256.png" type="Texture2D" id=1]
 [ext_resource path="res://src/main/career/ui/HardcoreBgSkulls.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/main/career/ui/BossFgSparkles.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/main/ui/level-select/BossLevelSelectButtonControlHolder.tscn" type="PackedScene" id=4]
@@ -9,10 +9,10 @@
 [ext_resource path="res://src/main/career/ui/HardcoreFgSkulls.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Gradient" id=42]
-offsets = PoolRealArray( 0, 0.683824, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.683824, 1 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=43]
+[sub_resource type="GradientTexture2D" id=43]
 gradient = SubResource( 42 )
 
 [sub_resource type="Curve" id=44]
@@ -21,7 +21,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 19.8455, 0, 0, Vector2( 0.105085, 1 ), -0.092475
 [sub_resource type="CurveTexture" id=45]
 curve = SubResource( 44 )
 
-[sub_resource type="ParticlesMaterial" id=46]
+[sub_resource type="ParticleProcessMaterial" id=46]
 lifetime_randomness = 0.1
 emission_shape = 2
 emission_box_extents = Vector3( 30, 15, 0 )
@@ -44,10 +44,10 @@ anim_offset = 1.0
 anim_offset_random = 1.0
 
 [sub_resource type="Gradient" id=34]
-offsets = PoolRealArray( 0, 0.683824, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.683824, 1 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=10]
+[sub_resource type="GradientTexture2D" id=10]
 gradient = SubResource( 34 )
 
 [sub_resource type="Curve" id=35]
@@ -56,7 +56,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 19.8455, 0, 0, Vector2( 0.105085, 1 ), -0.092475
 [sub_resource type="CurveTexture" id=12]
 curve = SubResource( 35 )
 
-[sub_resource type="ParticlesMaterial" id=36]
+[sub_resource type="ParticleProcessMaterial" id=36]
 resource_local_to_scene = true
 lifetime_randomness = 0.1
 emission_shape = 2
@@ -80,10 +80,10 @@ anim_offset = 1.0
 anim_offset_random = 1.0
 
 [sub_resource type="Gradient" id=47]
-offsets = PoolRealArray( 0, 0.683824, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.683824, 1 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=48]
+[sub_resource type="GradientTexture2D" id=48]
 gradient = SubResource( 47 )
 
 [sub_resource type="Curve" id=49]
@@ -92,7 +92,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 19.8455, 0, 0, Vector2( 0.105085, 1 ), -0.092475
 [sub_resource type="CurveTexture" id=50]
 curve = SubResource( 49 )
 
-[sub_resource type="ParticlesMaterial" id=51]
+[sub_resource type="ParticleProcessMaterial" id=51]
 resource_local_to_scene = true
 emission_shape = 2
 emission_box_extents = Vector3( 30, 15, 0 )
@@ -114,7 +114,7 @@ color_ramp = SubResource( 48 )
 anim_offset = 1.0
 anim_offset_random = 1.0
 
-[sub_resource type="ParticlesMaterial" id=40]
+[sub_resource type="ParticleProcessMaterial" id=40]
 resource_local_to_scene = true
 lifetime_randomness = 0.1
 emission_shape = 2
@@ -140,9 +140,9 @@ anim_offset_random = 1.0
 [sub_resource type="CanvasItemMaterial" id=41]
 
 [node name="Control" type="Control"]
-margin_right = 120.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 120, 80 )
+offset_right = 120.0
+offset_bottom = 80.0
+custom_minimum_size = Vector2( 120, 80 )
 mouse_filter = 1
 script = ExtResource( 7 )
 
@@ -201,7 +201,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 8 )
 
-[node name="Sprite" type="Sprite" parent="Halo"]
+[node name="Sprite2D" type="Sprite2D" parent="Halo"]
 modulate = Color( 0, 0, 0, 0.627451 )
 material = SubResource( 41 )
 position = Vector2( 60, 40 )

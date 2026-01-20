@@ -39,7 +39,7 @@ func pop_trail() -> void:
 	emit_signal("trail_popped", prev_path)
 	if not "::" in prev_path:
 		# '::' is used as a separator for breadcrumb items which do not result in a scene change
-		change_scene()
+		change_scene_to_file()
 
 
 ## Navigates forward one level, appending the new path to the breadcrumb trail.
@@ -50,7 +50,7 @@ func pop_trail() -> void:
 func push_trail(path: String) -> void:
 	trail.push_front(path)
 	if not "::" in path:
-		change_scene()
+		change_scene_to_file()
 
 
 ## Stays at the current level in the breadcrumb trail, but replaces the current navigation path.
@@ -62,11 +62,11 @@ func replace_trail(path: String) -> void:
 	trail.pop_front()
 	trail.push_front(path)
 	if not "::" in path:
-		change_scene()
+		change_scene_to_file()
 
 
 ## Changes the running scene to the one at the front of the breadcrumb trail.
-func change_scene() -> void:
+func change_scene_to_file() -> void:
 	if not is_inside_tree():
 		return
 	emit_signal("before_scene_changed")
@@ -82,9 +82,9 @@ func change_scene() -> void:
 	Global.print_verbose("Changing scene to %s (%s) valid=%s" % [new_scene, scene_path, is_instance_valid(new_scene)])
 	
 	_unload_current_scene_custom()
-	var result := get_tree().change_scene_to(new_scene)
+	var result := get_tree().change_scene_to_packed(new_scene)
 	
-	Global.print_verbose("tree.change_scene_to returned %s" % [result])
+	Global.print_verbose("tree.change_scene_to_packed returned %s" % [result])
 
 
 ## Unloads the current scene in a special way which prevents a sporadic silent crash.

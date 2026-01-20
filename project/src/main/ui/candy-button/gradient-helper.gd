@@ -1,4 +1,4 @@
-tool
+@tool
 class_name GradientHelper
 extends Node
 ## Calculates the currently active gradient for a CandyButton.
@@ -10,16 +10,16 @@ extends Node
 signal gradient_changed
 
 ## CandyButton used to decide the active gradient.
-onready var _button := get_parent()
+@onready var _button := get_parent()
 
-var gradient: Gradient = preload("res://src/main/ui/candy-button/gradient-none.tres") setget set_gradient
+var gradient: Gradient = preload("res://src/main/ui/candy-button/gradient-none.tres"): set = set_gradient
 
 func _ready() -> void:
-	_button.connect("color_changed", self, "_on_Button_color_changed")
-	_button.connect("disabled_changed", self, "_on_Button_disabled_changed")
-	_button.connect("focus_entered", self, "_on_Button_focus_entered")
-	_button.connect("focus_exited", self, "_on_Button_focus_exited")
-	_button.connect("hovered_changed", self, "_on_Button_hovered_changed")
+	_button.connect("color_changed", Callable(self, "_on_Button_color_changed"))
+	_button.connect("disabled_changed", Callable(self, "_on_Button_disabled_changed"))
+	_button.connect("focus_entered", Callable(self, "_on_Button_focus_entered"))
+	_button.connect("focus_exited", Callable(self, "_on_Button_focus_exited"))
+	_button.connect("hovered_changed", Callable(self, "_on_Button_hovered_changed"))
 	_refresh_gradient()
 
 

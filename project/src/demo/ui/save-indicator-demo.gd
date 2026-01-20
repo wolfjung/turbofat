@@ -4,7 +4,7 @@ extends Node
 ## Keys:
 ## 	[Space]: Show/hide save indicator
 
-onready var _save_indicator := $SaveIndicator
+@onready var _save_indicator := $SaveIndicator
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):

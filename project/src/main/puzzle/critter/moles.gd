@@ -5,11 +5,11 @@ extends Node2D
 ## Moles dig for a few turns, and then add a pickup to the playfield. But they can be interrupted if they are crushed,
 ## or if the player clears the row they are digging.
 
-export (PackedScene) var MoleScene: PackedScene
-export (NodePath) var critter_manager_path: NodePath
+@export var MoleScene: PackedScene
+@export var critter_manager_path: NodePath
 
-var piece_manager_path: NodePath setget set_piece_manager_path
-var playfield_path: NodePath setget set_playfield_path
+var piece_manager_path: NodePath: set = set_piece_manager_path
+var playfield_path: NodePath: set = set_playfield_path
 
 ## Queue of calls to defer until after line clears are finished
 var _call_queue: CallQueue = CallQueue.new()
@@ -17,10 +17,10 @@ var _call_queue: CallQueue = CallQueue.new()
 var _piece_manager: PieceManager
 var _playfield: Playfield
 
-onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
+@onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
 
 func _ready() -> void:
-	PuzzleState.connect("before_piece_written", self, "_on_PuzzleState_before_piece_written")
+	PuzzleState.connect("before_piece_written", Callable(self, "_on_PuzzleState_before_piece_written"))
 	_refresh_playfield_path()
 	_refresh_piece_manager_path()
 
@@ -75,16 +75,16 @@ func _refresh_playfield_path() -> void:
 		return
 	
 	if _playfield:
-		_playfield.disconnect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.disconnect("line_filled", self, "_on_Playfield_line_filled")
-		_playfield.disconnect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.disconnect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.disconnect("line_filled", Callable(self, "_on_Playfield_line_filled"))
+		_playfield.disconnect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 	
 	_playfield = get_node(playfield_path) if playfield_path else null
 	
 	if _playfield:
-		_playfield.connect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.connect("line_filled", self, "_on_Playfield_line_filled")
-		_playfield.connect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.connect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.connect("line_filled", Callable(self, "_on_Playfield_line_filled"))
+		_playfield.connect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 
 
 ## Connects piece manager listeners.
@@ -93,12 +93,12 @@ func _refresh_piece_manager_path() -> void:
 		return
 	
 	if _piece_manager:
-		_piece_manager.disconnect("piece_disturbed", self, "_on_PieceManager_piece_disturbed")
+		_piece_manager.disconnect("piece_disturbed", Callable(self, "_on_PieceManager_piece_disturbed"))
 	
 	_piece_manager = get_node(piece_manager_path) if piece_manager_path else null
 	
 	if _piece_manager:
-		_piece_manager.connect("piece_disturbed", self, "_on_PieceManager_piece_disturbed")
+		_piece_manager.connect("piece_disturbed", Callable(self, "_on_PieceManager_piece_disturbed"))
 
 
 ## Returns potential cells to which a mole could be added.
@@ -183,7 +183,7 @@ func _add_mole(cell: Vector2, config: MoleConfig) -> void:
 	if _critter_manager.critters_by_cell.has(cell):
 		return
 	
-	var mole: Mole = MoleScene.instance()
+	var mole: Mole = MoleScene.instantiate()
 	mole.z_index = 4
 	mole.scale = _playfield.tile_map.scale
 	

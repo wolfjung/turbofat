@@ -4,7 +4,7 @@ extends Node
 ## Keys:
 ## 	[=/-]: Select the next/previous career region
 
-export (PackedScene) var CareerWinScene: PackedScene
+@export var CareerWinScene: PackedScene
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):
@@ -23,6 +23,6 @@ func _input(event: InputEvent) -> void:
 ## Refreshes the CareerWin node so that it reflects the current career data.
 func _refresh_career_win() -> void:
 	remove_child($CareerWin)
-	var career_win := CareerWinScene.instance()
+	var career_win := CareerWinScene.instantiate()
 	career_win.name = "CareerWin"
 	add_child(career_win)

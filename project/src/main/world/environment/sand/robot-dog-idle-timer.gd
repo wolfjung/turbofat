@@ -10,13 +10,13 @@ const IDLE_ANIMATION_WEIGHTS := {
 	"walk-and-glance": 1.0,
 }
 
-export (NodePath) var animation_player_path: NodePath
+@export var animation_player_path: NodePath
 
 ## defines idle animations for the robot dog
-onready var _animation_player: AnimationPlayer = get_node(animation_player_path)
+@onready var _animation_player: AnimationPlayer = get_node(animation_player_path)
 
 func _ready() -> void:
-	start(rand_range(10, 20))
+	start(randf_range(10, 20))
 
 ## When the timer times out, we play a random idle animation.
 ##

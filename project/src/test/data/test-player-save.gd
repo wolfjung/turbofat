@@ -41,5 +41,5 @@ func test_one_bad_file() -> void:
 	assert_true(FileUtils.file_exists("user://test936.save.corrupt"), "user://test936.save.corrupt")
 	assert_true(FileUtils.file_exists("user://test936.save"), "user://test936.save")
 	
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.remove("user://test936.save.corrupt")

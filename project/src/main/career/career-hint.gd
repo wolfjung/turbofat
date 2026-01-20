@@ -4,7 +4,7 @@ extends Label
 ## Fixed seed to shuffle the hints in a reliable order, so we can ensure all hints are given eventually
 const SEED := 452866638
 
-onready var _accent := $Accent
+@onready var _accent := $Accent
 
 func _ready() -> void:
 	var hints := _hints()

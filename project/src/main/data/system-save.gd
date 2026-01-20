@@ -47,7 +47,7 @@ func _ready() -> void:
 	load_system_data()
 	_save_upgraded_data()
 	_refresh_save_slot()
-	SystemData.misc_settings.connect("save_slot_changed", self, "_on_MiscSettings_save_slot_changed")
+	SystemData.misc_settings.connect("save_slot_changed", Callable(self, "_on_MiscSettings_save_slot_changed"))
 	PlayerSave.load_player_data()
 
 
@@ -67,7 +67,7 @@ func save_system_data() -> void:
 	if FileUtils.file_exists(legacy_filename):
 		# Data older than July 2021 used a different filename.
 		# We load it once and then move it aside when saving.
-		var dir := Directory.new()
+		var dir := DirAccess.new()
 		dir.open("user://")
 		var rename_from := legacy_filename.trim_prefix("user://")
 		var rename_to := rename_from + ".bak"
@@ -79,7 +79,7 @@ func save_system_data() -> void:
 		
 		# Preserve turbofat0.save.bak, but delete the hourly/daily/weekly backups
 		for save_slot_filename in OLD_SAVES_TO_DELETE:
-			Directory.new().remove(save_slot_filename)
+			DirAccess.new().remove(save_slot_filename)
 	
 	SystemData.has_unsaved_changes = false
 	emit_signal("after_save")
@@ -116,7 +116,9 @@ func load_system_data() -> bool:
 		push_warning("Invalid json in file '%s': %s" % [filename_to_load, validate_json_result])
 		return false
 	
-	var json_save_items: Array = parse_json(save_json_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(save_json_text)
+	var json_save_items: Array = test_json_conv.get_data()
 	
 	if _upgrader.needs_upgrade(json_save_items):
 		json_save_items = _upgrader.upgrade(json_save_items)

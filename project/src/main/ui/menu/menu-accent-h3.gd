@@ -1,4 +1,4 @@
-tool
+@tool
 extends TextureRect
 ## Brown accent splat which appears behind a menu label.
 ##
@@ -39,14 +39,14 @@ const TEXTURES_BY_ACCENT_WIDTH := {
 	],
 }
 
-export (bool) var _refresh: bool setget refresh
+@export var _refresh: bool: set = refresh
 
-export (int) var _accent_index: int
+@export var _accent_index: int
 
 ## Approximate accent width, calculated from our label's font and text
 var _accent_width: int = AccentWidth.NONE
 
-onready var _parent: Label = get_parent()
+@onready var _parent: Label = get_parent()
 
 func _ready() -> void:
 	refresh()
@@ -98,5 +98,5 @@ func _refresh_texture() -> void:
 		texture = null
 	else:
 		texture = textures[_accent_index % TEXTURES_BY_ACCENT_WIDTH.size()]
-	rect_size = texture.get_size() * 0.5
-	rect_position = _parent.rect_size / 2 - rect_size / 2
+	size = texture.get_size() * 0.5
+	position = _parent.size / 2 - size / 2

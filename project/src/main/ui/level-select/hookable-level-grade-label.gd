@@ -5,16 +5,16 @@ extends Node2D
 ## This can be something like 'S' or 'B+' if a level has been cleared, or something like a lock/key icon for levels
 ## which haven't yet been cleared.
 
-const CLEARED_TEXTURE: Texture = preload("res://assets/main/ui/level-select/cleared.png")
-const CROWN_TEXTURE: Texture = preload("res://assets/main/ui/level-select/crown.png")
-const KEY_TEXTURE: Texture = preload("res://assets/main/ui/level-select/key.png")
-const LOCKED_TEXTURE: Texture = preload("res://assets/main/ui/level-select/locked.png")
+const CLEARED_TEXTURE: Texture2D = preload("res://assets/main/ui/level-select/cleared.png")
+const CROWN_TEXTURE: Texture2D = preload("res://assets/main/ui/level-select/crown.png")
+const KEY_TEXTURE: Texture2D = preload("res://assets/main/ui/level-select/key.png")
+const LOCKED_TEXTURE: Texture2D = preload("res://assets/main/ui/level-select/locked.png")
 
 ## LevelSelectButton this grade label applies to
-var button: Control setget set_button
+var button: Control: set = set_button
 
-onready var _grade_label: GradeLabel = $GradeLabel
-onready var _status_icon := $StatusIcon
+@onready var _grade_label: GradeLabel = $GradeLabel
+@onready var _status_icon := $StatusIcon
 
 ## Preemptively initializes onready variables to avoid null references.
 func _enter_tree() -> void:
@@ -35,12 +35,12 @@ func set_button(new_button: LevelSelectButton) -> void:
 	
 	if button:
 		button.get_node("GradeHook").remote_path = null
-		button.disconnect("tree_exited", self, "_on_LevelSelectButton_tree_exited")
+		button.disconnect("tree_exited", Callable(self, "_on_LevelSelectButton_tree_exited"))
 	
 	button = new_button
 	
 	button.get_node("GradeHook").remote_path = button.get_node("GradeHook").get_path_to(self)
-	button.connect("tree_exited", self, "_on_LevelSelectButton_tree_exited")
+	button.connect("tree_exited", Callable(self, "_on_LevelSelectButton_tree_exited"))
 	
 	_refresh_appearance()
 
@@ -73,7 +73,7 @@ func _refresh_status_icon(lock_status: int) -> void:
 	match lock_status:
 		LevelSelectButton.STATUS_NONE:
 			_status_icon.texture = null
-			icon_color = Color.white
+			icon_color = Color.WHITE
 		LevelSelectButton.STATUS_CLEARED:
 			_status_icon.texture = CLEARED_TEXTURE
 			icon_color = GradeLabel.GRADE_COLOR_GREEN

@@ -96,12 +96,12 @@ const BOX_TYPES_BY_INGREDIENTS := {
 	"l4": Foods.BoxType.CHEESE,
 }
 
-export (NodePath) var tile_map_path: NodePath
+@export var tile_map_path: NodePath
 
 ## remaining frames to wait for making the current box
 var remaining_box_build_frames := 0
 
-onready var _tile_map: PuzzleTileMap = get_node(tile_map_path)
+@onready var _tile_map: PuzzleTileMap = get_node(tile_map_path)
 
 func _ready() -> void:
 	set_physics_process(false)

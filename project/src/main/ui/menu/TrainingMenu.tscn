@@ -13,29 +13,29 @@
 [ext_resource path="res://src/main/ui/ClickCatcher.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/main/ui/squeak/gy/squeak-theme-h4.tres" type="Theme" id=12]
 [ext_resource path="res://src/main/ui/HighScoreTable.tscn" type="PackedScene" id=13]
-[ext_resource path="res://src/main/ui/theme/h3-font-outline.tres" type="DynamicFont" id=14]
+[ext_resource path="res://src/main/ui/theme/h3-font-outline.tres" type="FontFile" id=14]
 [ext_resource path="res://src/main/ui/menu/PagedLevelPanel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/main/ui/menu/MenuAccentH3.tscn" type="PackedScene" id=17]
-[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-s1.png" type="Texture" id=18]
+[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-s1.png" type="Texture2D" id=18]
 [ext_resource path="res://src/main/ui/squeak/br/squeak-theme-h4.tres" type="Theme" id=19]
-[ext_resource path="res://assets/main/ui/candy-button/h3-t-pressed.png" type="Texture" id=20]
+[ext_resource path="res://assets/main/ui/candy-button/h3-t-pressed.png" type="Texture2D" id=20]
 [ext_resource path="res://src/main/ui/candy-button/gradient-red-normal.tres" type="Gradient" id=21]
 [ext_resource path="res://src/main/ui/menu/region-submenu.gd" type="Script" id=22]
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonH3.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/main/ui/menu/level-submenu.gd" type="Script" id=24]
-[ext_resource path="res://assets/main/ui/candy-button/h3-t.png" type="Texture" id=25]
+[ext_resource path="res://assets/main/ui/candy-button/h3-t.png" type="Texture2D" id=25]
 [ext_resource path="res://src/main/ui/candy-button/gradient-violet-normal.tres" type="Gradient" id=26]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture" id=27]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture2D" id=27]
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonH4.tscn" type="PackedScene" id=28]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture" id=29]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture" id=30]
-[ext_resource path="res://assets/main/ui/touch/close.png" type="Texture" id=31]
-[ext_resource path="res://assets/main/ui/touch/close-pressed.png" type="Texture" id=32]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture2D" id=29]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture2D" id=30]
+[ext_resource path="res://assets/main/ui/touch/close.png" type="Texture2D" id=31]
+[ext_resource path="res://assets/main/ui/touch/close-pressed.png" type="Texture2D" id=32]
 [ext_resource path="res://src/main/ui/menu/training-menu.gd" type="Script" id=33]
 [ext_resource path="res://src/main/ui/menu/training-speed-selector.gd" type="Script" id=34]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture" id=35]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=36]
-[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="ShortCut" id=37]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture2D" id=35]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=36]
+[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="Shortcut" id=37]
 [ext_resource path="res://src/main/ui/HSliderGamepadHelper.tscn" type="PackedScene" id=38]
 
 [sub_resource type="StyleBoxFlat" id=12]
@@ -78,13 +78,13 @@ shader_param/gradient = SubResource( 10 )
 [sub_resource type="InputEventAction" id=4]
 action = "ui_cancel"
 
-[sub_resource type="ShortCut" id=5]
+[sub_resource type="Shortcut" id=5]
 shortcut = SubResource( 4 )
 
 [node name="TrainingMenu" type="Control" groups=["wallpaper_enabled"]]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 1024, 600 )
+custom_minimum_size = Vector2( 1024, 600 )
 script = ExtResource( 33 )
 high_scores_path = NodePath("MainMenu/DropPanel/VBoxContainer/HighScores")
 level_button_scroller_path = NodePath("MainMenu/DropPanel/VBoxContainer/Level/LevelButtonScroller")
@@ -99,51 +99,51 @@ anchor_bottom = 1.0
 [node name="DropPanel" type="Panel" parent="MainMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 50.0
-margin_top = 10.0
-margin_right = -50.0
-margin_bottom = -10.0
-custom_styles/panel = ExtResource( 10 )
+offset_left = 50.0
+offset_top = 10.0
+offset_right = -50.0
+offset_bottom = -10.0
+theme_override_styles/panel = ExtResource( 10 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/DropPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 14.0
-margin_top = 14.0
-margin_right = -14.0
-margin_bottom = -14.0
-custom_constants/separation = 5
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+theme_override_constants/separation = 5
 
 [node name="Level" type="VBoxContainer" parent="MainMenu/DropPanel/VBoxContainer"]
-margin_right = 896.0
-margin_bottom = 188.0
-rect_min_size = Vector2( 0, 160 )
+offset_right = 896.0
+offset_bottom = 188.0
+custom_minimum_size = Vector2( 0, 160 )
 
 [node name="Title" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Level"]
-margin_right = 896.0
-margin_bottom = 30.0
+offset_right = 896.0
+offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 14 )
+theme_override_fonts/font = ExtResource( 14 )
 text = "Level"
 align = 1
 valign = 1
 
 [node name="MenuAccentH3" parent="MainMenu/DropPanel/VBoxContainer/Level/Title" instance=ExtResource( 17 )]
-margin_left = -87.5
-margin_top = -37.5
-margin_right = 87.5
-margin_bottom = 37.5
+offset_left = -87.5
+offset_top = -37.5
+offset_right = 87.5
+offset_bottom = 37.5
 texture = ExtResource( 18 )
 
 [node name="LevelButtonScroller" parent="MainMenu/DropPanel/VBoxContainer/Level" instance=ExtResource( 9 )]
-margin_top = 34.0
-margin_bottom = 164.0
+offset_top = 34.0
+offset_bottom = 164.0
 
 [node name="Desc" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Level"]
-margin_top = 168.0
-margin_right = 896.0
-margin_bottom = 188.0
+offset_top = 168.0
+offset_right = 896.0
+offset_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource( 6 )
@@ -152,48 +152,48 @@ align = 1
 valign = 1
 
 [node name="Speed" type="VBoxContainer" parent="MainMenu/DropPanel/VBoxContainer"]
-margin_top = 202.0
-margin_right = 896.0
-margin_bottom = 284.0
+offset_top = 202.0
+offset_right = 896.0
+offset_bottom = 284.0
 size_flags_vertical = 6
 script = ExtResource( 34 )
 
 [node name="Title" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Speed"]
-margin_right = 896.0
-margin_bottom = 30.0
+offset_right = 896.0
+offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 14 )
+theme_override_fonts/font = ExtResource( 14 )
 text = "Speed"
 align = 1
 valign = 1
 
 [node name="MenuAccentH3" parent="MainMenu/DropPanel/VBoxContainer/Speed/Title" instance=ExtResource( 17 )]
-margin_left = -87.5
-margin_top = -37.5
-margin_right = 87.5
-margin_bottom = 37.5
+offset_left = -87.5
+offset_top = -37.5
+offset_right = 87.5
+offset_bottom = 37.5
 texture = ExtResource( 18 )
 
 [node name="SliderPanel" type="Panel" parent="MainMenu/DropPanel/VBoxContainer/Speed"]
-margin_left = 144.0
-margin_top = 34.0
-margin_right = 752.0
-margin_bottom = 58.0
-rect_min_size = Vector2( 608, 24 )
+offset_left = 144.0
+offset_top = 34.0
+offset_right = 752.0
+offset_bottom = 58.0
+custom_minimum_size = Vector2( 608, 24 )
 size_flags_horizontal = 4
-custom_styles/panel = SubResource( 12 )
+theme_override_styles/panel = SubResource( 12 )
 
 [node name="Slider" type="HSlider" parent="MainMenu/DropPanel/VBoxContainer/Speed/SliderPanel" groups=["main_practice_inputs"]]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -300.0
-margin_top = -9.0
-margin_right = 300.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 600, 0 )
+offset_left = -300.0
+offset_top = -9.0
+offset_right = 300.0
+offset_bottom = 9.0
+custom_minimum_size = Vector2( 600, 0 )
 size_flags_horizontal = 4
 theme = ExtResource( 19 )
 max_value = 3.0
@@ -203,67 +203,67 @@ tick_count = 4
 sliding_speed = 6.0
 
 [node name="ClickCatcher" parent="MainMenu/DropPanel/VBoxContainer/Speed/SliderPanel/Slider" instance=ExtResource( 11 )]
-margin_left = -25.0
-margin_top = -25.0
-margin_right = 25.0
-margin_bottom = 25.0
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
 
 [node name="Labels" type="HBoxContainer" parent="MainMenu/DropPanel/VBoxContainer/Speed"]
-margin_left = 144.0
-margin_top = 62.0
-margin_right = 752.0
-margin_bottom = 82.0
-rect_min_size = Vector2( 608, 0 )
+offset_left = 144.0
+offset_top = 62.0
+offset_right = 752.0
+offset_bottom = 82.0
+custom_minimum_size = Vector2( 608, 0 )
 mouse_filter = 2
 size_flags_horizontal = 4
 theme = ExtResource( 6 )
 
 [node name="Normal" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Speed/Labels"]
-margin_right = 99.0
-margin_bottom = 20.0
+offset_right = 99.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 text = "0"
 
 [node name="Hard" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Speed/Labels"]
-margin_left = 103.0
-margin_right = 302.0
-margin_bottom = 20.0
+offset_left = 103.0
+offset_right = 302.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "1"
 align = 1
 
 [node name="Expert" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Speed/Labels"]
-margin_left = 306.0
-margin_right = 504.0
-margin_bottom = 20.0
+offset_left = 306.0
+offset_right = 504.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "2"
 align = 1
 
 [node name="Master" type="Label" parent="MainMenu/DropPanel/VBoxContainer/Speed/Labels"]
-margin_left = 508.0
-margin_right = 608.0
-margin_bottom = 20.0
+offset_left = 508.0
+offset_right = 608.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 text = "3"
 align = 2
 
 [node name="System" type="VBoxContainer" parent="MainMenu/DropPanel/VBoxContainer"]
-margin_top = 298.0
-margin_right = 896.0
-margin_bottom = 428.0
+offset_top = 298.0
+offset_right = 896.0
+offset_bottom = 428.0
 size_flags_vertical = 8
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 script = ExtResource( 5 )
 
 [node name="Start" parent="MainMenu/DropPanel/VBoxContainer/System" groups=["main_practice_inputs"] instance=ExtResource( 23 )]
 material = SubResource( 7 )
-margin_left = 348.0
-margin_top = 0.0
-margin_right = 548.0
-margin_bottom = 50.0
+offset_left = 348.0
+offset_top = 0.0
+offset_right = 548.0
+offset_bottom = 50.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource( 25 )
@@ -275,10 +275,10 @@ shape = 6
 
 [node name="Settings" parent="MainMenu/DropPanel/VBoxContainer/System" groups=["main_practice_inputs"] instance=ExtResource( 28 )]
 material = SubResource( 9 )
-margin_left = 388.0
-margin_top = 60.0
-margin_right = 508.0
-margin_bottom = 90.0
+offset_left = 388.0
+offset_top = 60.0
+offset_right = 508.0
+offset_bottom = 90.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 shortcut = ExtResource( 37 )
@@ -294,10 +294,10 @@ action = "ui_cancel"
 
 [node name="Quit" parent="MainMenu/DropPanel/VBoxContainer/System" groups=["main_practice_inputs"] instance=ExtResource( 28 )]
 material = SubResource( 11 )
-margin_left = 388.0
-margin_top = 100.0
-margin_right = 508.0
-margin_bottom = 130.0
+offset_left = 388.0
+offset_top = 100.0
+offset_right = 508.0
+offset_bottom = 130.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource( 30 )
@@ -308,17 +308,17 @@ color = 1
 shape = 5
 
 [node name="Spacer" type="Control" parent="MainMenu/DropPanel/VBoxContainer"]
-margin_top = 433.0
-margin_right = 896.0
-margin_bottom = 443.0
-rect_min_size = Vector2( 0, 10 )
+offset_top = 433.0
+offset_right = 896.0
+offset_bottom = 443.0
+custom_minimum_size = Vector2( 0, 10 )
 
 [node name="HighScores" type="Panel" parent="MainMenu/DropPanel/VBoxContainer"]
-margin_left = 48.0
-margin_top = 448.0
-margin_right = 848.0
-margin_bottom = 552.0
-rect_min_size = Vector2( 800, 104 )
+offset_left = 48.0
+offset_top = 448.0
+offset_right = 848.0
+offset_bottom = 552.0
+custom_minimum_size = Vector2( 800, 104 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 12 )
@@ -327,21 +327,21 @@ script = ExtResource( 3 )
 [node name="Tables" type="HBoxContainer" parent="MainMenu/DropPanel/VBoxContainer/HighScores"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 5.0
-margin_right = -20.0
-margin_bottom = -5.0
-custom_constants/separation = 200
+offset_left = 20.0
+offset_top = 5.0
+offset_right = -20.0
+offset_bottom = -5.0
+theme_override_constants/separation = 200
 
 [node name="DailyTable" parent="MainMenu/DropPanel/VBoxContainer/HighScores/Tables" instance=ExtResource( 13 )]
-margin_right = 280.0
-margin_bottom = 94.0
+offset_right = 280.0
+offset_bottom = 94.0
 daily = true
 
 [node name="AllTimeTable" parent="MainMenu/DropPanel/VBoxContainer/HighScores/Tables" instance=ExtResource( 13 )]
-margin_left = 480.0
-margin_right = 760.0
-margin_bottom = 94.0
+offset_left = 480.0
+offset_right = 760.0
+offset_bottom = 94.0
 
 [node name="RegionSubmenu" type="Control" parent="."]
 visible = false
@@ -366,21 +366,21 @@ mouse_filter = 2
 [node name="Northeast" type="HBoxContainer" parent="RegionSubmenu/Buttons"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -512.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 100, 100 )
+offset_left = -512.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 110.0
+custom_minimum_size = Vector2( 100, 100 )
 mouse_filter = 2
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="BackButton" parent="RegionSubmenu/Buttons/Northeast" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 402.0
-margin_right = 502.0
-margin_bottom = 100.0
+offset_left = 402.0
+offset_right = 502.0
+offset_bottom = 100.0
 size_flags_horizontal = 0
 shortcut = SubResource( 5 )
 icon = ExtResource( 31 )
@@ -413,21 +413,21 @@ mouse_filter = 2
 [node name="Northeast" type="HBoxContainer" parent="LevelSubmenu/Buttons"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -512.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 100, 100 )
+offset_left = -512.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 110.0
+custom_minimum_size = Vector2( 100, 100 )
 mouse_filter = 2
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="BackButton" parent="LevelSubmenu/Buttons/Northeast" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 402.0
-margin_right = 502.0
-margin_bottom = 100.0
+offset_left = 402.0
+offset_right = 502.0
+offset_bottom = 100.0
 size_flags_horizontal = 0
 shortcut = SubResource( 5 )
 icon = ExtResource( 31 )

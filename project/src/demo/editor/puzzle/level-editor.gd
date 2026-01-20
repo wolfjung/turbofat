@@ -11,14 +11,14 @@ extends Node
 ## default to an empty level; players may be confused if it's not empty
 const DEFAULT_LEVEL_ID := "practice/ultra_normal"
 
-export (PackedScene) var PuzzleScene: PackedScene
+@export var PuzzleScene: PackedScene
 
 ## level scene currently being tested
 var _test_scene: Node
 
-onready var level_id_label := $HBoxContainer/SideButtons/LevelId
-onready var _level_json := $HBoxContainer/SideButtons/Json
-onready var _test_button := $HBoxContainer/SideButtons/Test
+@onready var level_id_label := $HBoxContainer/SideButtons/LevelId
+@onready var _level_json := $HBoxContainer/SideButtons/Json
+@onready var _test_button := $HBoxContainer/SideButtons/Test
 
 func _ready() -> void:
 	var level_text := FileUtils.get_file_as_text(LevelSettings.path_from_level_key(DEFAULT_LEVEL_ID))
@@ -28,7 +28,7 @@ func _ready() -> void:
 	
 	# immediately parse and upgrade the level; LevelEditor will behave strangely with older level formats
 	_parse_level(DEFAULT_LEVEL_ID, level_text)
-	Breadcrumb.connect("trail_popped", self, "_on_Breadcrumb_trail_popped")
+	Breadcrumb.connect("trail_popped", Callable(self, "_on_Breadcrumb_trail_popped"))
 
 
 func save_level(path: String) -> void:
@@ -56,7 +56,7 @@ func _start_test() -> void:
 	var settings := LevelSettings.new()
 	settings.load_from_text(level_id_label.text, _level_json.text)
 	CurrentLevel.start_level(settings)
-	_test_scene = PuzzleScene.instance()
+	_test_scene = PuzzleScene.instantiate()
 	
 	# back button should close level; shouldn't redirect us to a new scene
 	SceneTransition.push_trail("res://src/demo/editor/puzzle/LevelEditor.tscn::test",

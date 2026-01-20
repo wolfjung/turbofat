@@ -1,15 +1,15 @@
-tool
+@tool
 extends ConfirmationDialog
 ## Displays a confirmation with a warning icon.
 
 ## The text displayed by the dialog.
-export (String, MULTILINE) var custom_text: String setget set_custom_text
+@export var custom_text: String: set = set_custom_text
 
 ## The color of the warning icon.
-export (Color) var icon_color: Color setget set_icon_color
+@export var icon_color: Color: set = set_icon_color
 
-onready var _icon := $TextContainer/Icon
-onready var _label := $TextContainer/Label
+@onready var _icon := $TextContainer/Icon
+@onready var _label := $TextContainer/Label
 
 func _ready() -> void:
 	_refresh_custom_text()
@@ -40,7 +40,7 @@ func _refresh_custom_text() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _label:
 			_initialize_onready_variables()
 	
@@ -51,7 +51,7 @@ func _refresh_icon_color() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _label:
 			_initialize_onready_variables()
 	

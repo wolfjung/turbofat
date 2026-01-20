@@ -5,7 +5,7 @@ extends Node
 ## 	[0]: Disappear
 ## 	[1,2,3]: Idle animation with 1/2/3 fingers
 
-onready var _tomato := $Tomato
+@onready var _tomato := $Tomato
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):

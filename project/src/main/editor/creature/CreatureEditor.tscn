@@ -1,52 +1,52 @@
 [gd_scene load_steps=118 format=2]
 
-[ext_resource path="res://assets/main/editor/creature/icon-category-eye.png" type="Texture" id=1]
-[ext_resource path="res://assets/main/editor/creature/icon-category-nose.png" type="Texture" id=2]
-[ext_resource path="res://assets/main/editor/creature/icon-category-mouth.png" type="Texture" id=3]
-[ext_resource path="res://assets/main/editor/creature/icon-category-cheek.png" type="Texture" id=4]
-[ext_resource path="res://assets/main/editor/creature/icon-category-accessory.png" type="Texture" id=5]
-[ext_resource path="res://assets/main/editor/creature/icon-category-body.png" type="Texture" id=6]
-[ext_resource path="res://assets/main/editor/creature/icon-category-tail.png" type="Texture" id=7]
-[ext_resource path="res://assets/main/editor/creature/icon-category-belly.png" type="Texture" id=8]
-[ext_resource path="res://assets/main/editor/creature/icon-category-neck.png" type="Texture" id=9]
-[ext_resource path="res://assets/main/editor/creature/icon-category-finish.png" type="Texture" id=10]
-[ext_resource path="res://assets/main/editor/creature/icon-category-hair.png" type="Texture" id=11]
-[ext_resource path="res://assets/main/editor/creature/icon-category-ear.png" type="Texture" id=12]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture" id=13]
+[ext_resource path="res://assets/main/editor/creature/icon-category-eye.png" type="Texture2D" id=1]
+[ext_resource path="res://assets/main/editor/creature/icon-category-nose.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/main/editor/creature/icon-category-mouth.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/main/editor/creature/icon-category-cheek.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/main/editor/creature/icon-category-accessory.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/main/editor/creature/icon-category-body.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/main/editor/creature/icon-category-tail.png" type="Texture2D" id=7]
+[ext_resource path="res://assets/main/editor/creature/icon-category-belly.png" type="Texture2D" id=8]
+[ext_resource path="res://assets/main/editor/creature/icon-category-neck.png" type="Texture2D" id=9]
+[ext_resource path="res://assets/main/editor/creature/icon-category-finish.png" type="Texture2D" id=10]
+[ext_resource path="res://assets/main/editor/creature/icon-category-hair.png" type="Texture2D" id=11]
+[ext_resource path="res://assets/main/editor/creature/icon-category-ear.png" type="Texture2D" id=12]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture2D" id=13]
 [ext_resource path="res://assets/main/puzzle/tech-move.wav" type="AudioStream" id=14]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture" id=15]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture" id=16]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture" id=17]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture2D" id=15]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture2D" id=16]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture2D" id=17]
 [ext_resource path="res://assets/main/puzzle/lock.wav" type="AudioStream" id=18]
-[ext_resource path="res://assets/main/editor/creature/icon-category-horn.png" type="Texture" id=19]
+[ext_resource path="res://assets/main/editor/creature/icon-category-horn.png" type="Texture2D" id=19]
 [ext_resource path="res://src/main/ui/menu/drop-panel.tres" type="StyleBox" id=20]
 [ext_resource path="res://src/main/editor/creature/allele-buttons.gd" type="Script" id=21]
 [ext_resource path="res://src/main/editor/creature/creature-saver.gd" type="Script" id=22]
 [ext_resource path="res://src/main/editor/creature/category-selector.gd" type="Script" id=23]
-[ext_resource path="res://assets/main/ui/candy-button/c3-t.png" type="Texture" id=24]
-[ext_resource path="res://assets/main/ui/candy-button/c3-t-pressed.png" type="Texture" id=25]
-[ext_resource path="res://assets/main/ui/candy-button/a3-q-pressed.png" type="Texture" id=26]
-[ext_resource path="res://assets/main/ui/candy-button/a3-v-pressed.png" type="Texture" id=27]
-[ext_resource path="res://assets/main/ui/candy-button/a3-j-pressed.png" type="Texture" id=28]
-[ext_resource path="res://assets/main/ui/candy-button/a3-o.png" type="Texture" id=29]
-[ext_resource path="res://assets/main/ui/candy-button/a3-t.png" type="Texture" id=30]
-[ext_resource path="res://assets/main/ui/candy-button/a3-t-pressed.png" type="Texture" id=31]
-[ext_resource path="res://assets/main/ui/candy-button/a3-u.png" type="Texture" id=32]
-[ext_resource path="res://assets/main/ui/candy-button/a3-p.png" type="Texture" id=33]
-[ext_resource path="res://assets/main/ui/candy-button/a3-v.png" type="Texture" id=34]
-[ext_resource path="res://assets/main/ui/candy-button/a3-l.png" type="Texture" id=35]
-[ext_resource path="res://assets/main/ui/candy-button/a3-u-pressed.png" type="Texture" id=36]
-[ext_resource path="res://assets/main/ui/candy-button/a3-o-pressed.png" type="Texture" id=37]
-[ext_resource path="res://assets/main/ui/candy-button/a3-l-pressed.png" type="Texture" id=38]
-[ext_resource path="res://assets/main/ui/candy-button/a3-j.png" type="Texture" id=39]
-[ext_resource path="res://assets/main/ui/candy-button/a3-q.png" type="Texture" id=40]
-[ext_resource path="res://assets/main/ui/candy-button/a3-focused.png" type="Texture" id=41]
-[ext_resource path="res://assets/main/ui/candy-button/a3-p-pressed.png" type="Texture" id=42]
-[ext_resource path="res://src/main/ui/theme/h3-font-outline.tres" type="DynamicFont" id=43]
+[ext_resource path="res://assets/main/ui/candy-button/c3-t.png" type="Texture2D" id=24]
+[ext_resource path="res://assets/main/ui/candy-button/c3-t-pressed.png" type="Texture2D" id=25]
+[ext_resource path="res://assets/main/ui/candy-button/a3-q-pressed.png" type="Texture2D" id=26]
+[ext_resource path="res://assets/main/ui/candy-button/a3-v-pressed.png" type="Texture2D" id=27]
+[ext_resource path="res://assets/main/ui/candy-button/a3-j-pressed.png" type="Texture2D" id=28]
+[ext_resource path="res://assets/main/ui/candy-button/a3-o.png" type="Texture2D" id=29]
+[ext_resource path="res://assets/main/ui/candy-button/a3-t.png" type="Texture2D" id=30]
+[ext_resource path="res://assets/main/ui/candy-button/a3-t-pressed.png" type="Texture2D" id=31]
+[ext_resource path="res://assets/main/ui/candy-button/a3-u.png" type="Texture2D" id=32]
+[ext_resource path="res://assets/main/ui/candy-button/a3-p.png" type="Texture2D" id=33]
+[ext_resource path="res://assets/main/ui/candy-button/a3-v.png" type="Texture2D" id=34]
+[ext_resource path="res://assets/main/ui/candy-button/a3-l.png" type="Texture2D" id=35]
+[ext_resource path="res://assets/main/ui/candy-button/a3-u-pressed.png" type="Texture2D" id=36]
+[ext_resource path="res://assets/main/ui/candy-button/a3-o-pressed.png" type="Texture2D" id=37]
+[ext_resource path="res://assets/main/ui/candy-button/a3-l-pressed.png" type="Texture2D" id=38]
+[ext_resource path="res://assets/main/ui/candy-button/a3-j.png" type="Texture2D" id=39]
+[ext_resource path="res://assets/main/ui/candy-button/a3-q.png" type="Texture2D" id=40]
+[ext_resource path="res://assets/main/ui/candy-button/a3-focused.png" type="Texture2D" id=41]
+[ext_resource path="res://assets/main/ui/candy-button/a3-p-pressed.png" type="Texture2D" id=42]
+[ext_resource path="res://src/main/ui/theme/h3-font-outline.tres" type="FontFile" id=43]
 [ext_resource path="res://src/main/ui/candy-button/gradient-orange-normal.tres" type="Gradient" id=44]
 [ext_resource path="res://src/main/ui/candy-button/gradient-none.tres" type="Gradient" id=45]
 [ext_resource path="res://src/main/ui/candy-button/gradient-red-normal.tres" type="Gradient" id=46]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=47]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=47]
 [ext_resource path="res://src/main/ui/candy-button/gradient-violet-normal.tres" type="Gradient" id=48]
 [ext_resource path="res://src/main/ui/candy-button/gradient-green-normal.tres" type="Gradient" id=49]
 [ext_resource path="res://src/main/ui/candy-button/gradient-blue-normal.tres" type="Gradient" id=50]
@@ -63,7 +63,7 @@
 [ext_resource path="res://src/main/ui/DialogBackdrop.tscn" type="PackedScene" id=63]
 [ext_resource path="res://src/main/world/environment/restaurant/RestaurantNametagPanel.tscn" type="PackedScene" id=64]
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonC3.tscn" type="PackedScene" id=65]
-[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="ShortCut" id=66]
+[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="Shortcut" id=66]
 [ext_resource path="res://src/main/ui/menu/MenuAccentH3.tscn" type="PackedScene" id=67]
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonH4.tscn" type="PackedScene" id=68]
 [ext_resource path="res://src/main/editor/creature/CreatureNameButton.tscn" type="PackedScene" id=69]
@@ -72,9 +72,9 @@
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonCollapsible.tscn" type="PackedScene" id=72]
 [ext_resource path="res://src/main/editor/creature/CreatureColorButton.tscn" type="PackedScene" id=73]
 [ext_resource path="res://src/main/editor/creature/AlleleButton.tscn" type="PackedScene" id=75]
-[ext_resource path="res://assets/main/editor/creature/icon-category-face.png" type="Texture" id=76]
-[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-l1.png" type="Texture" id=77]
-[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-s1.png" type="Texture" id=78]
+[ext_resource path="res://assets/main/editor/creature/icon-category-face.png" type="Texture2D" id=76]
+[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-l1.png" type="Texture2D" id=77]
+[ext_resource path="res://assets/main/ui/menu/menu-accent-h2-s1.png" type="Texture2D" id=78]
 [ext_resource path="res://src/main/editor/creature/save-message.gd" type="Script" id=79]
 [ext_resource path="res://src/main/editor/creature/fatness-changer.gd" type="Script" id=80]
 [ext_resource path="res://src/main/editor/creature/category-label.gd" type="Script" id=81]
@@ -262,14 +262,14 @@ shader_param/gradient = SubResource( 44 )
 [sub_resource type="Animation" id=49]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Buttons/SaveLabel:rect_scale")
+tracks/0/path = NodePath("Buttons/SaveLabel:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
@@ -280,8 +280,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
@@ -292,8 +292,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ false ]
 }
@@ -303,14 +303,14 @@ resource_name = "play"
 length = 3.0
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("Buttons/SaveLabel:rect_scale")
+tracks/0/path = NodePath("Buttons/SaveLabel:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.133333, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.05, 0.133333, 0.2 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.6, 0.6 ), Vector2( 1.5, 0.9 ), Vector2( 0.9, 1.5 ), Vector2( 1, 1 ) ]
 }
@@ -321,8 +321,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05, 2.5, 3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.05, 2.5, 3 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
@@ -338,7 +338,7 @@ tracks/2/keys = {
 "start_offset": 0.0,
 "stream": ExtResource( 14 )
 } ],
-"times": PoolRealArray( 0 )
+"times": PackedFloat32Array( 0 )
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Buttons/SaveLabel:visible")
@@ -347,8 +347,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 3 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
 }
@@ -362,32 +362,32 @@ creature_saver_path = NodePath("CreatureSaver")
 [node name="DropPanel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 20.0
-margin_right = -20.0
-margin_bottom = -20.0
-custom_styles/panel = ExtResource( 20 )
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_styles/panel = ExtResource( 20 )
 
 [node name="CategoryLabel" type="Label" parent="DropPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -303.0
-margin_top = -183.0
-margin_right = -215.0
-margin_bottom = -153.0
-custom_fonts/font = ExtResource( 43 )
+offset_left = -303.0
+offset_top = -183.0
+offset_right = -215.0
+offset_bottom = -153.0
+theme_override_fonts/font = ExtResource( 43 )
 text = "Mouths"
 align = 1
 script = ExtResource( 81 )
 category_selector_path = NodePath("../../Buttons/VBoxContainer/CategorySelector")
 
 [node name="MenuAccentH3" parent="DropPanel/CategoryLabel" instance=ExtResource( 67 )]
-margin_left = -87.5
-margin_top = -37.5
-margin_right = 87.5
-margin_bottom = 37.5
+offset_left = -87.5
+offset_top = -37.5
+offset_right = 87.5
+offset_bottom = 37.5
 texture = ExtResource( 78 )
 
 [node name="Preview" type="CanvasLayer" parent="."]
@@ -397,12 +397,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -492.0
-margin_top = -280.0
-margin_right = 492.0
-margin_bottom = -25.0
-rect_min_size = Vector2( 200, 0 )
-rect_clip_content = true
+offset_left = -492.0
+offset_top = -280.0
+offset_right = 492.0
+offset_bottom = -25.0
+custom_minimum_size = Vector2( 200, 0 )
+clip_contents = true
 mouse_filter = 2
 script = ExtResource( 54 )
 EnvironmentScene = ExtResource( 61 )
@@ -416,20 +416,20 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -120.0
-margin_top = -90.0
-margin_right = 120.0
-margin_bottom = 0.0
+offset_left = -120.0
+offset_top = -90.0
+offset_right = 120.0
+offset_bottom = 0.0
 layout = 7
 
 [node name="Panel" parent="Preview/World/Nametag" instance=ExtResource( 64 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = -60.0
-margin_top = -30.0
-margin_right = 60.0
-margin_bottom = 0.0
-custom_styles/panel = SubResource( 52 )
+offset_left = -60.0
+offset_top = -30.0
+offset_right = 60.0
+offset_bottom = 0.0
+theme_override_styles/panel = SubResource( 52 )
 script = ExtResource( 53 )
 overworld_environment_path = NodePath("../../Environment")
 
@@ -440,20 +440,20 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -160.0
-margin_top = -104.0
-margin_right = -40.0
-margin_bottom = -40.0
+offset_left = -160.0
+offset_top = -104.0
+offset_right = -40.0
+offset_bottom = -40.0
 script = ExtResource( 82 )
 allele_buttons_path = NodePath("../VBoxContainer/AlleleButtons")
 category_selector_path = NodePath("../VBoxContainer/CategorySelector")
 
 [node name="Settings" parent="Buttons/SystemButtons" instance=ExtResource( 68 )]
 material = SubResource( 46 )
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 120.0
-margin_bottom = 30.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 30.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 shortcut = ExtResource( 66 )
@@ -466,10 +466,10 @@ shape = 3
 
 [node name="Quit" parent="Buttons/SystemButtons" instance=ExtResource( 68 )]
 material = SubResource( 47 )
-margin_left = 0.0
-margin_top = 34.0
-margin_right = 120.0
-margin_bottom = 64.0
+offset_left = 0.0
+offset_top = 34.0
+offset_right = 120.0
+offset_bottom = 64.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource( 17 )
@@ -484,16 +484,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -472.0
-margin_top = -260.0
-margin_right = 472.0
-margin_bottom = 260.0
+offset_left = -472.0
+offset_top = -260.0
+offset_right = 472.0
+offset_bottom = 260.0
 mouse_filter = 2
 
 [node name="CategorySelector" type="HBoxContainer" parent="Buttons/VBoxContainer"]
-margin_right = 944.0
-margin_bottom = 64.0
-custom_constants/separation = 10
+offset_right = 944.0
+offset_bottom = 64.0
+theme_override_constants/separation = 10
 alignment = 1
 script = ExtResource( 23 )
 allele_buttons_path = NodePath("../AlleleButtons")
@@ -501,11 +501,11 @@ system_buttons_path = NodePath("../../SystemButtons")
 
 [node name="Face" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 14 )
-margin_left = 172.0
-margin_top = 0.0
-margin_right = 252.0
-margin_bottom = 64.0
-focus_neighbour_left = NodePath(".")
+offset_left = 172.0
+offset_top = 0.0
+offset_right = 252.0
+offset_bottom = 64.0
+focus_neighbor_left = NodePath(".")
 texture_normal = ExtResource( 24 )
 texture_pressed = ExtResource( 25 )
 texture_hover = ExtResource( 24 )
@@ -515,11 +515,11 @@ shape = 6
 
 [node name="Eyes" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 43 )
-margin_left = 262.0
-margin_top = 0.0
-margin_right = 292.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 262.0
+offset_top = 0.0
+offset_right = 292.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 32 )
 texture_pressed = ExtResource( 36 )
 texture_hover = ExtResource( 32 )
@@ -531,11 +531,11 @@ collapsed = true
 
 [node name="Nose" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 19 )
-margin_left = 302.0
-margin_top = 0.0
-margin_right = 332.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 302.0
+offset_top = 0.0
+offset_right = 332.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 39 )
 texture_pressed = ExtResource( 28 )
 texture_hover = ExtResource( 39 )
@@ -547,11 +547,11 @@ collapsed = true
 
 [node name="Mouth" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 21 )
-margin_left = 342.0
-margin_top = 0.0
-margin_right = 372.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 342.0
+offset_top = 0.0
+offset_right = 372.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 33 )
 texture_pressed = ExtResource( 42 )
 texture_hover = ExtResource( 33 )
@@ -563,11 +563,11 @@ collapsed = true
 
 [node name="Cheeks" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 23 )
-margin_left = 382.0
-margin_top = 0.0
-margin_right = 412.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 382.0
+offset_top = 0.0
+offset_right = 412.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 34 )
 texture_pressed = ExtResource( 27 )
 texture_hover = ExtResource( 34 )
@@ -579,11 +579,11 @@ collapsed = true
 
 [node name="Ears" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 25 )
-margin_left = 422.0
-margin_top = 0.0
-margin_right = 452.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 422.0
+offset_top = 0.0
+offset_right = 452.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 29 )
 texture_pressed = ExtResource( 37 )
 texture_hover = ExtResource( 29 )
@@ -595,11 +595,11 @@ collapsed = true
 
 [node name="Forehead" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 51 )
-margin_left = 462.0
-margin_top = 0.0
-margin_right = 492.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 462.0
+offset_top = 0.0
+offset_right = 492.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 33 )
 texture_pressed = ExtResource( 42 )
 texture_hover = ExtResource( 33 )
@@ -611,11 +611,11 @@ collapsed = true
 
 [node name="Hair" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 27 )
-margin_left = 502.0
-margin_top = 0.0
-margin_right = 532.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 502.0
+offset_top = 0.0
+offset_right = 532.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 35 )
 texture_pressed = ExtResource( 38 )
 texture_hover = ExtResource( 35 )
@@ -627,11 +627,11 @@ collapsed = true
 
 [node name="Accessory" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 29 )
-margin_left = 542.0
-margin_top = 0.0
-margin_right = 572.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 542.0
+offset_top = 0.0
+offset_right = 572.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 40 )
 texture_pressed = ExtResource( 26 )
 texture_hover = ExtResource( 40 )
@@ -643,11 +643,11 @@ collapsed = true
 
 [node name="Body" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 31 )
-margin_left = 582.0
-margin_top = 0.0
-margin_right = 612.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 582.0
+offset_top = 0.0
+offset_right = 612.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 29 )
 texture_pressed = ExtResource( 37 )
 texture_hover = ExtResource( 29 )
@@ -659,11 +659,11 @@ collapsed = true
 
 [node name="Neck" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 33 )
-margin_left = 622.0
-margin_top = 0.0
-margin_right = 652.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 622.0
+offset_top = 0.0
+offset_right = 652.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 30 )
 texture_pressed = ExtResource( 31 )
 texture_hover = ExtResource( 30 )
@@ -675,11 +675,11 @@ collapsed = true
 
 [node name="Tail" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 35 )
-margin_left = 662.0
-margin_top = 0.0
-margin_right = 692.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 662.0
+offset_top = 0.0
+offset_right = 692.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 40 )
 texture_pressed = ExtResource( 26 )
 texture_hover = ExtResource( 40 )
@@ -691,11 +691,11 @@ collapsed = true
 
 [node name="Belly" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 37 )
-margin_left = 702.0
-margin_top = 0.0
-margin_right = 732.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
+offset_left = 702.0
+offset_top = 0.0
+offset_right = 732.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
 texture_normal = ExtResource( 34 )
 texture_pressed = ExtResource( 27 )
 texture_hover = ExtResource( 34 )
@@ -707,12 +707,12 @@ collapsed = true
 
 [node name="Finish" parent="Buttons/VBoxContainer/CategorySelector" instance=ExtResource( 72 )]
 material = SubResource( 41 )
-margin_left = 742.0
-margin_top = 0.0
-margin_right = 772.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 30, 64 )
-focus_neighbour_right = NodePath(".")
+offset_left = 742.0
+offset_top = 0.0
+offset_right = 772.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 30, 64 )
+focus_neighbor_right = NodePath(".")
 texture_normal = ExtResource( 39 )
 texture_pressed = ExtResource( 28 )
 texture_hover = ExtResource( 39 )
@@ -723,16 +723,16 @@ shape = 1
 collapsed = true
 
 [node name="Spacer" type="Control" parent="Buttons/VBoxContainer"]
-margin_top = 68.0
-margin_right = 944.0
-margin_bottom = 118.0
-rect_min_size = Vector2( 0, 50 )
+offset_top = 68.0
+offset_right = 944.0
+offset_bottom = 118.0
+custom_minimum_size = Vector2( 0, 50 )
 mouse_filter = 2
 
 [node name="AlleleButtons" type="Control" parent="Buttons/VBoxContainer"]
-margin_top = 122.0
-margin_right = 944.0
-margin_bottom = 520.0
+offset_top = 122.0
+offset_right = 944.0
+offset_bottom = 520.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -748,110 +748,110 @@ top_system_button_path = NodePath("../../SystemButtons/Settings")
 
 [node name="CandyButton" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = -1.0
-margin_top = 0.999992
-margin_right = 79.0
-margin_bottom = 65.0
+offset_left = -1.0
+offset_top = 0.999992
+offset_right = 79.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton2" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = -1.0
-margin_top = 76.0
-margin_right = 79.0
-margin_bottom = 140.0
+offset_left = -1.0
+offset_top = 76.0
+offset_right = 79.0
+offset_bottom = 140.0
 text = ""
 
 [node name="CandyButton3" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = -1.0
-margin_top = 155.0
-margin_right = 79.0
-margin_bottom = 219.0
+offset_left = -1.0
+offset_top = 155.0
+offset_right = 79.0
+offset_bottom = 219.0
 text = ""
 
 [node name="CandyButton4" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = -1.0
-margin_top = 230.0
-margin_right = 79.0
-margin_bottom = 294.0
+offset_left = -1.0
+offset_top = 230.0
+offset_right = 79.0
+offset_bottom = 294.0
 text = ""
 
 [node name="CandyButton5" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 95.0
-margin_top = 0.999992
-margin_right = 175.0
-margin_bottom = 65.0
+offset_left = 95.0
+offset_top = 0.999992
+offset_right = 175.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton9" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 192.0
-margin_top = 0.999992
-margin_right = 272.0
-margin_bottom = 65.0
+offset_left = 192.0
+offset_top = 0.999992
+offset_right = 272.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton10" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 288.0
-margin_top = 0.999992
-margin_right = 368.0
-margin_bottom = 65.0
+offset_left = 288.0
+offset_top = 0.999992
+offset_right = 368.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton6" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 95.0
-margin_top = 76.0
-margin_right = 175.0
-margin_bottom = 140.0
+offset_left = 95.0
+offset_top = 76.0
+offset_right = 175.0
+offset_bottom = 140.0
 text = ""
 
 [node name="CandyButton11" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 767.0
-margin_top = 0.999992
-margin_right = 847.0
-margin_bottom = 65.0
+offset_left = 767.0
+offset_top = 0.999992
+offset_right = 847.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton12" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 863.0
-margin_top = 0.999992
-margin_right = 943.0
-margin_bottom = 65.0
+offset_left = 863.0
+offset_top = 0.999992
+offset_right = 943.0
+offset_bottom = 65.0
 text = ""
 
 [node name="CandyButton13" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 863.0
-margin_top = 76.0
-margin_right = 943.0
-margin_bottom = 140.0
+offset_left = 863.0
+offset_top = 76.0
+offset_right = 943.0
+offset_bottom = 140.0
 text = ""
 
 [node name="CandyButton7" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 95.0
-margin_top = 155.0
-margin_right = 175.0
-margin_bottom = 219.0
+offset_left = 95.0
+offset_top = 155.0
+offset_right = 175.0
+offset_bottom = 219.0
 text = ""
 
 [node name="CandyButton8" parent="Buttons/VBoxContainer/AlleleButtons" instance=ExtResource( 65 )]
 material = SubResource( 45 )
-margin_left = 95.0
-margin_top = 230.0
-margin_right = 175.0
-margin_bottom = 294.0
+offset_left = 95.0
+offset_top = 230.0
+offset_right = 175.0
+offset_bottom = 294.0
 text = ""
 
 [node name="Dialogs" type="Control" parent="Buttons"]
-pause_mode = 2
+process_mode = 3
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -865,11 +865,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -90.0
-margin_top = -45.0
-margin_right = 160.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 250, 90 )
+offset_left = -90.0
+offset_top = -45.0
+offset_right = 160.0
+offset_bottom = 45.0
+custom_minimum_size = Vector2( 250, 90 )
 theme = ExtResource( 57 )
 window_title = "Save Changes?"
 dialog_text = "Want to save your changes?"
@@ -880,42 +880,42 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -302.0
-margin_top = -204.0
-margin_right = 298.0
-margin_bottom = 196.0
+offset_left = -302.0
+offset_top = -204.0
+offset_right = 298.0
+offset_bottom = 196.0
 theme = ExtResource( 57 )
-popup_exclusive = true
+exclusive = true
 window_title = "Import Creature"
 mode_overrides_title = false
 mode = 0
 access = 2
-filters = PoolStringArray( "*.json" )
+filters = PackedStringArray( "*.json" )
 
 [node name="Export" type="FileDialog" parent="Buttons/Dialogs"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 192.0
-margin_top = 80.0
-margin_right = 792.0
-margin_bottom = 480.0
+offset_left = 192.0
+offset_top = 80.0
+offset_right = 792.0
+offset_bottom = 480.0
 theme = ExtResource( 57 )
-popup_exclusive = true
+exclusive = true
 window_title = "Export Creature"
 mode_overrides_title = false
 access = 2
-filters = PoolStringArray( "*.json" )
+filters = PackedStringArray( "*.json" )
 
 [node name="Error" type="AcceptDialog" parent="Buttons/Dialogs"]
-margin_left = 419.0
-margin_top = 304.0
-margin_right = 669.0
-margin_bottom = 377.0
-rect_min_size = Vector2( 250, 90 )
+offset_left = 419.0
+offset_top = 304.0
+offset_right = 669.0
+offset_bottom = 377.0
+custom_minimum_size = Vector2( 250, 90 )
 theme = ExtResource( 57 )
-popup_exclusive = true
+exclusive = true
 window_title = "Error"
 dialog_autowrap = true
 
@@ -926,22 +926,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -512.0
-margin_top = -15.0
-margin_right = 512.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 512, 15 )
+offset_left = -512.0
+offset_top = -15.0
+offset_right = 512.0
+offset_bottom = 15.0
+pivot_offset = Vector2( 512, 15 )
 theme = ExtResource( 58 )
-custom_fonts/font = ExtResource( 43 )
+theme_override_fonts/font = ExtResource( 43 )
 text = "Creature Saved"
 align = 1
 script = ExtResource( 79 )
 
 [node name="MenuAccentH3" parent="Buttons/SaveLabel" instance=ExtResource( 67 )]
-margin_left = -137.5
-margin_top = -37.5
-margin_right = 137.5
-margin_bottom = 37.5
+offset_left = -137.5
+offset_top = -37.5
+offset_right = 137.5
+offset_bottom = 37.5
 texture = ExtResource( 77 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Buttons/SaveLabel"]
@@ -980,13 +980,13 @@ bus = "Sound Bus"
 [connection signal="allele_buttons_refreshed" from="Buttons/VBoxContainer/AlleleButtons" to="FatnessChanger" method="_on_AlleleButtons_allele_buttons_refreshed"]
 [connection signal="operation_button_pressed" from="Buttons/VBoxContainer/AlleleButtons" to="." method="_on_AlleleButtons_operation_button_pressed"]
 [connection signal="operation_button_pressed" from="Buttons/VBoxContainer/AlleleButtons" to="FatnessChanger" method="_on_AlleleButtons_operation_button_pressed"]
-[connection signal="about_to_show" from="Buttons/Dialogs/UnsavedChangesConfirmation" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
+[connection signal="about_to_popup" from="Buttons/Dialogs/UnsavedChangesConfirmation" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
 [connection signal="popup_hide" from="Buttons/Dialogs/UnsavedChangesConfirmation" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_popup_hide"]
-[connection signal="about_to_show" from="Buttons/Dialogs/Import" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
+[connection signal="about_to_popup" from="Buttons/Dialogs/Import" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
 [connection signal="file_selected" from="Buttons/Dialogs/Import" to="." method="_on_Import_file_selected"]
 [connection signal="file_selected" from="Buttons/Dialogs/Import" to="CreatureSaver" method="_on_Import_file_selected"]
 [connection signal="popup_hide" from="Buttons/Dialogs/Import" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_popup_hide"]
-[connection signal="about_to_show" from="Buttons/Dialogs/Export" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
+[connection signal="about_to_popup" from="Buttons/Dialogs/Export" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_about_to_show"]
 [connection signal="file_selected" from="Buttons/Dialogs/Export" to="." method="_on_Export_file_selected"]
 [connection signal="popup_hide" from="Buttons/Dialogs/Export" to="Buttons/Dialogs/Backdrop" method="_on_Dialog_popup_hide"]
 [connection signal="quit_pressed" from="SettingsMenu" to="." method="_on_Quit_pressed"]

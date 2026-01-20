@@ -35,12 +35,12 @@ const SPAWN_RIGHT := [
 		Vector2(0, 0), Vector2(0, -1), Vector2(-1, 0), Vector2(-1, -1),
 	]
 
-export (NodePath) var input_path: NodePath
+@export var input_path: NodePath
 
 ## how many times the piece has moved horizontally this frame, as a result of normal movement (not mid-drop movement)
 var _normal_horizontal_movement_count := 0
 
-onready var input: PieceInput = get_node(input_path)
+@onready var input: PieceInput = get_node(input_path)
 
 func _physics_process(_delta: float) -> void:
 	_normal_horizontal_movement_count = 0
@@ -87,7 +87,7 @@ func apply_initial_move_input(piece: ActivePiece) -> String:
 
 
 func emit_initial_move_signal(movement_signal: String, piece: ActivePiece) -> void:
-	if movement_signal.empty():
+	if movement_signal.is_empty():
 		return
 	
 	emit_signal(movement_signal, piece)

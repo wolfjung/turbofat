@@ -1,21 +1,21 @@
 extends VBoxContainer
 ## UI control which lets the player view and update the game's keybinds.
 
-onready var _tab_container: TabContainer = get_parent()
+@onready var _tab_container: TabContainer = get_parent()
 
 
 func _ready() -> void:
-	$Presets/Guideline.connect("pressed", self, "_on_Guideline_pressed")
-	$Presets/Wasd.connect("pressed", self, "_on_Wasd_pressed")
-	$Presets/Custom.connect("pressed", self, "_on_Custom_pressed")
-	_custom_control("ResetToDefault").connect("pressed", self, "_on_ResetToDefault_pressed")
-	PlayerData.difficulty.connect("hold_piece_changed", self, "_on_DifficultyData_hold_piece_changed")
-	InputManager.connect("input_mode_changed", self, "_on_InputManager_input_mode_changed")
+	$Presets/Guideline.connect("pressed", Callable(self, "_on_Guideline_pressed"))
+	$Presets/Wasd.connect("pressed", Callable(self, "_on_Wasd_pressed"))
+	$Presets/Custom.connect("pressed", Callable(self, "_on_Custom_pressed"))
+	_custom_control("ResetToDefault").connect("pressed", Callable(self, "_on_ResetToDefault_pressed"))
+	PlayerData.difficulty.connect("hold_piece_changed", Callable(self, "_on_DifficultyData_hold_piece_changed"))
+	InputManager.connect("input_mode_changed", Callable(self, "_on_InputManager_input_mode_changed"))
 	
 	match SystemData.keybind_settings.preset:
-		KeybindSettings.GUIDELINE: $Presets/Guideline.pressed = true
-		KeybindSettings.WASD: $Presets/Wasd.pressed = true
-		KeybindSettings.CUSTOM: $Presets/Custom.pressed = true
+		KeybindSettings.GUIDELINE: $Presets/Guideline.button_pressed = true
+		KeybindSettings.WASD: $Presets/Wasd.button_pressed = true
+		KeybindSettings.CUSTOM: $Presets/Custom.button_pressed = true
 	
 	_refresh_keybind_labels()
 
@@ -175,7 +175,7 @@ func _refresh_focus_neighbours() -> void:
 			pressed_preset_button = preset_button
 			break
 	if pressed_preset_button:
-		_tab_container.focus_neighbour_bottom = _tab_container.get_path_to(pressed_preset_button)
+		_tab_container.focus_neighbor_bottom = _tab_container.get_path_to(pressed_preset_button)
 
 
 func _on_Guideline_pressed() -> void:

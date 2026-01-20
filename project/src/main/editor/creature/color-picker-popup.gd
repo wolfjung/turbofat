@@ -5,12 +5,12 @@ extends PopupPanel
 signal color_changed(color)
 
 ## Virtual property; value is only exposed through getters/setters
-var color_presets: Array setget set_color_presets
+var color_presets: Array: set = set_color_presets
 
 ## Virtual property; value is only exposed through getters/setters
-var selected_color: Color setget set_selected_color, get_selected_color
+var selected_color: Color: get = get_selected_color, set = set_selected_color
 
-onready var _color_picker := $ColorPicker
+@onready var _color_picker := $ColorPicker
 
 func _ready() -> void:
 	_refresh_size()
@@ -27,11 +27,11 @@ func _input(event: InputEvent) -> void:
 		if not get_global_rect().has_point(event.position):
 			hide()
 			if is_inside_tree():
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		hide()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 func set_color_presets(new_color_presets: Array) -> void:
@@ -47,7 +47,7 @@ func get_selected_color() -> Color:
 
 
 func _refresh_size() -> void:
-	rect_size = _color_picker.rect_min_size
+	size = _color_picker.custom_minimum_size
 
 
 func _on_about_to_show() -> void:
@@ -65,13 +65,13 @@ func _on_ColorPicker_resized() -> void:
 		return
 	
 	# Avoid a Stack Overflow where changing our size triggers another _on_resized() event
-	_color_picker.disconnect("resized", self, "_on_ColorPicker_resized")
+	_color_picker.disconnect("resized", Callable(self, "_on_ColorPicker_resized"))
 	_refresh_size()
-	_color_picker.connect("resized", self, "_on_ColorPicker_resized")
+	_color_picker.connect("resized", Callable(self, "_on_ColorPicker_resized"))
 
 
 func _on_visibility_changed() -> void:
 	if visible:
 		if is_inside_tree():
-			yield(get_tree(), "idle_frame")
+			await get_tree().idle_frame
 		_color_picker.grab_focus()

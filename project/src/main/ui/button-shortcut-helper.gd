@@ -11,13 +11,13 @@ extends Node
 ## activated simultaneously.
 
 ## action which activates the button
-export (String) var action: String
+@export var action: String
 
 ## (optional) second action which is also required to activate the button
-export (String) var overridden_action: String
+@export var overridden_action: String
 
 ## button this helper will activate
-onready var button: BaseButton = get_parent()
+@onready var button: BaseButton = get_parent()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreen"):
@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 	if not get_parent().is_visible_in_tree():
 		# do not activate invisible buttons
 		return
-	if not overridden_action.empty() \
+	if not overridden_action.is_empty() \
 			and not Input.is_action_pressed(overridden_action) \
 			and not Input.is_action_just_released(overridden_action):
 		# if an 'overridden_action' is defined, only activate when both actions are activated
@@ -37,14 +37,14 @@ func _input(event: InputEvent) -> void:
 		# workaround for Godot #35172 (https://github.com/godotengine/godot/issues/35172); setting button pressed to
 		# true doesn't work without toggle mode
 		button.toggle_mode = true
-		button.pressed = true
+		button.button_pressed = true
 		button.emit_signal("button_down")
 	if button.pressed and event.is_action_released(action):
 		# workaround for Godot #35172 (https://github.com/godotengine/godot/issues/35172); setting button pressed to
 		# true doesn't work without toggle mode
-		button.pressed = false
+		button.button_pressed = false
 		button.toggle_mode = false
 		button.emit_signal("button_up")
 		button.emit_signal("pressed")
 	if is_inside_tree():
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()

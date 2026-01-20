@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/main/world/environment/overworld-obstacle.gd" type="Script" id=1]
-[ext_resource path="res://assets/main/world/environment/lava/volcano-large-1.png" type="Texture" id=3]
-[ext_resource path="res://assets/main/world/environment/lava/volcano-large-4.png" type="Texture" id=4]
-[ext_resource path="res://assets/main/world/environment/lava/volcano-large-2.png" type="Texture" id=5]
-[ext_resource path="res://assets/main/world/environment/lava/volcano-large-3.png" type="Texture" id=6]
+[ext_resource path="res://assets/main/world/environment/lava/volcano-large-1.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/main/world/environment/lava/volcano-large-4.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/main/world/environment/lava/volcano-large-2.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/main/world/environment/lava/volcano-large-3.png" type="Texture2D" id=6]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -14,11 +14,11 @@ animations = [ {
 "speed": 3.0
 } ]
 
-[node name="VolcanoLarge" type="KinematicBody2D"]
+[node name="VolcanoLarge" type="CharacterBody2D"]
 script = ExtResource( 1 )
 shadow_scale = 3.2
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2( 0.539476, 0.539476 )
 frames = SubResource( 2 )
 frame = 2
@@ -27,4 +27,4 @@ offset = Vector2( 0, -140 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 scale = Vector2( 0.539476, 0.539476 )
-polygon = PoolVector2Array( -32.4389, 161.268, -327.169, 102.878, -443.949, 45.4144, -441.169, -27.8048, -332.73, -127.902, -0.926825, -167.755, 338.291, -111.219, 430.047, -32.4389, 444.876, 53.7559, 281.755, 160.341 )
+polygon = PackedVector2Array( -32.4389, 161.268, -327.169, 102.878, -443.949, 45.4144, -441.169, -27.8048, -332.73, -127.902, -0.926825, -167.755, 338.291, -111.219, 430.047, -32.4389, 444.876, 53.7559, 281.755, 160.341 )

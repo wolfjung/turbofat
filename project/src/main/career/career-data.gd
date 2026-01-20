@@ -52,7 +52,7 @@ var day := 0
 var distance_earned := 0
 
 ## Distance the player has travelled in the current career session.
-var distance_travelled := 0 setget set_distance_travelled
+var distance_travelled := 0: set = set_distance_travelled
 
 ## Number of extra lives awarded in the current career session.
 var extra_life_count := 0
@@ -61,7 +61,7 @@ var extra_life_count := 0
 var forced_hardcore_level_hours := []
 
 ## Number of levels played in the current career session.
-var hours_passed := 0 setget set_hours_passed
+var hours_passed := 0: set = set_hours_passed
 
 ## Level IDs played in the current career session. This is tracked to avoid repeating levels.
 var level_ids := []
@@ -113,11 +113,11 @@ var _career_calendar
 var _career_flow
 
 func _ready() -> void:
-	CurrentCutscene.connect("cutscene_played", self, "_on_CurrentCutscene_cutscene_played")
+	CurrentCutscene.connect("cutscene_played", Callable(self, "_on_CurrentCutscene_cutscene_played"))
 	
 	_seconds_played_timer = Timer.new()
 	_seconds_played_timer.wait_time = PlayerData.SECONDS_PLAYED_INCREMENT
-	_seconds_played_timer.connect("timeout", self, "_on_SecondsPlayedTimer_timeout")
+	_seconds_played_timer.connect("timeout", Callable(self, "_on_SecondsPlayedTimer_timeout"))
 	add_child(_seconds_played_timer)
 	_seconds_played_timer.start()
 	

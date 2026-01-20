@@ -1,13 +1,13 @@
 extends Control
 ## Shows popup dialogs for the level editor.
 
-export (NodePath) var level_editor_path: NodePath
+@export var level_editor_path: NodePath
 
-onready var _level_editor: LevelEditor = get_node(level_editor_path)
+@onready var _level_editor: LevelEditor = get_node(level_editor_path)
 
-onready var _open_file_dialog := $OpenFile
-onready var _open_resource_dialog := $OpenResource
-onready var _save_dialog := $Save
+@onready var _open_file_dialog := $OpenFile
+@onready var _open_resource_dialog := $OpenResource
+@onready var _save_dialog := $Save
 
 func _ready() -> void:
 	_assign_default_dialog_paths()

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/chew-alt.wav-7f88a6d4f24bc06f54c6763eac338873.sample"
+type="AudioStreamWAV"
+uid="uid://dyku0peisloup"
+path="res://.godot/imported/chew-alt.wav-7f88a6d4f24bc06f54c6763eac338873.sample"
 
 [deps]
 
 source_file="res://assets/main/world/creature/chew-alt.wav"
-dest_files=[ "res://.import/chew-alt.wav-7f88a6d4f24bc06f54c6763eac338873.sample" ]
+dest_files=["res://.godot/imported/chew-alt.wav-7f88a6d4f24bc06f54c6763eac338873.sample"]
 
 [params]
 

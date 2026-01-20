@@ -9,7 +9,7 @@ extends TileMap
 
 var dirty := false
 
-onready var _parent_map: TileMap = get_parent()
+@onready var _parent_map: TileMap = get_parent()
 
 func _process(_delta: float) -> void:
 	if dirty:

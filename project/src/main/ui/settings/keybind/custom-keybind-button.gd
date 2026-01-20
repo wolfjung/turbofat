@@ -4,14 +4,14 @@ extends Button
 ## emitted when the player starts or stops rebinding a key
 signal awaiting_changed(awaiting)
 
-export (String) var action_name: String
-export (int) var action_index: int
+@export var action_name: String
+@export var action_index: int
 
 ## 'true' if this button is waiting for the player to press a key
 var awaiting := false
 
 func _ready() -> void:
-	SystemData.keybind_settings.connect("settings_changed", self, "_on_KeybindSettings_settings_changed")
+	SystemData.keybind_settings.connect("changed", Callable(self, "_on_KeybindSettings_settings_changed"))
 	_refresh()
 
 
@@ -61,7 +61,7 @@ func _start_awaiting() -> void:
 ## Updates the button's text and texture based on the player's current keybinds.
 func _refresh() -> void:
 	var new_text := ""
-	var new_image: Texture = null
+	var new_image: Texture2D = null
 	var json: Dictionary = SystemData.keybind_settings.get_custom_keybind(action_name, action_index)
 	if json.get("type") == "key":
 		new_text = tr(KeybindManager.pretty_string(json))

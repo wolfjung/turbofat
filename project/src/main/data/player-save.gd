@@ -23,17 +23,17 @@ var rolling_backups := RollingBackups.new()
 ## file worked.
 ##
 ## Virtual property; value is only exposed through getters/setters
-var loaded_backup: int setget ,get_loaded_backup
+var loaded_backup: int: get = get_loaded_backup
 
 ## Newly renamed save files which couldn't be loaded
 ## Virtual property; value is only exposed through getters/setters
-var corrupt_filenames: Array setget ,get_corrupt_filenames
+var corrupt_filenames: Array: get = get_corrupt_filenames
 
 ## Filename for saving/loading player data. Can be changed for tests
-var data_filename := "user://saveslot0.json" setget set_data_filename
+var data_filename := "user://saveslot0.json": set = set_data_filename
 
 ## Filename for loading data older than July 2021. Can be changed for tests
-var legacy_filename := "user://turbofat0.save" setget set_legacy_filename
+var legacy_filename := "user://turbofat0.save": set = set_legacy_filename
 
 ## 'true' if the previous '_save_items_from_file' call upgraded the loaded data.
 var load_performed_upgrade := false
@@ -56,7 +56,7 @@ func _ready() -> void:
 	rolling_backups.data_filename = data_filename
 	rolling_backups.legacy_filename = legacy_filename
 	
-	Breadcrumb.connect("before_scene_changed", self, "_on_Breadcrumb_before_scene_changed")
+	Breadcrumb.connect("before_scene_changed", Callable(self, "_on_Breadcrumb_before_scene_changed"))
 
 
 func _exit_tree() -> void:
@@ -107,7 +107,7 @@ func save_player_data(threaded: bool = false) -> void:
 	if use_threaded:
 		emit_signal("before_save")
 		_save_thread = Thread.new()
-		_save_thread.start(self, "_threaded_write_file")
+		_save_thread.start(Callable(self, "_threaded_write_file"))
 		# The after_save signal is emitted from within the thread.
 	else:
 		emit_signal("before_save")
@@ -163,7 +163,7 @@ func get_save_slot_player_short_name(filename: String) -> String:
 func load_player_data_from_file(filename: String) -> bool:
 	load_performed_upgrade = false
 	var json_save_items := _save_items_from_file(filename)
-	if json_save_items.empty():
+	if json_save_items.is_empty():
 		return false
 	
 	for json_save_item_obj in json_save_items:
@@ -223,7 +223,9 @@ func _save_items_from_file(filename: String) -> Array:
 		push_warning("Invalid json in file '%s': %s" % [filename, validate_json_result])
 		return []
 	
-	var json_save_items: Array = parse_json(save_json_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(save_json_text)
+	var json_save_items: Array = test_json_conv.get_data()
 	
 	if _upgrader.needs_upgrade(json_save_items):
 		json_save_items = _upgrader.upgrade(json_save_items)

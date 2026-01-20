@@ -13,11 +13,11 @@ enum CreatureDetail {
 }
 
 ## enum from CreatureDetail describing how detailed the creatures should look
-var creature_detail: int = _default_creature_detail() setget set_creature_detail
+var creature_detail: int = _default_creature_detail(): set = set_creature_detail
 
-var fullscreen: bool = true setget set_fullscreen
+var fullscreen: bool = true: set = set_fullscreen
 
-var use_vsync: bool = _default_use_vsync() setget set_use_vsync
+var use_vsync: bool = _default_use_vsync(): set = set_use_vsync
 
 func set_creature_detail(new_creature_detail: int) -> void:
 	if creature_detail == new_creature_detail:

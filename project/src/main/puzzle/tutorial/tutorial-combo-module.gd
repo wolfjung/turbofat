@@ -30,24 +30,24 @@ var _prepared_levels: Dictionary
 var _failed_levels: Dictionary
 
 func _ready() -> void:
-	PuzzleState.connect("after_game_prepared", self, "_on_PuzzleState_after_game_prepared")
-	PuzzleState.connect("after_piece_written", self, "_on_PuzzleState_after_piece_written")
-	PuzzleState.connect("combo_ended", self, "_on_PuzzleState_combo_ended")
-	PuzzleState.connect("topped_out", self, "_on_PuzzleState_topped_out")
+	PuzzleState.connect("after_game_prepared", Callable(self, "_on_PuzzleState_after_game_prepared"))
+	PuzzleState.connect("after_piece_written", Callable(self, "_on_PuzzleState_after_piece_written"))
+	PuzzleState.connect("combo_ended", Callable(self, "_on_PuzzleState_combo_ended"))
+	PuzzleState.connect("topped_out", Callable(self, "_on_PuzzleState_topped_out"))
 	
-	playfield.connect("line_cleared", self, "_on_Playfield_line_cleared")
-	playfield.connect("box_built", self, "_on_Playfield_box_built")
+	playfield.connect("line_cleared", Callable(self, "_on_Playfield_line_cleared"))
+	playfield.connect("box_built", Callable(self, "_on_Playfield_box_built"))
 	
-	piece_manager.connect("piece_spawned", self, "_on_PieceManager_piece_spawned")
-	hud.diagram.connect("ok_chosen", self, "_on_TutorialDiagram_ok_chosen")
-	hud.diagram.connect("help_chosen", self, "_on_TutorialDiagram_help_chosen")
+	piece_manager.connect("piece_spawned", Callable(self, "_on_PieceManager_piece_spawned"))
+	hud.diagram.connect("ok_chosen", Callable(self, "_on_TutorialDiagram_ok_chosen"))
+	hud.diagram.connect("help_chosen", Callable(self, "_on_TutorialDiagram_help_chosen"))
 	
 	hud.set_message(tr("Today we'll go over combos."
 			+ "\n\nCombos are easy, you might have already done them on accident!"))
 
 
 func prepare_tutorial_level() -> void:
-	.prepare_tutorial_level()
+	super.prepare_tutorial_level()
 
 	_cakes_built = 0
 	PuzzleState.level_performance.pieces = 0
@@ -73,7 +73,7 @@ func prepare_tutorial_level() -> void:
 			hud.enqueue_message(tr("It's okay if they don't fit perfectly, or if they leave little holes!"
 					+ "\n\nDon't worry about that."))
 			start_timer_after_all_messages_shown(3.0) \
-					.connect("timeout", self, "_on_Timer_timeout_advance_level")
+					super.connect("timeout", Callable(self, "_on_Timer_timeout_advance_level"))
 		"tutorial/combo_1":
 			_show_next_diagram()
 		"tutorial/combo_2":
@@ -270,20 +270,20 @@ func _on_PuzzleState_after_piece_written() -> void:
 						+ "\n\nIf this seems overwhelming, don't worry."
 						+ "\n\nYou can get good scores without combos too."))
 				start_timer_after_all_messages_shown(3.0) \
-						.connect("timeout", self, "_on_Timer_timeout_advance_level")
+						super.connect("timeout", Callable(self, "_on_Timer_timeout_advance_level"))
 		"tutorial/combo_3":
 			if PuzzleState.level_performance.pieces == 2:
 				var message := tr("Oops! I can still make the cake box, but my combo already broke.")
 				start_timer_after_all_messages_shown(3.0) \
-						.connect("timeout", self, "_on_Timer_timeout_set_message", [message])
+						super.connect("timeout", Callable(self, "_on_Timer_timeout_set_message").bind(message))
 			if PuzzleState.level_performance.pieces >= 3:
 				PuzzleState.start_timer(3.0) \
-						.connect("timeout", self, "_on_Timer_timeout_advance_level")
+						super.connect("timeout", Callable(self, "_on_Timer_timeout_advance_level"))
 		"tutorial/combo_4":
 			if PuzzleState.level_performance.pieces >= 4:
 				hud.set_message(tr("There, I did it!\n\nThat was tricky."))
 				start_timer_after_all_messages_shown(3.0) \
-						.connect("timeout", self, "_on_Timer_timeout_advance_level")
+						super.connect("timeout", Callable(self, "_on_Timer_timeout_advance_level"))
 		"tutorial/combo_5":
 			if hud.skill_tally_item("CakeBox").is_complete():
 				_advance_level()
@@ -300,7 +300,7 @@ func _on_PuzzleState_after_piece_written() -> void:
 						+ "\n\nIf this seems overwhelming, don't worry."
 						+ "\n\nYou can get good scores without combos too."))
 				start_timer_after_all_messages_shown(3.0) \
-						.connect("timeout", self, "_on_Timer_timeout_advance_level")
+						super.connect("timeout", Callable(self, "_on_Timer_timeout_advance_level"))
 		"tutorial/combo_6":
 			if not _showed_end_of_level_message:
 				var first_customer_score: int = PuzzleState.customer_scores[0]

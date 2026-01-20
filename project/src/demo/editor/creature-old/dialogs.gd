@@ -1,13 +1,13 @@
 extends Control
 ## Shows popup dialogs for the old creature editor.
 
-export (NodePath) var creature_editor_path: NodePath
+@export var creature_editor_path: NodePath
 
-onready var _creature_editor: CreatureEditorOld = get_node(creature_editor_path)
-onready var _error_dialog := $Error
-onready var _import_dialog := $Import
-onready var _export_dialog := $Export
-onready var _save_confirmation := $SaveConfirmation
+@onready var _creature_editor: CreatureEditorOld = get_node(creature_editor_path)
+@onready var _error_dialog := $Error
+@onready var _import_dialog := $Import
+@onready var _export_dialog := $Export
+@onready var _save_confirmation := $SaveConfirmation
 
 func _ready() -> void:
 	_assign_default_dialog_paths()

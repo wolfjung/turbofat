@@ -2,9 +2,9 @@
 
 [ext_resource path="res://src/main/puzzle/result/BarGraphBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/puzzle/result/BarGraphGoal.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/main/utils/outline.shader" type="Shader" id=3]
-[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://src/main/puzzle/result/bar-graph-bar.shader" type="Shader" id=5]
+[ext_resource path="res://src/main/utils/outline.gdshader" type="Shader" id=3]
+[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="FontFile" id=4]
+[ext_resource path="res://src/main/puzzle/result/bar-graph-bar.gdshader" type="Shader" id=5]
 [ext_resource path="res://assets/main/puzzle/line-erase.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/main/career/ui/progress-board-appear.wav" type="AudioStream" id=7]
 [ext_resource path="res://src/main/puzzle/result/results-hud.gd" type="Script" id=8]
@@ -14,40 +14,40 @@
 [ext_resource path="res://src/main/puzzle/result/bar-graph-sfx.gd" type="Script" id=12]
 [ext_resource path="res://src/main/puzzle/result/receipt-header.gd" type="Script" id=13]
 [ext_resource path="res://src/main/puzzle/result/receipt-medal.gd" type="Script" id=14]
-[ext_resource path="res://assets/main/puzzle/result/receipt-table.png" type="Texture" id=15]
-[ext_resource path="res://assets/main/puzzle/result/combo-texture.png" type="Texture" id=16]
-[ext_resource path="res://assets/main/puzzle/result/medal-hand.png" type="Texture" id=17]
-[ext_resource path="res://assets/main/puzzle/result/receipt-grade-sheet.png" type="Texture" id=18]
-[ext_resource path="res://assets/main/puzzle/result/receipt-header.png" type="Texture" id=19]
-[ext_resource path="res://assets/main/puzzle/result/stamp-hand.png" type="Texture" id=20]
-[ext_resource path="res://assets/main/puzzle/result/medal-sheet.png" type="Texture" id=21]
+[ext_resource path="res://assets/main/puzzle/result/receipt-table.png" type="Texture2D" id=15]
+[ext_resource path="res://assets/main/puzzle/result/combo-texture.png" type="Texture2D" id=16]
+[ext_resource path="res://assets/main/puzzle/result/medal-hand.png" type="Texture2D" id=17]
+[ext_resource path="res://assets/main/puzzle/result/receipt-grade-sheet.png" type="Texture2D" id=18]
+[ext_resource path="res://assets/main/puzzle/result/receipt-header.png" type="Texture2D" id=19]
+[ext_resource path="res://assets/main/puzzle/result/stamp-hand.png" type="Texture2D" id=20]
+[ext_resource path="res://assets/main/puzzle/result/medal-sheet.png" type="Texture2D" id=21]
 [ext_resource path="res://assets/main/puzzle/result/bar-pop.wav" type="AudioStream" id=22]
 [ext_resource path="res://assets/main/puzzle/result/medal-shimmer.wav" type="AudioStream" id=23]
 [ext_resource path="res://assets/main/puzzle/result/medal-bang.wav" type="AudioStream" id=24]
-[ext_resource path="res://assets/main/puzzle/result/box-texture.png" type="Texture" id=25]
-[ext_resource path="res://assets/main/puzzle/result/receipt-paper.png" type="Texture" id=26]
-[ext_resource path="res://assets/main/puzzle/result/extra-texture.png" type="Texture" id=27]
+[ext_resource path="res://assets/main/puzzle/result/box-texture.png" type="Texture2D" id=25]
+[ext_resource path="res://assets/main/puzzle/result/receipt-paper.png" type="Texture2D" id=26]
+[ext_resource path="res://assets/main/puzzle/result/extra-texture.png" type="Texture2D" id=27]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 24
 outline_size = 3
 outline_color = Color( 0.305882, 0.227451, 0.196078, 1 )
 use_filter = true
-extra_spacing_top = -3
-extra_spacing_bottom = -3
+spacing_top = -3
+spacing_bottom = -3
 font_data = ExtResource( 4 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_scale")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
@@ -58,8 +58,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ true ]
 }
@@ -69,14 +69,14 @@ resource_name = "play"
 length = 0.25
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_scale")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.133333, 0.183333, 0.233333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.133333, 0.183333, 0.233333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.8, 0.8 ), Vector2( 0.9, 1.1 ), Vector2( 1.07, 0.93 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ) ]
 }
@@ -87,8 +87,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ true ]
 }
@@ -99,18 +99,18 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [ 0.0 ],
 "method": "play"
 } ]
 }
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 use_filter = true
-extra_spacing_top = -3
-extra_spacing_bottom = -3
+spacing_top = -3
+spacing_bottom = -3
 font_data = ExtResource( 4 )
 
 [sub_resource type="ShaderMaterial" id=21]
@@ -186,8 +186,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 0.25, 0.25 ) ]
 }
@@ -198,8 +198,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 98, 370 ) ]
 }
@@ -210,8 +210,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ -11.2 ]
 }
@@ -222,8 +222,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
@@ -234,8 +234,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ false ]
 }
@@ -246,8 +246,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ false ]
 }
@@ -263,8 +263,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.133333, 0.333333, 0.666667 ),
-"transitions": PoolRealArray( 1.5, 1, 1.5, 1 ),
+"times": PackedFloat32Array( 0, 0.133333, 0.333333, 0.666667 ),
+"transitions": PackedFloat32Array( 1.5, 1, 1.5, 1 ),
 "update": 0,
 "values": [ Vector2( 0.35, 0.35 ), Vector2( 0.25, 0.25 ), Vector2( 0.25, 0.25 ), Vector2( 0.35, 0.35 ) ]
 }
@@ -275,8 +275,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.133333, 0.333333, 0.666667 ),
-"transitions": PoolRealArray( 1.5, 1, 1.5, 1 ),
+"times": PackedFloat32Array( 0, 0.133333, 0.333333, 0.666667 ),
+"transitions": PackedFloat32Array( 1.5, 1, 1.5, 1 ),
 "update": 0,
 "values": [ Vector2( 279, 370 ), Vector2( 98, 370 ), Vector2( 98, 370 ), Vector2( 279, 370 ) ]
 }
@@ -287,8 +287,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.133333, 0.333333, 0.666667 ),
-"transitions": PoolRealArray( 1.5, 1, 1.5, 1 ),
+"times": PackedFloat32Array( 0, 0.133333, 0.333333, 0.666667 ),
+"transitions": PackedFloat32Array( 1.5, 1, 1.5, 1 ),
 "update": 0,
 "values": [ 10.0, -11.2, -11.2, 10.0 ]
 }
@@ -299,8 +299,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.0333333, 0.6, 0.666667 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0333333, 0.6, 0.666667 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
@@ -311,8 +311,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.15 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.15 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "stamp"
@@ -325,8 +325,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.666667 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 0.666667 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
 }
@@ -337,8 +337,8 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.15 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.15 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [ 0.0 ],
 "method": "play"
@@ -351,8 +351,8 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 0.133334 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 0.133334 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
 }
@@ -372,8 +372,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 300, 507 ) ]
 }
@@ -384,8 +384,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.0 ]
 }
@@ -396,8 +396,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
@@ -408,8 +408,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ false ]
 }
@@ -420,8 +420,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 0.25, 0.25 ) ]
 }
@@ -432,8 +432,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 2 ]
 }
@@ -444,8 +444,8 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ false ]
 }
@@ -460,8 +460,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.133333, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.133333, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 334, 153 ), Vector2( 205, 293 ), Vector2( 341, 515 ) ]
 }
@@ -472,8 +472,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.133333, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.133333, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ 7.0, 0.0, -20.0 ]
 }
@@ -484,8 +484,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.0333333, 0.266667, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0333333, 0.266667, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
@@ -496,8 +496,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.133333 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 0.133333 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
 }
@@ -508,8 +508,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.133333 ),
-"transitions": PoolRealArray( 1.5, 1 ),
+"times": PackedFloat32Array( 0, 0.133333 ),
+"transitions": PackedFloat32Array( 1.5, 1 ),
 "update": 0,
 "values": [ Vector2( 0.35, 0.35 ), Vector2( 0.25, 0.25 ) ]
 }
@@ -520,8 +520,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.133333, 0.666667, 0.733333, 0.8, 0.866667, 0.933333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0.133333, 0.666667, 0.733333, 0.8, 0.866667, 0.933333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 2, 1, 3, 4, 5, 2 ]
 }
@@ -532,8 +532,8 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
 }
@@ -544,8 +544,8 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0.133333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.133333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [ 0.0 ],
 "method": "play"
@@ -558,8 +558,8 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0.8 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.8 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [ 0.0 ],
 "method": "play"
@@ -573,26 +573,26 @@ mouse_filter = 2
 script = ExtResource( 8 )
 
 [node name="Clipper" type="Control" parent="."]
-margin_left = 580.0
-margin_right = 1180.0
-margin_bottom = 684.0
-rect_clip_content = true
+offset_left = 580.0
+offset_right = 1180.0
+offset_bottom = 684.0
+clip_contents = true
 mouse_filter = 2
 
 [node name="ReceiptPaper" type="TextureRect" parent="Clipper"]
-margin_left = 185.0
-margin_top = 4.0
-margin_right = 443.0
-margin_bottom = 716.0
+offset_left = 185.0
+offset_top = 4.0
+offset_right = 443.0
+offset_bottom = 716.0
 texture = ExtResource( 26 )
 expand = true
 
 [node name="Header" type="TextureRect" parent="Clipper/ReceiptPaper"]
-margin_left = 16.5
-margin_top = 20.0
-margin_right = 241.5
-margin_bottom = 107.5
-rect_pivot_offset = Vector2( 112, 43.75 )
+offset_left = 16.5
+offset_top = 20.0
+offset_right = 241.5
+offset_bottom = 107.5
+pivot_offset = Vector2( 112, 43.75 )
 texture = ExtResource( 19 )
 expand = true
 script = ExtResource( 13 )
@@ -600,8 +600,8 @@ script = ExtResource( 13 )
 [node name="Label" type="Label" parent="Clipper/ReceiptPaper/Header"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-custom_fonts/font = SubResource( 1 )
+theme_override_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+theme_override_fonts/font = SubResource( 1 )
 text = "Level
 Complete!"
 align = 1
@@ -617,45 +617,45 @@ volume_db = -2.0
 bus = "Sound Bus"
 
 [node name="Table" type="TextureRect" parent="Clipper/ReceiptPaper"]
-margin_left = 13.0
-margin_top = 110.0
-margin_right = 245.0
-margin_bottom = 152.0
+offset_left = 13.0
+offset_top = 110.0
+offset_right = 245.0
+offset_bottom = 152.0
 texture = ExtResource( 15 )
 expand = true
 script = ExtResource( 10 )
 
 [node name="BoxesLabel" type="Label" parent="Clipper/ReceiptPaper/Table"]
-margin_left = 3.0
-margin_top = 2.0
-margin_right = 78.0
-margin_bottom = 40.0
-custom_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
-custom_fonts/font = SubResource( 2 )
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 78.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Boxes
 ¥0"
 align = 1
 valign = 1
 
 [node name="CombosLabel" type="Label" parent="Clipper/ReceiptPaper/Table"]
-margin_left = 78.0
-margin_top = 2.0
-margin_right = 153.0
-margin_bottom = 40.0
-custom_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
-custom_fonts/font = SubResource( 2 )
+offset_left = 78.0
+offset_top = 2.0
+offset_right = 153.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Combos
 ¥0"
 align = 1
 valign = 1
 
 [node name="ExtraLabel" type="Label" parent="Clipper/ReceiptPaper/Table"]
-margin_left = 154.0
-margin_top = 2.0
-margin_right = 229.0
-margin_bottom = 40.0
-custom_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
-custom_fonts/font = SubResource( 2 )
+offset_left = 154.0
+offset_top = 2.0
+offset_right = 229.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Extra
 ¥0"
 align = 1
@@ -665,11 +665,11 @@ valign = 1
 wait_time = 0.05
 
 [node name="BarGraph" type="Control" parent="Clipper/ReceiptPaper"]
-margin_left = 13.0
-margin_top = 160.0
-margin_right = 245.0
-margin_bottom = 710.0
-rect_clip_content = true
+offset_left = 13.0
+offset_top = 160.0
+offset_right = 245.0
+offset_bottom = 710.0
+clip_contents = true
 script = ExtResource( 9 )
 receipt_table_path = NodePath("../Table")
 
@@ -679,73 +679,73 @@ anchor_bottom = 1.0
 
 [node name="BoxBar" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 1 )]
 material = SubResource( 21 )
-margin_top = 371.0
-margin_right = 85.0
-margin_bottom = 448.0
-custom_styles/panel = SubResource( 11 )
+offset_top = 371.0
+offset_right = 85.0
+offset_bottom = 448.0
+theme_override_styles/panel = SubResource( 11 )
 
 [node name="ComboBar" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 1 )]
 material = SubResource( 20 )
-margin_top = 219.0
-margin_right = 85.0
-margin_bottom = 372.0
-custom_styles/panel = SubResource( 12 )
+offset_top = 219.0
+offset_right = 85.0
+offset_bottom = 372.0
+theme_override_styles/panel = SubResource( 12 )
 
 [node name="OtherBar" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 1 )]
 material = SubResource( 7 )
-margin_top = 183.0
-margin_right = 85.0
-margin_bottom = 220.0
-custom_styles/panel = SubResource( 13 )
+offset_top = 183.0
+offset_right = 85.0
+offset_bottom = 220.0
+theme_override_styles/panel = SubResource( 13 )
 
 [node name="TotalLabel" type="Label" parent="Clipper/ReceiptPaper/BarGraph/Contents"]
-margin_top = 163.0
-margin_right = 85.0
-margin_bottom = 183.0
-custom_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
-custom_fonts/font = SubResource( 2 )
+offset_top = 163.0
+offset_right = 85.0
+offset_bottom = 183.0
+theme_override_colors/font_color = Color( 0.305882, 0.227451, 0.196078, 1 )
+theme_override_fonts/font = SubResource( 2 )
 text = "¥387"
 align = 1
 valign = 1
 
 [node name="SuccessGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 198.0
-margin_right = 200.0
-margin_bottom = 218.0
+offset_left = 0.0
+offset_top = 198.0
+offset_right = 200.0
+offset_bottom = 218.0
 
 [node name="SssGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 198.0
-margin_right = 200.0
-margin_bottom = 218.0
+offset_left = 0.0
+offset_top = 198.0
+offset_right = 200.0
+offset_bottom = 218.0
 
 [node name="SsGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 271.0
-margin_right = 200.0
-margin_bottom = 291.0
+offset_left = 0.0
+offset_top = 271.0
+offset_right = 200.0
+offset_bottom = 291.0
 text = "¥20,000: SS"
 
 [node name="SGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 331.0
-margin_right = 200.0
-margin_bottom = 351.0
+offset_left = 0.0
+offset_top = 331.0
+offset_right = 200.0
+offset_bottom = 351.0
 text = "¥15,000: S"
 
 [node name="AGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 380.0
-margin_right = 200.0
-margin_bottom = 400.0
+offset_left = 0.0
+offset_top = 380.0
+offset_right = 200.0
+offset_bottom = 400.0
 text = "¥10,000: A"
 
 [node name="BGoal" parent="Clipper/ReceiptPaper/BarGraph/Contents" instance=ExtResource( 2 )]
-margin_left = 0.0
-margin_top = 423.0
-margin_right = 200.0
-margin_bottom = 443.0
+offset_left = 0.0
+offset_top = 423.0
+offset_right = 200.0
+offset_bottom = 443.0
 text = "¥5,000: B"
 
 [node name="Sfx" type="Node" parent="Clipper/ReceiptPaper/BarGraph"]
@@ -757,20 +757,20 @@ volume_db = -12.0
 bus = "Sound Bus"
 
 [node name="Stamp" type="Control" parent="Clipper/ReceiptPaper"]
-margin_left = 73.0001
-margin_top = -135.0
-margin_right = 113.0
-margin_bottom = -95.0
+offset_left = 73.0001
+offset_top = -135.0
+offset_right = 113.0
+offset_bottom = -95.0
 script = ExtResource( 11 )
 
 [node name="InkClip" type="Control" parent="Clipper/ReceiptPaper/Stamp"]
-margin_left = -64.0001
-margin_top = 229.0
-margin_right = 177.0
-margin_bottom = 529.0
-rect_clip_content = true
+offset_left = -64.0001
+offset_top = 229.0
+offset_right = 177.0
+offset_bottom = 529.0
+clip_contents = true
 
-[node name="Ink" type="Sprite" parent="Clipper/ReceiptPaper/Stamp/InkClip"]
+[node name="Ink" type="Sprite2D" parent="Clipper/ReceiptPaper/Stamp/InkClip"]
 visible = false
 modulate = Color( 1, 1, 1, 0.784314 )
 position = Vector2( 162, 142 )
@@ -780,7 +780,7 @@ hframes = 5
 vframes = 4
 frame = 7
 
-[node name="Hand" type="Sprite" parent="Clipper/ReceiptPaper/Stamp"]
+[node name="Hand" type="Sprite2D" parent="Clipper/ReceiptPaper/Stamp"]
 visible = false
 material = SubResource( 16 )
 position = Vector2( 98, 370 )
@@ -800,11 +800,11 @@ volume_db = -2.0
 bus = "Sound Bus"
 
 [node name="Medal" type="Control" parent="Clipper/ReceiptPaper"]
-margin_right = 40.0
-margin_bottom = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource( 14 )
 
-[node name="Medal" type="Sprite" parent="Clipper/ReceiptPaper/Medal"]
+[node name="Medal" type="Sprite2D" parent="Clipper/ReceiptPaper/Medal"]
 visible = false
 position = Vector2( 204, 283 )
 scale = Vector2( 0.5, 0.5 )
@@ -813,7 +813,7 @@ hframes = 3
 vframes = 2
 frame = 2
 
-[node name="Hand" type="Sprite" parent="Clipper/ReceiptPaper/Medal"]
+[node name="Hand" type="Sprite2D" parent="Clipper/ReceiptPaper/Medal"]
 visible = false
 material = SubResource( 17 )
 position = Vector2( 300, 507 )
@@ -842,7 +842,7 @@ position = Vector2( 73.0001, -135 )
 scale = Vector2( 0.444724, 0.444458 )
 color = Color( 0.345098, 0.14902, 0.0705882, 1 )
 antialiased = true
-polygon = PoolVector2Array( -129.116, 322.644, -116.927, 330.74, -112.429, 326.24, -98.9377, 330.74, -87.6948, 317.24, -71.9547, 314.99, -56.2146, 317.24, -44.9717, 314.99, -20.2373, 319.49, -13.4916, 314.99, 20.2373, 314.99, 24.7344, 319.49, 31.4802, 319.49, 35.9773, 314.99, 56.2146, 312.74, 60.7118, 308.241, 71.9547, 310.49, 76.4519, 305.991, 94.4406, 305.991, 112.429, 314.99, 146.158, 314.99, 159.65, 310.49, 179.887, 317.24, 188.881, 317.24, 197.876, 321.74, 200.124, 317.24, 224.859, 317.24, 236.101, 312.74, 249.593, 312.74, 265.333, 310.49, 278.825, 312.74, 292.316, 308.241, 308.056, 308.241, 319.299, 314.99, 332.791, 314.99, 350.779, 321.74, 362.022, 321.74, 368.768, 317.24, 380.011, 317.24, 391.254, 308.241, 409.243, 305.991, 409.243, 1892.19, 395.751, 1905.69, -143.91, 1905.69, -143.91, 335.24 )
+polygon = PackedVector2Array( -129.116, 322.644, -116.927, 330.74, -112.429, 326.24, -98.9377, 330.74, -87.6948, 317.24, -71.9547, 314.99, -56.2146, 317.24, -44.9717, 314.99, -20.2373, 319.49, -13.4916, 314.99, 20.2373, 314.99, 24.7344, 319.49, 31.4802, 319.49, 35.9773, 314.99, 56.2146, 312.74, 60.7118, 308.241, 71.9547, 310.49, 76.4519, 305.991, 94.4406, 305.991, 112.429, 314.99, 146.158, 314.99, 159.65, 310.49, 179.887, 317.24, 188.881, 317.24, 197.876, 321.74, 200.124, 317.24, 224.859, 317.24, 236.101, 312.74, 249.593, 312.74, 265.333, 310.49, 278.825, 312.74, 292.316, 308.241, 308.056, 308.241, 319.299, 314.99, 332.791, 314.99, 350.779, 321.74, 362.022, 321.74, 368.768, 317.24, 380.011, 317.24, 391.254, 308.241, 409.243, 305.991, 409.243, 1892.19, 395.751, 1905.69, -143.91, 1905.69, -143.91, 335.24 )
 
 [node name="Sfx" type="Node" parent="."]
 

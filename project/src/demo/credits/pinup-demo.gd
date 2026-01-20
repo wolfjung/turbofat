@@ -11,9 +11,9 @@ extends Node
 
 const FATNESS_KEYS := [10.0, 1.0, 1.5, 2.0, 3.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 
-export (String) var creature_id: String
+@export var creature_id: String
 
-onready var _pinup := $Pinup
+@onready var _pinup := $Pinup
 
 func _ready() -> void:
 	if creature_id:

@@ -13,15 +13,15 @@ signal allele_buttons_refreshed
 ## Grid size for the allele buttons. This is the size of a CandyButtonC3 plus some extra padding.
 const CELL_SIZE := Vector2(92, 76)
 
-export (PackedScene) var AlleleButtonScene: PackedScene
-export (PackedScene) var CreatureColorButtonScene: PackedScene
-export (PackedScene) var CreatureNameButtonScene: PackedScene
-export (PackedScene) var OperationButtonScene: PackedScene
+@export var AlleleButtonScene: PackedScene
+@export var CreatureColorButtonScene: PackedScene
+@export var CreatureNameButtonScene: PackedScene
+@export var OperationButtonScene: PackedScene
 
-export (NodePath) var category_selector_path: NodePath
-export (NodePath) var creature_saver_path: NodePath
-export (NodePath) var overworld_environment_path: NodePath
-export (NodePath) var top_system_button_path: NodePath
+@export var category_selector_path: NodePath
+@export var creature_saver_path: NodePath
+@export var overworld_environment_path: NodePath
+@export var top_system_button_path: NodePath
 
 ## Grid coordinates for where allele buttons should be placed on the left side. These are not arranged row by row, but
 ## rather they wind their way out from the corner to maintain a compact arrangement.
@@ -44,10 +44,10 @@ var _grid_coordinates_by_color_index := [
 ## The control which will grab focus after the allele buttons are refreshed.
 var _new_focus_target: Control = null
 
-onready var _category_selector: CategorySelector = get_node(category_selector_path)
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
-onready var _creature_saver: CreatureSaver = get_node(creature_saver_path)
-onready var _creature_editor_library := Global.get_creature_editor_library()
+@onready var _category_selector: CategorySelector = get_node(category_selector_path)
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _creature_saver: CreatureSaver = get_node(creature_saver_path)
+@onready var _creature_editor_library := Global.get_creature_editor_library()
 
 func _ready() -> void:
 	for creature in [_player(), _player_swap()]:
@@ -55,14 +55,14 @@ func _ready() -> void:
 		# instances, and their physics interferes with the swapping process.
 		creature.set_physics_process(false)
 		
-		creature.connect("dna_loaded", self, "_on_Creature_dna_loaded", [creature])
+		creature.connect("dna_loaded", Callable(self, "_on_Creature_dna_loaded").bind(creature))
 
 
 ## Deletes and recreates all buttons for the specified category.
 func _refresh_allele_buttons(category: int) -> void:
 	# calculate whether to grab focus
 	var should_grab_focus := false
-	if get_focus_owner() in get_children() or get_focus_owner() == null:
+	if get_viewport().gui_get_focus_owner() in get_children() or get_viewport().gui_get_focus_owner() == null:
 		should_grab_focus = true
 	_new_focus_target = null
 	
@@ -99,19 +99,19 @@ func _add_operation_buttons(category: int) -> void:
 		# instance button scene
 		var button: CandyButtonC3
 		if operation.id == "name":
-			button = CreatureNameButtonScene.instance()
+			button = CreatureNameButtonScene.instantiate()
 		else:
-			button = OperationButtonScene.instance()
+			button = OperationButtonScene.instantiate()
 		
 		# assign color/shape
 		match operation.grid_anchor:
 			Operation.GridAnchor.LEFT:
-				button.rect_position = _left_position_from_grid_cell(operation.grid_position)
+				button.position = _left_position_from_grid_cell(operation.grid_position)
 			Operation.GridAnchor.RIGHT:
-				button.rect_position = _right_position_from_grid_cell(operation.grid_position)
+				button.position = _right_position_from_grid_cell(operation.grid_position)
 			_:
 				push_warning("Unrecognized operation.grid_anchor: %s" % [operation.grid_anchor])
-				button.rect_position = _left_position_from_grid_cell(operation.grid_position)
+				button.position = _left_position_from_grid_cell(operation.grid_position)
 		button.set_color(category_button.color)
 		button.set_shape(category_button.shape)
 		
@@ -129,7 +129,7 @@ func _initialize_creature_name_button(button: CreatureNameButton) -> void:
 		return
 	
 	button.creature = _player()
-	button.connect("name_changed", self, "_on_CreatureNameButton_name_changed")
+	button.connect("name_changed", Callable(self, "_on_CreatureNameButton_name_changed"))
 
 
 func _initialize_operation_button(button: OperationButton, operation: Operation) -> void:
@@ -141,7 +141,7 @@ func _initialize_operation_button(button: OperationButton, operation: Operation)
 		button.set_disabled(true)
 	if operation.id == "save":
 		_new_focus_target = button
-	button.connect("pressed", self, "_on_OperationButton_pressed", [button])
+	button.connect("pressed", Callable(self, "_on_OperationButton_pressed").bind(button))
 
 
 ## Adds all AlleleButtons for the specified category.
@@ -158,15 +158,15 @@ func _add_allele_buttons(category: int) -> void:
 	
 	# create the correct number of buttons; position appropriately
 	for allele_index in range(allele_combos.size()):
-		var allele_button: AlleleButton = AlleleButtonScene.instance()
-		allele_button.rect_position = _left_position_from_grid_cell(_grid_coordinates_by_allele_index[allele_index])
+		var allele_button: AlleleButton = AlleleButtonScene.instantiate()
+		allele_button.position = _left_position_from_grid_cell(_grid_coordinates_by_allele_index[allele_index])
 		allele_button.set_color(category_button.color)
 		allele_button.set_shape(category_button.shape)
 		allele_buttons.append(allele_button)
 		add_child(allele_button)
 	
 	# sort allele buttons from top to bottom
-	allele_buttons.sort_custom(self, "_compare_by_y_then_x")
+	allele_buttons.sort_custom(Callable(self, "_compare_by_y_then_x"))
 	
 	# assign an allele to each button
 	for i in range(allele_combos.size()):
@@ -178,12 +178,12 @@ func _add_allele_buttons(category: int) -> void:
 	for allele_button in allele_buttons:
 		var allele_combo: String = allele_button.allele_combo
 		if _is_allele_combo_assigned(allele_combo):
-			allele_button.pressed = true
+			allele_button.button_pressed = true
 			_new_focus_target = allele_button
 	
 	# connect listeners
 	for allele_button in allele_buttons:
-		allele_button.connect("pressed", self, "_on_AlleleButton_pressed", [allele_button])
+		allele_button.connect("pressed", Callable(self, "_on_AlleleButton_pressed").bind(allele_button))
 
 
 ## Converts a cell coordinate like (1, 2) to a screen coordinate like (60, 120).
@@ -247,14 +247,14 @@ func _add_color_buttons(category: int) -> void:
 	
 	# create the correct number of buttons; position appropriately
 	for color_index in range(color_properties.size()):
-		var color_button: CreatureColorButton = CreatureColorButtonScene.instance()
-		color_button.rect_position = _right_position_from_grid_cell(_grid_coordinates_by_color_index[color_index])
+		var color_button: CreatureColorButton = CreatureColorButtonScene.instantiate()
+		color_button.position = _right_position_from_grid_cell(_grid_coordinates_by_color_index[color_index])
 		color_button.set_shape(category_button.shape)
 		color_buttons.append(color_button)
 		add_child(color_button)
 	
 	# sort allele buttons from top to bottom
-	color_buttons.sort_custom(self, "_compare_by_y_then_x")
+	color_buttons.sort_custom(Callable(self, "_compare_by_y_then_x"))
 	
 	# assign a color to each button
 	for i in range(color_properties.size()):
@@ -263,17 +263,17 @@ func _add_color_buttons(category: int) -> void:
 		var creature_color_html: String = _player().dna[color_property]
 		color_button.creature_color = Color(creature_color_html)
 		color_button.enabled_if = _creature_editor_library.get_color_property_enabled_if(category, color_property)
-		color_button.connect("about_to_show", self, "_on_CreatureColorButton_about_to_show",
+		color_button.connect("about_to_popup", self, "_on_CreatureColorButton_about_to_show",
 				[color_button, color_property])
-		color_button.connect("color_changed", self, "_on_CreatureColorButton_color_changed", [color_property])
+		color_button.connect("color_changed", Callable(self, "_on_CreatureColorButton_color_changed").bind(color_property))
 
 
 func _compare_by_y_then_x(a: Control, b: Control) -> bool:
-	if b.rect_position.y > a.rect_position.y:
+	if b.position.y > a.position.y:
 		return true
-	if b.rect_position.y < a.rect_position.y:
+	if b.position.y < a.position.y:
 		return false
-	return b.rect_position.x > a.rect_position.x
+	return b.position.x > a.position.x
 
 
 ## Assigns focus neighbours to all children.
@@ -297,13 +297,13 @@ func _assign_focus_neighbours(category: int) -> void:
 	
 	# assign focus_neighbour_top to category button
 	for allele_button in focusable_buttons:
-		if allele_button.rect_position.y == 0:
-			allele_button.focus_neighbour_top = category_button.get_path()
+		if allele_button.position.y == 0:
+			allele_button.focus_neighbor_top = category_button.get_path()
 	
 	# assign focus_neighbour_bottom to SettingsButton
 	for allele_button in focusable_buttons:
-		if allele_button.focus_neighbour_bottom == NodePath("."):
-			allele_button.focus_neighbour_bottom = allele_button.get_path_to(get_node(top_system_button_path))
+		if allele_button.focus_neighbor_bottom == NodePath("."):
+			allele_button.focus_neighbor_bottom = allele_button.get_path_to(get_node(top_system_button_path))
 
 
 func _find_operation_button(id: String) -> OperationButton:
@@ -352,11 +352,11 @@ func _on_AlleleButton_pressed(allele_button: AlleleButton) -> void:
 		return
 	
 	# update the pressed allele buttons
-	allele_button.pressed = true
+	allele_button.button_pressed = true
 	for other_allele_button in Utils.get_child_members(self, "allele_buttons"):
 		if other_allele_button == allele_button:
 			continue
-		other_allele_button.pressed = false
+		other_allele_button.button_pressed = false
 
 	# disable any conflicting alleles
 	var allele_combo: String = allele_button.allele_combo

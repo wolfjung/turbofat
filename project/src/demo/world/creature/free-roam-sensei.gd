@@ -7,7 +7,7 @@ extends Creature
 const TOO_CLOSE_THRESHOLD := 140.0
 const TOO_FAR_THRESHOLD := 280.0
 
-export (NodePath) var overworld_environment_path: NodePath = NodePath("../..") setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath = NodePath("../.."): set = set_overworld_environment_path
 
 ## if 'true' the sensei is in free roam mode and will follow the player
 var free_roam := false
@@ -15,7 +15,7 @@ var free_roam := false
 var _overworld_environment: OverworldEnvironment
 
 ## Cannot statically type as 'OverworldUi' because of cyclic reference
-onready var _overworld_ui: Node = Global.get_overworld_ui()
+@onready var _overworld_ui: Node = Global.get_overworld_ui()
 
 func _ready() -> void:
 	_refresh_overworld_environment_path()
@@ -43,7 +43,7 @@ func _on_MoveTimer_timeout() -> void:
 	
 	var player_relative_pos: Vector2 = Global.from_iso(_overworld_environment.player.position - position)
 	# the sensei runs at isometric 45 degree angles to mimic the player's inputs
-	var player_angle := stepify(player_relative_pos.normalized().angle(), PI / 4)
+	var player_angle := snapped(player_relative_pos.normalized().angle(), PI / 4)
 	
 	var move_dir := Vector2.ZERO
 	if player_relative_pos.length() > TOO_FAR_THRESHOLD:

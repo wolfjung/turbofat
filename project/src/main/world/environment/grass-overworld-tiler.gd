@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 ## Adds grass tiles to an overworld obstacle map.
 ##
@@ -16,31 +16,31 @@ const AUTOTILE_COORDS_GOOPY_GRASS := [
 	Vector2(0, 3), Vector2(1, 3), Vector2(2, 3),
 ]
 
-export (NodePath) var ground_map_path: NodePath
+@export var ground_map_path: NodePath
 
 ## Percent of cake tiles which should have grass
-export (float, 0.0, 1.0) var grass_density := 0.03
+@export var grass_density := 0.03 # (float, 0.0, 1.0)
 
 ## Ground tilemap's tile ID for goopless cells
-export (int) var ground_no_goop_tile_index: int
+@export var ground_no_goop_tile_index: int
 
 ## Ground tilemap's tile ID for goopy cells
-export (int) var ground_all_goop_tile_index: int
+@export var ground_all_goop_tile_index: int
 
 ## Obstacle tilemap's tile ID for grass tiles
-export (int) var grass_tile_index: int
+@export var grass_tile_index: int
 
 ## Editor toggle which adds grass to a random selection of goopy/goopless cake tiles
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, removing all grass.
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 ## Obstacle tilemap with grass tiles to place
-onready var _tile_map := get_parent()
+@onready var _tile_map := get_parent()
 
 ## Ground tilemap containing data on which cells should have grass on top of them
-onready var _ground_map: TileMap = get_node(ground_map_path)
+@onready var _ground_map: TileMap = get_node(ground_map_path)
 
 ## Preemptively initializes onready variables to avoid null references
 func _enter_tree() -> void:
@@ -55,7 +55,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -70,7 +70,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

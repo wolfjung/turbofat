@@ -1,7 +1,7 @@
 extends Control
 ## Displays a large "Goal!" message in the center of the progress board when the player reaches the goal.
 
-onready var _puzzle_message := $PuzzleMessage
+@onready var _puzzle_message := $PuzzleMessage
 
 func _on_Player_travelling_finished() -> void:
 	if PlayerData.career.is_boss_level() and PlayerData.career.can_play_more_levels():

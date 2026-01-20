@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=2 format=2]
 
-[ext_resource path="res://assets/main/world/environment/sand/banana-hq-floor-sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/main/world/environment/sand/banana-hq-floor-sheet.png" type="Texture2D" id=2]
 
 [resource]
 82455/name = "banana-hq-floor-sheet.png 2"

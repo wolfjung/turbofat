@@ -1,4 +1,4 @@
-tool
+@tool
 class_name ConfettiCannon
 extends OverworldObstacle
 ## A confetti cannon which fires confetti during the ending cutscene.
@@ -25,15 +25,15 @@ const SOUTHWEST := Orientation.SOUTHWEST
 const NORTHWEST := Orientation.NORTHWEST
 const NORTHEAST := Orientation.NORTHEAST
 
-export (Orientation) var orientation: int setget set_orientation
+@export var orientation: Orientation: set = set_orientation
 
-onready var _animation_player := $AnimationPlayer
-onready var _blast := $Visuals/Blast
-onready var _cannon := $Visuals/Cannon
+@onready var _animation_player := $AnimationPlayer
+@onready var _blast := $Visuals/Blast
+@onready var _cannon := $Visuals/Cannon
 
 func _ready() -> void:
 	if Global.get_overworld_ui():
-		Global.get_overworld_ui().connect("chat_event_meta_played", self, "_on_OverworldUi_chat_event_meta_played")
+		Global.get_overworld_ui().connect("chat_event_meta_played", Callable(self, "_on_OverworldUi_chat_event_meta_played"))
 	
 	_refresh_orientation()
 
@@ -60,7 +60,7 @@ func _refresh_orientation() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _cannon:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

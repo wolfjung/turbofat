@@ -11,25 +11,25 @@ signal played
 signal stopped
 
 ## Number in the range [0.0, 1.0] for how many creatures should jump up and down with their arms raised.
-export (float, 0.0, 1.0) var bouncing_crowd_percent := 0.0 setget set_bouncing_crowd_percent
+@export var bouncing_crowd_percent := 0.0: set = set_bouncing_crowd_percent
 
-export (NodePath) var player_path: NodePath
-export (NodePath) var sensei_path: NodePath
-export (NodePath) var destination_path: NodePath
+@export var player_path: NodePath
+@export var sensei_path: NodePath
+@export var destination_path: NodePath
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 ## key: (Node2D) node whose position should be initialized
 ## value: (Vector2) initial position
 var _initial_positions_by_node: Dictionary
 
-onready var _animation_player := $AnimationPlayer
-onready var _player: WalkingBuddy = get_node(player_path)
-onready var _sensei: WalkingBuddy = get_node(sensei_path)
+@onready var _animation_player := $AnimationPlayer
+@onready var _player: WalkingBuddy = get_node(player_path)
+@onready var _sensei: WalkingBuddy = get_node(sensei_path)
 
 ## Location where which the player and Fat Sensei run towards. This also decides the starting position for creatures in
 ## the scene.
-onready var _destination: Node2D = get_node(destination_path)
+@onready var _destination: Node2D = get_node(destination_path)
 
 func _ready() -> void:
 	_refresh_bouncing_crowd_percent()
@@ -88,18 +88,18 @@ func play(time_until_launch: float) -> void:
 	
 	# crowd gradually becomes calmer, until they toss the player and sensei into the air
 	_tween = Utils.recreate_tween(self, _tween).set_parallel(true)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.9]).set_delay(time_until_launch * 0.3)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.7]).set_delay(time_until_launch * 0.4)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.5]).set_delay(time_until_launch * 0.5)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.3]).set_delay(time_until_launch * 0.6)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.1]).set_delay(time_until_launch * 0.7)
-	_tween.tween_callback(self, "set_bouncing_crowd_percent", [0.0]).set_delay(time_until_launch * 0.8)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.9)).set_delay(time_until_launch * 0.3)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.7)).set_delay(time_until_launch * 0.4)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.5)).set_delay(time_until_launch * 0.5)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.3)).set_delay(time_until_launch * 0.6)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.1)).set_delay(time_until_launch * 0.7)
+	_tween.tween_callback(Callable(self, "set_bouncing_crowd_percent").bind(0.0)).set_delay(time_until_launch * 0.8)
 	
 	# fat sensei and the player look around, and then are launched into the air
-	_tween.tween_callback(_animation_player, "play", ["look_around"]) \
-			.set_delay(time_until_launch - look_around_duration)
-	_tween.tween_callback(_animation_player, "play", ["launch"]).set_delay(time_until_launch)
-	_tween.tween_callback(self, "crowd_launch").set_delay(time_until_launch)
+	_tween.tween_callback(Callable(_animation_player, "play").bind("look_around")) \
+			super.set_delay(time_until_launch - look_around_duration)
+	_tween.tween_callback(Callable(_animation_player, "play").bind("launch")).set_delay(time_until_launch)
+	_tween.tween_callback(Callable(self, "crowd_launch")).set_delay(time_until_launch)
 	
 	emit_signal("played")
 

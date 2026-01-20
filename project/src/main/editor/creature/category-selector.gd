@@ -7,16 +7,16 @@ extends HBoxContainer
 
 signal category_selected(category)
 
-export (NodePath) var allele_buttons_path: NodePath
-export (NodePath) var system_buttons_path: NodePath
+@export var allele_buttons_path: NodePath
+@export var system_buttons_path: NodePath
 
-onready var allele_buttons: Control = get_node(allele_buttons_path)
-onready var system_buttons: Control = get_node(system_buttons_path)
+@onready var allele_buttons: Control = get_node(allele_buttons_path)
+@onready var system_buttons: Control = get_node(system_buttons_path)
 
 func _ready() -> void:
 	for child in get_children():
 		if child is CandyButtonCollapsible:
-			child.connect("focus_entered", self, "_on_CandyButtonCollapsible_focus_entered", [child])
+			child.connect("focus_entered", Callable(self, "_on_CandyButtonCollapsible_focus_entered").bind(child))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -47,9 +47,9 @@ func set_selected_category_index(new_selected_index: int) -> void:
 	# Maintain focus if a category button is focused. Or, steal focus if no allele buttons were focused. This is an
 	# edge case which could occur if no allele buttons are shown, or if the creature's current allele isn't in the
 	# panel.
-	if get_focus_owner() in _get_category_buttons() \
-			or not is_instance_valid(get_focus_owner()) \
-			or get_focus_owner().is_queued_for_deletion():
+	if get_viewport().gui_get_focus_owner() in _get_category_buttons() \
+			or not is_instance_valid(get_viewport().gui_get_focus_owner()) \
+			or get_viewport().gui_get_focus_owner().is_queued_for_deletion():
 		get_category_button(new_selected_index).grab_focus()
 
 
@@ -98,4 +98,4 @@ func _on_AlleleButtons_allele_buttons_refreshed() -> void:
 			neighbour = coordinator.find_nearest_approximate(button, Vector2.DOWN)
 		if not neighbour:
 			neighbour = system_buttons.settings_button
-		button.focus_neighbour_bottom = button.get_path_to(neighbour)
+		button.focus_neighbor_bottom = button.get_path_to(neighbour)

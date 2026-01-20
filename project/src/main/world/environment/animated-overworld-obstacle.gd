@@ -1,4 +1,4 @@
-tool
+@tool
 extends OverworldObstacle
 ## Overworld obstacle with different animation variations in an animation player.
 ##
@@ -6,16 +6,16 @@ extends OverworldObstacle
 ## chosen animation, and also has logic for randomizing the sprite's appearance.
 
 ## The obstacle's variation, which decides the animation for the AnimationPlayer.
-export (int) var variant: int setget set_variant
+@export var variant: int: set = set_variant
 
 ## If true, the sprite's texture is flipped horizontally.
-export (bool) var flip_h: bool setget set_flip_h
+@export var flip_h: bool: set = set_flip_h
 
 ## Editor toggle which randomizes the obstacle's appearance
-export (bool) var shuffle: bool setget set_shuffle
+@export var shuffle: bool: set = set_shuffle
 
-onready var _sprite := $Sprite
-onready var _animation_player := $AnimationPlayer
+@onready var _sprite := $Sprite2D
+@onready var _animation_player := $AnimationPlayer
 
 func _ready() -> void:
 	_refresh()
@@ -41,7 +41,7 @@ func set_shuffle(value: bool) -> void:
 	if not value:
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _animation_player:
 			_initialize_onready_variables()
 	
@@ -53,11 +53,11 @@ func set_shuffle(value: bool) -> void:
 	set_flip_h(randf() < 0.5)
 	scale = Vector2.ONE
 	
-	property_list_changed_notify()
+	notify_property_list_changed()
 
 
 func _initialize_onready_variables() -> void:
-	_sprite = $Sprite
+	_sprite = $Sprite2D
 	_animation_player = $AnimationPlayer
 
 
@@ -65,11 +65,11 @@ func _refresh() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _sprite:
 			_initialize_onready_variables()
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# in the editor, assign the sprite to first frame of the animation, but don't let the animation keep playing
 		_animation_player.play("play%s" % [variant])
 		_animation_player.seek(0.01, true)

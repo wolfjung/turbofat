@@ -20,8 +20,8 @@ var has_unsaved_changes := false
 
 ## We store the non-fullscreened window size so we can restore it when the player disables fullscreen mode.
 var _prev_window_size: Vector2 = Global.window_size
-var _prev_window_position: Vector2 = OS.window_position
-var _prev_window_maximized: bool = OS.window_maximized
+var _prev_window_position: Vector2 = get_window().position
+var _prev_window_maximized: bool = (get_window().mode == Window.MODE_MAXIMIZED)
 
 ## When the graphics settings change, we update them after a few milliseconds delay.
 ##
@@ -30,12 +30,12 @@ var _prev_window_maximized: bool = OS.window_maximized
 var _refresh_graphics_settings_timer: SceneTreeTimer = null
 
 func _ready() -> void:
-	graphics_settings.connect("fullscreen_changed", self, "_on_GraphicsSettings_fullscreen_changed")
-	graphics_settings.connect("use_vsync_changed", self, "_on_GraphicsSettings_use_vsync_changed")
+	graphics_settings.connect("fullscreen_changed", Callable(self, "_on_GraphicsSettings_fullscreen_changed"))
+	graphics_settings.connect("use_vsync_changed", Callable(self, "_on_GraphicsSettings_use_vsync_changed"))
 	_schedule_refresh_graphics_settings()
 	
 	# allow the alt+enter shortcut to process even when gameplay is paused
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 func _input(_event: InputEvent) -> void:
@@ -44,7 +44,7 @@ func _input(_event: InputEvent) -> void:
 		SystemData.has_unsaved_changes = true
 		SystemSave.save_system_data()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 ## Prevents the player's settings from triggering fullscreen mode or vsync.
@@ -52,10 +52,10 @@ func _input(_event: InputEvent) -> void:
 ## This is called when running Gut tests to prevent the Gut window from becoming fullscreen. This could happen if the
 ## developer enables fullscreen mode, or when a test loads system data with fullscreen mode enabled.
 func disallow_graphics_customization() -> void:
-	graphics_settings.disconnect("fullscreen_changed", self, "_on_GraphicsSettings_fullscreen_changed")
-	graphics_settings.disconnect("use_vsync_changed", self, "_on_GraphicsSettings_use_vsync_changed")
+	graphics_settings.disconnect("fullscreen_changed", Callable(self, "_on_GraphicsSettings_fullscreen_changed"))
+	graphics_settings.disconnect("use_vsync_changed", Callable(self, "_on_GraphicsSettings_use_vsync_changed"))
 	if _refresh_graphics_settings_timer:
-		_refresh_graphics_settings_timer.disconnect("timeout", self, "_on_RefreshGraphicsSettingsTimer_timeout")
+		_refresh_graphics_settings_timer.disconnect("timeout", Callable(self, "_on_RefreshGraphicsSettingsTimer_timeout"))
 		_refresh_graphics_settings_timer = null
 
 
@@ -72,26 +72,26 @@ func reset() -> void:
 
 ## Apply the vsync/maximized settings.
 func _refresh_graphics_settings() -> void:
-	OS.set_use_vsync(graphics_settings.use_vsync)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if (graphics_settings.use_vsync) else DisplayServer.VSYNC_DISABLED)
 	
-	var old_maximized := OS.window_maximized and OS.window_borderless
+	var old_maximized := (get_window().mode == Window.MODE_MAXIMIZED) and get_window().borderless
 	var new_maximized := graphics_settings.fullscreen
 	
 	if not old_maximized:
 		# store the old window size and position
-		_prev_window_size = OS.window_size
-		_prev_window_position = OS.window_position
-		_prev_window_maximized = OS.window_maximized
+		_prev_window_size = get_window().size
+		_prev_window_position = get_window().position
+		_prev_window_maximized = (get_window().mode == Window.MODE_MAXIMIZED)
 	
 	if old_maximized != new_maximized:
-		OS.window_borderless = graphics_settings.fullscreen
-		OS.window_maximized = graphics_settings.fullscreen
+		get_window().borderless = graphics_settings.fullscreen
+		get_window().mode = Window.MODE_MAXIMIZED if (graphics_settings.fullscreen) else Window.MODE_WINDOWED
 	
 	if old_maximized and not new_maximized:
 		# becoming windowed; restore the old window size and position
-		OS.window_maximized = _prev_window_maximized
-		OS.window_size = _prev_window_size
-		OS.window_position = _prev_window_position
+		get_window().mode = Window.MODE_MAXIMIZED if (_prev_window_maximized) else Window.MODE_WINDOWED
+		get_window().size = _prev_window_size
+		get_window().position = _prev_window_position
 
 
 ## Schedules the vsync/maximized settings to be applied a few milliseconds in the future.
@@ -105,7 +105,7 @@ func _schedule_refresh_graphics_settings() -> void:
 		return
 	
 	_refresh_graphics_settings_timer = get_tree().create_timer(0.05)
-	_refresh_graphics_settings_timer.connect("timeout", self, "_on_RefreshGraphicsSettingsTimer_timeout")
+	_refresh_graphics_settings_timer.connect("timeout", Callable(self, "_on_RefreshGraphicsSettingsTimer_timeout"))
 
 
 func _on_GraphicsSettings_fullscreen_changed(_value: bool) -> void:

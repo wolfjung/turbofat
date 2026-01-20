@@ -24,8 +24,8 @@ var _left_pressed := false
 var _right_pressed := false
 
 func _ready() -> void:
-	pause_mode = Node.PAUSE_MODE_PROCESS
-	KeybindManager.connect("input_map_updated", self, "_on_KeybindManager_input_map_updated")
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	KeybindManager.connect("input_map_updated", Callable(self, "_on_KeybindManager_input_map_updated"))
 	_refresh_inputs()
 
 
@@ -92,7 +92,7 @@ func _trigger_joypad_button(device: int, button_index: int, pressed: bool) -> vo
 	var ev := InputEventJoypadButton.new()
 	ev.device = device
 	ev.button_index = button_index
-	ev.pressed = pressed
+	ev.button_pressed = pressed
 	Input.parse_input_event(ev)
 
 
@@ -102,7 +102,7 @@ func _trigger_joypad_button(device: int, button_index: int, pressed: bool) -> vo
 func _get_monitored_devices() -> Array:
 	var devices_set := {}
 	for action in InputMap.get_actions():
-		var events := InputMap.get_action_list(action)
+		var events := InputMap.action_get_events(action)
 		for event in events:
 			if event is InputEventJoypadButton and event.button_index in [12, 13, 14, 15]:
 				devices_set[event.device] = true

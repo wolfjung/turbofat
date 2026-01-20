@@ -16,7 +16,7 @@ enum GoalType {
 var _sandbox_text := tr("There is no goal in this mode. Just have fun!")
 
 func _ready() -> void:
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 	
 	refresh()
 

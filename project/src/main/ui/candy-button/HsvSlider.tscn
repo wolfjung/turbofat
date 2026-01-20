@@ -7,19 +7,19 @@
 [node name="HsvSlider" type="HBoxContainer"]
 size_flags_vertical = 4
 theme = ExtResource( 1 )
-custom_constants/separation = 0
+theme_override_constants/separation = 0
 script = ExtResource( 2 )
 
 [node name="TextLabel" type="Label" parent="."]
-margin_right = 15.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 15, 0 )
+offset_right = 15.0
+offset_bottom = 20.0
+custom_minimum_size = Vector2( 15, 0 )
 align = 1
 
 [node name="HSlider" type="HSlider" parent="."]
-margin_left = 15.0
-margin_right = 31.0
-margin_bottom = 18.0
+offset_left = 15.0
+offset_right = 31.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 max_value = 255.0
 tick_count = 8
@@ -28,10 +28,10 @@ tick_count = 8
 sliding_speed = 128.0
 
 [node name="ValueLabel" type="Label" parent="."]
-margin_left = 31.0
-margin_right = 61.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 30, 0 )
+offset_left = 31.0
+offset_right = 61.0
+offset_bottom = 20.0
+custom_minimum_size = Vector2( 30, 0 )
 text = "0"
 align = 1
 

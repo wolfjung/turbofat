@@ -29,10 +29,10 @@ const LINGER_DURATION := 3.0
 ## monitors whether the popup is currently popping in or out
 var _popup_state: int = PopupState.POPPED_OUT
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _panel := $Panel
-onready var _label := $Panel/Label
+@onready var _panel := $Panel
+@onready var _label := $Panel/Label
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept", true):
@@ -63,25 +63,25 @@ func _handle_press_event() -> void:
 func _pop_in() -> void:
 	# Calculate the tween duration.
 	# This is usually TWEEN_DURATION, but can be shorter if the popup is partially popped in.
-	var pop_in_amount := inverse_lerp(POP_OUT_Y, POP_IN_Y, _panel.rect_position.y)
+	var pop_in_amount := inverse_lerp(POP_OUT_Y, POP_IN_Y, _panel.position.y)
 	var tween_duration := TWEEN_DURATION * (1.0 - pop_in_amount)
 
 	_tween = Utils.recreate_tween(self, _tween)
-	_tween.tween_callback(self, "set", ["_popup_state", POPPING_IN])
-	_tween.tween_property(_panel, "rect_position:y", POP_IN_Y, tween_duration)
-	_tween.tween_callback(self, "set", ["_popup_state", POPPED_IN])
+	_tween.tween_callback(Callable(self, "set").bind("_popup_state", POPPING_IN))
+	_tween.tween_property(_panel, "position:y", POP_IN_Y, tween_duration)
+	_tween.tween_callback(Callable(self, "set").bind("_popup_state", POPPED_IN))
 	
 	# pop out after a few seconds
-	_tween.tween_callback(self, "_pop_out").set_delay(LINGER_DURATION)
+	_tween.tween_callback(Callable(self, "_pop_out")).set_delay(LINGER_DURATION)
 
 
 func _pop_out() -> void:
 	# Calculate the tween duration.
 	# This is usually TWEEN_DURATION, but can be shorter if the popup is partially popped in.
-	var pop_in_amount := inverse_lerp(POP_OUT_Y, POP_IN_Y, _panel.rect_position.y)
+	var pop_in_amount := inverse_lerp(POP_OUT_Y, POP_IN_Y, _panel.position.y)
 	var tween_duration := TWEEN_DURATION * pop_in_amount
 
 	_tween = Utils.recreate_tween(self, _tween)
-	_tween.tween_callback(self, "set", ["_popup_state", POPPING_OUT])
-	_tween.tween_property(_panel, "rect_position:y", POP_OUT_Y, tween_duration)
-	_tween.tween_callback(self, "set", ["_popup_state", POPPED_OUT])
+	_tween.tween_callback(Callable(self, "set").bind("_popup_state", POPPING_OUT))
+	_tween.tween_property(_panel, "position:y", POP_OUT_Y, tween_duration)
+	_tween.tween_callback(Callable(self, "set").bind("_popup_state", POPPED_OUT))

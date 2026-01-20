@@ -5,23 +5,23 @@ extends Control
 ## a dark outline.
 
 ## Width in pixels of the main part of the trail
-export (float) var line_width := 8.0
+@export var line_width := 8.0
 
 ## Width in pixels of the trail's outline
-export (float) var outline_width := 8.0
+@export var outline_width := 8.0
 
 ## Color for the main part of the trail
-export (Color) var path_color := Color.white setget set_path_color
+@export var path_color := Color.WHITE: set = set_path_color
 
 ## Color for the trail's outline
-export (Color) var outline_color := Color.transparent
+@export var outline_color := Color.TRANSPARENT
 
 ## If 'true', the line flashes different colors. Used when the player reaches a goal.
-var cycle_colors: bool setget set_cycle_colors
+var cycle_colors: bool: set = set_cycle_colors
 
-var path2d: Path2D setget set_path2d
+var path2d: Path2D: set = set_path2d
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 func _ready() -> void:
 	_refresh_cycle_colors()
@@ -65,7 +65,7 @@ func _refresh_cycle_colors() -> void:
 		var rainbow_colors := ProgressBoard.RAINBOW_CHALK_COLORS.duplicate()
 		rainbow_colors.shuffle()
 		for i in range(rainbow_colors.size()):
-			_tween.tween_callback(self, "set", ["path_color", rainbow_colors[i]])
+			_tween.tween_callback(Callable(self, "set").bind("path_color", rainbow_colors[i))
 			_tween.tween_interval(ProgressBoard.RAINBOW_INTERVAL)
 	else:
 		# reset to our default color

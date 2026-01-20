@@ -22,7 +22,7 @@ signal rotated_cw(piece)
 # warning-ignore:unused_signal
 signal rotated_180(piece)
 
-export (NodePath) var input_path: NodePath
+@export var input_path: NodePath
 
 var just_flipped := false
 
@@ -31,7 +31,7 @@ var _prev_rotate_frames := 0
 var _prev_rotate_piece: ActivePiece
 var _prev_rotate_pos := Vector2(3, 3)
 
-onready var input: PieceInput = get_node(input_path)
+@onready var input: PieceInput = get_node(input_path)
 
 func apply_initial_rotate_input(piece: ActivePiece) -> String:
 	if not input.is_cw_pressed() and not input.is_ccw_pressed():
@@ -71,7 +71,7 @@ func apply_initial_rotate_input(piece: ActivePiece) -> String:
 
 
 func emit_initial_rotate_signal(rotation_signal: String, piece: ActivePiece) -> void:
-	if rotation_signal.empty():
+	if rotation_signal.is_empty():
 		return
 	
 	emit_signal(rotation_signal, piece)

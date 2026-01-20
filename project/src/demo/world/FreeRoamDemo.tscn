@@ -22,15 +22,15 @@ EnvironmentScene = ExtResource( 4 )
 
 [node name="ChatLetters" parent="World" instance=ExtResource( 6 )]
 
-[node name="Camera" type="Camera2D" parent="World"]
+[node name="Camera3D" type="Camera2D" parent="World"]
 current = true
-smoothing_enabled = true
-smoothing_speed = 12.5
+position_smoothing_enabled = true
+position_smoothing_speed = 12.5
 script = ExtResource( 3 )
 overworld_environment_path = NodePath("../Environment")
 
 [node name="Ui" parent="." instance=ExtResource( 5 )]
 overworld_environment_path = NodePath("../World/Environment")
 
-[connection signal="overworld_environment_changed" from="World" to="World/Camera" method="_on_OverworldWorld_overworld_environment_changed"]
+[connection signal="overworld_environment_changed" from="World" to="World/Camera3D" method="_on_OverworldWorld_overworld_environment_changed"]
 [connection signal="overworld_environment_changed" from="World" to="Ui" method="_on_OverworldWorld_overworld_environment_changed"]

@@ -5,7 +5,7 @@ extends Node
 ## 	[Q]: Show confirmation dialog
 ## 	[W]: Show file dialog
 
-onready var _panel := $Panel
+@onready var _panel := $Panel
 
 func _ready() -> void:
 	_initialize_option_button()

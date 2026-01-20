@@ -23,8 +23,8 @@ const POP_LENGTHS := [
 var _pop_anim_duration_index := 2
 var _pop_length_index := 1
 
-onready var _spear_narrow := $Spear
-onready var _spear_wide := $SpearWide
+@onready var _spear_narrow := $Spear
+@onready var _spear_wide := $SpearWide
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):

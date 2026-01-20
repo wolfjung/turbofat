@@ -10,32 +10,32 @@ signal focus_neighbours_refreshed(current_tab)
 ##
 ## The first visible node of each of these arrays will have its its focus_neighbour_top assigned our TabContainer, so
 ## that the player can arrow up into our TabContainer from the nodes below.
-export (Array, Array, NodePath) var focusable_nodes_below: Array = []
+@export var focusable_nodes_below: Array = [] # (Array, Array, NodePath)
 
 ## Style for the foreground tab when focused
-export (StyleBox) var tab_fg_focused: StyleBox
+@export var tab_fg_focused: StyleBox
 
 ## Font color for the foreground tab when focused
-export (Color) var font_color_fg_focused: Color
+@export var font_color_fg_focused: Color
 
 ## 'true' if our TabContainer is focused.
-var focused: bool = false setget set_focused
+var focused: bool = false: set = set_focused
 
-onready var tab_container := get_parent()
+@onready var tab_container := get_parent()
 
 ## Style for foreground tab when unfocused
-onready var tab_fg_normal: StyleBox
+@onready var tab_fg_normal: StyleBox
 
 ## Font color for foreground tab when unfocused, or null if no font color is defined.
-onready var font_color_fg_normal
+@onready var font_color_fg_normal
 
 func _ready() -> void:
-	tab_fg_normal = tab_container.get("custom_styles/tab_fg")
-	font_color_fg_normal = tab_container.get("custom_colors/font_color_fg")
+	tab_fg_normal = tab_container.get("theme_override_styles/tab_selected")
+	font_color_fg_normal = tab_container.get("theme_override_colors/font_color_fg")
 	
 	tab_container.focus_mode = Control.FOCUS_ALL
-	tab_container.connect("tab_changed", self, "_on_TabContainer_tab_changed")
-	tab_container.get_viewport().connect("gui_focus_changed", self, "_on_Viewport_gui_focus_changed")
+	tab_container.connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
+	tab_container.get_viewport().connect("gui_focus_changed", Callable(self, "_on_Viewport_gui_focus_changed"))
 	
 	_refresh_focused()
 	refresh_focus_neighbours_for_current_tab()
@@ -101,11 +101,11 @@ func refresh_focus_neighbours_for_current_tab() -> void:
 	
 	## Navigating down from the TabContainer focuses the top item within the TabContainer.
 	if top_focusable_node:
-		tab_container.focus_neighbour_bottom = top_focusable_node.get_path()
+		tab_container.focus_neighbor_bottom = top_focusable_node.get_path()
 	
 	## Navigating up from the top item within the TabContainer focuses the TabContainer.
 	if top_focusable_node:
-		top_focusable_node.focus_neighbour_top = tab_container.get_path()
+		top_focusable_node.focus_neighbor_top = tab_container.get_path()
 	
 	## Navigating up from the top item below the TabContainer focuses the bottom item in the TabContainer.
 	for nodes_in_column in focusable_nodes_below:
@@ -118,8 +118,8 @@ func refresh_focus_neighbours_for_current_tab() -> void:
 		
 		if highest_node_in_column:
 			for node_below_path in nodes_in_column:
-				get_node(node_below_path).focus_neighbour_top = NodePath()
-			highest_node_in_column.focus_neighbour_top = bottom_focusable_node.get_path()
+				get_node(node_below_path).focus_neighbor_top = NodePath()
+			highest_node_in_column.focus_neighbor_top = bottom_focusable_node.get_path()
 	
 	emit_signal("focus_neighbours_refreshed", tab_container.current_tab)
 
@@ -163,7 +163,7 @@ func _find_control_by_func(parent: Node, object: Object, method: String) -> Node
 	
 	# recursively descend through the children and grandchildren
 	var node_queue := parent.get_children()
-	while not node_queue.empty():
+	while not node_queue.is_empty():
 		var node := node_queue.pop_back() as Node
 		if node is Control and not node.visible:
 			# ignore invisible controls and their children
@@ -199,11 +199,11 @@ func _compare_by_max_y(a: Control, b: Control) -> bool:
 ## Refreshes our TabContainer's colors based on whether it's focused or not.
 func _refresh_focused() -> void:
 	if focused:
-		tab_container.set("custom_colors/font_color_fg", font_color_fg_focused)
-		tab_container.set("custom_styles/tab_fg", tab_fg_focused)
+		tab_container.set("theme_override_colors/font_color_fg", font_color_fg_focused)
+		tab_container.set("theme_override_styles/tab_selected", tab_fg_focused)
 	else:
-		tab_container.set("custom_colors/font_color_fg", font_color_fg_normal)
-		tab_container.set("custom_styles/tab_fg", tab_fg_normal)
+		tab_container.set("theme_override_colors/font_color_fg", font_color_fg_normal)
+		tab_container.set("theme_override_styles/tab_selected", tab_fg_normal)
 
 
 func _on_TabContainer_tab_changed(_tab: int) -> void:

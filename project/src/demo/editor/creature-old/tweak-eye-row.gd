@@ -3,12 +3,12 @@ extends HBoxContainer
 ##
 ## The eye uses two different colors, and requires a specialized tool.
 
-export (NodePath) var creature_editor_path: NodePath
+@export var creature_editor_path: NodePath
 
-onready var _creature_editor: CreatureEditorOld = get_node(creature_editor_path)
+@onready var _creature_editor: CreatureEditorOld = get_node(creature_editor_path)
 
 func _ready() -> void:
-	_creature_editor.connect("center_creature_changed", self, "_on_CreatureEditor_center_creature_changed")
+	_creature_editor.connect("center_creature_changed", Callable(self, "_on_CreatureEditor_center_creature_changed"))
 
 
 ## Update the creature with the player's chosen eye color.

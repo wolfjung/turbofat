@@ -95,7 +95,7 @@ func _find_chat_paths() -> Array:
 	var dir_queue := CHAT_DIRS.duplicate()
 	
 	# recursively look for chat files under the specified paths
-	var dir: Directory
+	var dir: DirAccess
 	var file: String
 	while true:
 		if file:
@@ -107,12 +107,12 @@ func _find_chat_paths() -> Array:
 		else:
 			if dir:
 				dir.list_dir_end()
-			if dir_queue.empty():
+			if dir_queue.is_empty():
 				break
 			# there are more directories. open the next directory
-			dir = Directory.new()
+			dir = DirAccess.new()
 			dir.open(dir_queue.pop_front())
-			dir.list_dir_begin(true, true)
+			dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		file = dir.get_next()
 	
 	return result

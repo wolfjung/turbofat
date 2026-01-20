@@ -1,9 +1,9 @@
 extends BlockLevelChunkControl
 ## Level editor chunk which contains a snack/cake box.
 
-export (Foods.BoxType) var box_type: int setget set_box_type
+@export var box_type: int: set = set_box_type
 
-export (Vector2) var box_size: Vector2 = Vector2(3, 3) setget set_box_size
+@export var box_size: Vector2 = Vector2(3, 3): set = set_box_size
 
 func set_box_type(new_box_type: int) -> void:
 	box_type = new_box_type

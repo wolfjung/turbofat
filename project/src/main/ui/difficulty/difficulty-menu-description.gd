@@ -17,9 +17,9 @@ var descriptions_by_speed := {
 
 func _ready() -> void:
 	for difficulty_button in get_tree().get_nodes_in_group("difficulty_buttons"):
-		difficulty_button.connect("focus_entered", self, "_on_DifficultyButton_focus_entered")
-		difficulty_button.connect("focus_exited", self, "_on_DifficultyButton_focus_exited")
-	PlayerData.difficulty.connect("speed_changed", self, "_on_DifficultyData_speed_changed")
+		difficulty_button.connect("focus_entered", Callable(self, "_on_DifficultyButton_focus_entered"))
+		difficulty_button.connect("focus_exited", Callable(self, "_on_DifficultyButton_focus_exited"))
+	PlayerData.difficulty.connect("speed_changed", Callable(self, "_on_DifficultyData_speed_changed"))
 
 
 func _refresh() -> void:
@@ -30,8 +30,8 @@ func _refresh() -> void:
 	var speed: int = PlayerData.difficulty.speed
 	
 	# the focused difficulty overrides the currently chosen difficulty, so that the player can browse
-	if get_focus_owner() is DifficultyButton:
-		speed = get_focus_owner().speed
+	if get_viewport().gui_get_focus_owner() is DifficultyButton:
+		speed = get_viewport().gui_get_focus_owner().speed
 	
 	text = descriptions_by_speed.get(speed)
 

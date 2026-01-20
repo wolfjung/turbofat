@@ -25,7 +25,7 @@ const TEXTURE_PAIRS_BY_SPEED := {
 			preload("res://assets/main/ui/difficulty/zen-off.png")],
 }
 
-export (DifficultyData.Speed) var speed: int = DifficultyData.Speed.DEFAULT
+@export var speed: int = DifficultyData.Speed.DEFAULT # (DifficultyData.Speed)
 
 ## key: (int) Enum from DifficultyData.Speed
 ## value: (String) Difficulty name shown on the button
@@ -41,11 +41,11 @@ var difficulty_names_by_speed := {
 	DifficultyData.Speed.SLOWESTEST: tr("Zen Mode"),
 }
 
-onready var _polygon2d := $Polygon2D
-onready var _name_label := $NameLabel
+@onready var _polygon2d := $Polygon2D
+@onready var _name_label := $NameLabel
 
 func _ready() -> void:
-	PlayerData.difficulty.connect("speed_changed", self, "_on_DifficultyData_speed_changed")
+	PlayerData.difficulty.connect("speed_changed", Callable(self, "_on_DifficultyData_speed_changed"))
 	
 	_refresh()
 
@@ -66,7 +66,7 @@ func _refresh() -> void:
 		new_outline_color = Color("41281e")
 	else:
 		new_outline_color = Color("6c4331")
-	var font: DynamicFont = _name_label.get("custom_fonts/font")
+	var font: FontFile = _name_label.get("theme_override_fonts/font")
 	font.outline_color = new_outline_color
 
 

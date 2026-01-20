@@ -8,8 +8,8 @@ extends Node
 ## 	[R]: Assign a palette with 24 colors.
 ## 	[T]: Assign a palette with 100 colors.
 
-onready var _color_rect := $ColorRect
-onready var _color_picker: CandyColorPicker = $ColorPicker
+@onready var _color_rect := $ColorRect
+@onready var _color_picker: CandyColorPicker = $ColorPicker
 
 func _ready() -> void:
 	_assign_color_presets(24)
@@ -37,9 +37,9 @@ func _assign_color_presets(count: int) -> void:
 func color_presets(count: int) -> Array:
 	var result := []
 	if count >= 8:
-		result.append(Color.white)
-		result.append(Color.gray)
-		result.append(Color.black)
+		result.append(Color.WHITE)
+		result.append(Color.GRAY)
+		result.append(Color.BLACK)
 	while result.size() < count:
 		var random_color := Color(randf(), randf(), randf())
 		result.append(random_color)
@@ -54,4 +54,4 @@ func _on_ColorPicker_resized() -> void:
 	if not _color_picker:
 		return
 	
-	_color_picker.rect_position = (Global.window_size - _color_picker.rect_size) / 2
+	_color_picker.position = (Global.window_size - _color_picker.size) / 2

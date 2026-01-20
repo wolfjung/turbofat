@@ -4,7 +4,7 @@ extends Area2D
 ## This lets us reuse the same ~150 crowdies instead of creating ~1,500 crowdies. This probably has a
 ## performance benefit, but honestly it's just cumbersome to maintain that many nodes in a scene.
 
-export (NodePath) var target_path: NodePath
+@export var target_path: NodePath
 
 ## The direction and distance which crowdies should move after the player runs past them.
 var _move_direction: Vector2
@@ -17,11 +17,11 @@ var _move_direction: Vector2
 ## it enabled for several frames to avoid race conditions.
 var _just_arranged_creatures := false
 
-onready var _target: Node2D = get_node(target_path)
+@onready var _target: Node2D = get_node(target_path)
 
 ## When the crowd walk director moves all crowdies, we temporarily ignore collisions. This timer reenables
 ## collisions afterward.
-onready var _reenable_collision_timer := $ReenableCollisionTimer
+@onready var _reenable_collision_timer := $ReenableCollisionTimer
 
 func _ready() -> void:
 	_move_direction = $MoveDirection.points[1] - $MoveDirection.points[0]

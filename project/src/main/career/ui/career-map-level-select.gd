@@ -4,16 +4,16 @@ extends CanvasLayer
 
 signal level_button_focused(button_index)
 
-export (PackedScene) var LevelSelectButtonScene: PackedScene
-export (PackedScene) var HardcoreLevelSelectButtonScene: PackedScene
-export (PackedScene) var BossLevelSelectButtonScene: PackedScene
-export (PackedScene) var HardcoreBossLevelSelectButtonScene: PackedScene
+@export var LevelSelectButtonScene: PackedScene
+@export var HardcoreLevelSelectButtonScene: PackedScene
+@export var BossLevelSelectButtonScene: PackedScene
+@export var HardcoreBossLevelSelectButtonScene: PackedScene
 
 var _prev_focused_level_button_index := -1
 
-onready var _control := $VBoxContainer/LevelButtons
-onready var _grade_labels := $VBoxContainer/LevelButtons/GradeLabels
-onready var _level_buttons_container := $VBoxContainer/LevelButtons/HBoxContainer
+@onready var _control := $VBoxContainer/LevelButtons
+@onready var _grade_labels := $VBoxContainer/LevelButtons/GradeLabels
+@onready var _level_buttons_container := $VBoxContainer/LevelButtons/HBoxContainer
 
 func _ready() -> void:
 	# If the day is over, we show the career map briefly so the player can see their progress, but we hide the level
@@ -51,15 +51,15 @@ func clear_level_select_buttons() -> void:
 func add_level_select_button(settings: LevelSettings) -> LevelSelectButton:
 	var button: LevelSelectButton
 	if PlayerData.career.is_boss_level() and settings.lose_condition.top_out == 1:
-		button = HardcoreBossLevelSelectButtonScene.instance()
+		button = HardcoreBossLevelSelectButtonScene.instantiate()
 	elif PlayerData.career.is_boss_level():
-		button = BossLevelSelectButtonScene.instance()
+		button = BossLevelSelectButtonScene.instantiate()
 	elif settings.lose_condition.top_out == 1:
-		button = HardcoreLevelSelectButtonScene.instance()
+		button = HardcoreLevelSelectButtonScene.instantiate()
 	else:
-		button = LevelSelectButtonScene.instance()
+		button = LevelSelectButtonScene.instantiate()
 	button.decorate_for_level(PlayerData.career.current_region(), settings, true)
-	button.rect_min_size = Vector2(200, 120)
+	button.custom_minimum_size = Vector2(200, 120)
 	button.size_flags_horizontal = 6
 	button.size_flags_vertical = 4
 	
@@ -101,5 +101,5 @@ func _on_SettingsMenu_show() -> void:
 
 func _on_SettingsMenu_hide() -> void:
 	_control.show()
-	if not _control.get_focus_owner():
+	if not _control.get_viewport().gui_get_focus_owner():
 		focus_button()

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/confetti-bang.wav-9a63adc04bb0134790b2454b3d9f7e2b.sample"
+type="AudioStreamWAV"
+uid="uid://dicgrcvqlkfuf"
+path="res://.godot/imported/confetti-bang.wav-9a63adc04bb0134790b2454b3d9f7e2b.sample"
 
 [deps]
 
 source_file="res://assets/main/world/environment/credits/confetti-bang.wav"
-dest_files=[ "res://.import/confetti-bang.wav-9a63adc04bb0134790b2454b3d9f7e2b.sample" ]
+dest_files=["res://.godot/imported/confetti-bang.wav-9a63adc04bb0134790b2454b3d9f7e2b.sample"]
 
 [params]
 

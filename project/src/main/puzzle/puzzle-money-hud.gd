@@ -5,18 +5,18 @@ extends Control
 const TWEEN_DURATION := 0.1
 
 ## Path to the results hud which shows the total the player earned. The money label responds to this hud.
-export (NodePath) var results_hud_path: NodePath
+@export var results_hud_path: NodePath
 
-var _money_label_tween: SceneTreeTween
+var _money_label_tween: Tween
 
-onready var _money_label := $MoneyLabel
-onready var _results_hud: ResultsHud = get_node(results_hud_path)
+@onready var _money_label := $MoneyLabel
+@onready var _results_hud: ResultsHud = get_node(results_hud_path)
 
 func _ready() -> void:
-	PuzzleState.connect("game_prepared", self, "_on_PuzzleState_game_prepared")
+	PuzzleState.connect("game_prepared", Callable(self, "_on_PuzzleState_game_prepared"))
 	
-	_results_hud.connect("receipt_shown", self, "_on_ResultsHud_receipt_shown")
-	_results_hud.connect("stamped", self, "_on_ResultsHud_stamped")
+	_results_hud.connect("receipt_shown", Callable(self, "_on_ResultsHud_receipt_shown"))
+	_results_hud.connect("stamped", Callable(self, "_on_ResultsHud_stamped"))
 
 
 ## Shows the money label, decrementing it so that it does not include money earned for the current level.
@@ -26,13 +26,13 @@ func _ready() -> void:
 func _show_money() -> void:
 	_money_label.set_shown_money(PlayerData.money - PuzzleState.level_performance.score)
 	_money_label_tween = Utils.recreate_tween(self, _money_label_tween)
-	_money_label_tween.tween_property(_money_label, "rect_position:y", 0.0, TWEEN_DURATION)
+	_money_label_tween.tween_property(_money_label, "position:y", 0.0, TWEEN_DURATION)
 
 
 ## Hides the money label.
 func _hide_money() -> void:
 	_money_label_tween = Utils.recreate_tween(self, _money_label_tween)
-	_money_label_tween.tween_property(_money_label, "rect_position:y", -32.0, TWEEN_DURATION)
+	_money_label_tween.tween_property(_money_label, "position:y", -32.0, TWEEN_DURATION)
 
 
 func _on_PuzzleState_game_prepared() -> void:

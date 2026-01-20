@@ -1,15 +1,15 @@
 [gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/main/ui/candy-button/candy-button-h4.gd" type="Script" id=1]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=2]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=2]
 [ext_resource path="res://src/main/ui/candy-button/ClickSound.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/main/ui/candy-button/h4-focused.png" type="Texture" id=4]
-[ext_resource path="res://assets/main/ui/candy-button/h4-blank.png" type="Texture" id=5]
-[ext_resource path="res://assets/main/ui/candy-button/h4-blank-pressed.png" type="Texture" id=6]
-[ext_resource path="res://assets/main/ui/candy-button/h4-shine.png" type="Texture" id=7]
-[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://assets/main/ui/candy-button/h4-focused.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/main/ui/candy-button/h4-blank.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/main/ui/candy-button/h4-blank-pressed.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/main/ui/candy-button/h4-shine.png" type="Texture2D" id=7]
+[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="FontFile" id=8]
 [ext_resource path="res://src/main/ui/candy-button/HoverSound.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/main/ui/candy-button/h4-shine-pressed.png" type="Texture" id=10]
+[ext_resource path="res://assets/main/ui/candy-button/h4-shine-pressed.png" type="Texture2D" id=10]
 [ext_resource path="res://src/main/ui/candy-button/gradient-none.tres" type="Gradient" id=11]
 [ext_resource path="res://src/main/ui/candy-button/ShineTextureRect.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main/ui/candy-button/gradient-helper.gd" type="Script" id=13]
@@ -25,7 +25,7 @@ shader = ExtResource( 2 )
 shader_param/mix_amount = 1.0
 shader_param/gradient = SubResource( 9 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="FontFile" id=10]
 resource_local_to_scene = true
 outline_size = 2
 outline_color = Color( 0.149412, 0.135882, 0.15, 1 )
@@ -34,11 +34,11 @@ font_data = ExtResource( 8 )
 
 [node name="CandyButton" type="TextureButton"]
 material = SubResource( 8 )
-margin_left = 95.6823
-margin_top = 66.0563
-margin_right = 215.682
-margin_bottom = 96.0563
-rect_min_size = Vector2( 120, 30 )
+offset_left = 95.6823
+offset_top = 66.0563
+offset_right = 215.682
+offset_bottom = 96.0563
+custom_minimum_size = Vector2( 120, 30 )
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
@@ -51,10 +51,10 @@ text = "Text"
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_right = -5.0
+offset_left = 5.0
+offset_right = -5.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 10 )
+theme_override_fonts/font = SubResource( 10 )
 text = "Text"
 align = 1
 valign = 1

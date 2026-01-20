@@ -22,38 +22,38 @@ const IDLE_2 := State.IDLE_2
 const IDLE_3 := State.IDLE_3
 
 ## Enum from State for the tomato's current animation state.
-var state := NONE setget set_state
+var state := NONE: set = set_state
 
-onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 ## Poof cloud which covers the tomato when they appear or disappear
-onready var poof := $TomatoHolder/Poof
+@onready var poof := $TomatoHolder/Poof
 
 ## Red shadow behind the tomato which darkens the line they're affecting
-onready var shadow := $TomatoHolder/Shadow
+@onready var shadow := $TomatoHolder/Shadow
 
 ## Tomato sprite
-onready var tomato := $TomatoHolder/Tomato
+@onready var tomato := $TomatoHolder/Tomato
 
-onready var sfx := $TomatoSfx
+@onready var sfx := $TomatoSfx
 
 ## Particles which decorate the tomato shadow
-onready var _clock_particles := $TomatoHolder/ClockParticles
-onready var _light_particles := $TomatoHolder/LightParticles
+@onready var _clock_particles := $TomatoHolder/ClockParticles
+@onready var _light_particles := $TomatoHolder/LightParticles
 
 ## key: (int) Enum from State
 ## value: (Node) State node from the _states StateMachine
-onready var _state_nodes_by_enum := {
+@onready var _state_nodes_by_enum := {
 	NONE: $States/None,
 	IDLE_1: $States/Idle1,
 	IDLE_2: $States/Idle2,
 	IDLE_3: $States/Idle3,
 }
 
-onready var _states := $States
+@onready var _states := $States
 
 ## The column the tomato appears in
-var column: int = 0 setget set_column
+var column: int = 0: set = set_column
 
 ## 'true' if the tomato should not play their voice sfx.
 var suppress_voice := false
@@ -61,7 +61,7 @@ var suppress_voice := false
 ## 'true' if the tomato will be queued for deletion after the 'poof' animation completes.
 var _free_after_poof := false
 
-var _particles_tween: SceneTreeTween
+var _particles_tween: Tween
 
 func _ready() -> void:
 	_clock_particles.visible = false
@@ -104,8 +104,8 @@ func show_backdrop() -> void:
 	_particles_tween = Utils.recreate_tween(self, _particles_tween).set_parallel()
 	for particles_node in [_clock_particles, _light_particles]:
 		particles_node.visible = true
-		particles_node.modulate = Color.transparent
-		_particles_tween.tween_property(particles_node, "modulate", Color.white, TomatoShadow.FADE_IN_DURATION)
+		particles_node.modulate = Color.TRANSPARENT
+		_particles_tween.tween_property(particles_node, "modulate", Color.WHITE, TomatoShadow.FADE_IN_DURATION)
 
 
 ## Makes the shadow and particles invisible and stops their animation.
@@ -114,9 +114,9 @@ func hide_backdrop() -> void:
 	
 	_particles_tween = Utils.recreate_tween(self, _particles_tween).set_parallel()
 	for particles_node in [_clock_particles, _light_particles]:
-		_particles_tween.tween_property(particles_node, "modulate", Color.transparent, TomatoShadow.FADE_OUT_DURATION)
-		_particles_tween.tween_callback(particles_node, "set", ["visible", false]) \
-				.set_delay(TomatoShadow.FADE_OUT_DURATION)
+		_particles_tween.tween_property(particles_node, "modulate", Color.TRANSPARENT, TomatoShadow.FADE_OUT_DURATION)
+		_particles_tween.tween_callback(Callable(particles_node, "set").bind("visible", false)) \
+				super.set_delay(TomatoShadow.FADE_OUT_DURATION)
 
 
 ## Updates the state machine's state to match the value of the 'state' enum.

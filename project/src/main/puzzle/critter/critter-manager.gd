@@ -7,8 +7,8 @@ extends Node
 ## shifts critters around.
 signal line_inserted(y, tiles_key, src_y)
 
-var piece_manager_path: NodePath setget set_piece_manager_path
-var playfield_path: NodePath setget set_playfield_path
+var piece_manager_path: NodePath: set = set_piece_manager_path
+var playfield_path: NodePath: set = set_playfield_path
 
 ## key: (Vector2) cell containing a critter
 ## value: (Node2D) critter at that cell location
@@ -151,7 +151,7 @@ func update_piece_manager_piece(new_type: PieceType, new_pos: Vector2, new_orien
 func check_for_empty_piece() -> void:
 	# A piece can spawn directly on a blue shark and disappear before entering the move_piece state, so we check for
 	# empty pieces in the prespawn state as well.
-	if _piece_manager.piece.type.empty() \
+	if _piece_manager.piece.type.is_empty() \
 			and _piece_manager.get_state() in [_piece_manager.states.move_piece, _piece_manager.states.prespawn]:
 		_playfield.add_misc_delay_frames(PieceSpeeds.current_speed.lock_delay)
 		
@@ -168,7 +168,7 @@ func check_for_empty_piece() -> void:
 ## 	'cell': The critter's playfield cell
 func _refresh_critter_position(cell: Vector2) -> void:
 	var critter: Node2D = critters_by_cell[cell]
-	critter.position = _playfield.tile_map.map_to_world(cell + Vector2(0, -3))
+	critter.position = _playfield.tile_map.map_to_local(cell + Vector2(0, -3))
 	critter.position += _playfield.tile_map.cell_size * Vector2(0.5, 0.5)
 	critter.position *= _playfield.tile_map.scale
 
@@ -223,16 +223,16 @@ func _refresh_playfield_path() -> void:
 		return
 	
 	if _playfield:
-		_playfield.disconnect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.disconnect("line_deleted", self, "_on_Playfield_line_deleted")
-		_playfield.disconnect("line_inserted", self, "_on_Playfield_line_inserted")
+		_playfield.disconnect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.disconnect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
+		_playfield.disconnect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
 	
 	_playfield = get_node(playfield_path) if playfield_path else null
 	
 	if _playfield:
-		_playfield.connect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.connect("line_deleted", self, "_on_Playfield_line_deleted")
-		_playfield.connect("line_inserted", self, "_on_Playfield_line_inserted")
+		_playfield.connect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.connect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
+		_playfield.connect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
 
 
 func _on_Playfield_blocks_prepared() -> void:

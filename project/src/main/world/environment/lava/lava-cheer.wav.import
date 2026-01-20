@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/lava-cheer.wav-01cf93120465fecf62ea9a156380e32e.sample"
+type="AudioStreamWAV"
+uid="uid://dg7qc8a32x6ak"
+path="res://.godot/imported/lava-cheer.wav-01cf93120465fecf62ea9a156380e32e.sample"
 
 [deps]
 
 source_file="res://src/main/world/environment/lava/lava-cheer.wav"
-dest_files=[ "res://.import/lava-cheer.wav-01cf93120465fecf62ea9a156380e32e.sample" ]
+dest_files=["res://.godot/imported/lava-cheer.wav-01cf93120465fecf62ea9a156380e32e.sample"]
 
 [params]
 

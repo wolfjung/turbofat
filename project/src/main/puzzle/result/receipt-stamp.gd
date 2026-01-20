@@ -26,10 +26,10 @@ const INK_FRAMES_BY_GRADE := {
 
 var _blueprint: ResultsHudBlueprint
 
-onready var _animation_player := $AnimationPlayer
+@onready var _animation_player := $AnimationPlayer
 
-onready var _ink := $InkClip/Ink
-onready var _hand := $Hand
+@onready var _ink := $InkClip/Ink
+@onready var _hand := $Hand
 
 ## Plays an animation of a hand stamping down, leaving an ink stamp on the receipt.
 func play(new_blueprint: ResultsHudBlueprint) -> void:

@@ -25,9 +25,9 @@ var _piece_speed: String
 
 var _career_cutscene_librarian := CareerCutsceneLibrarian.new()
 
-onready var _world := $World
-onready var _distance_label := $Ui/Control/StatusBar/Distance
-onready var _level_select_control := $LevelSelect
+@onready var _world := $World
+@onready var _distance_label := $Ui/Control/StatusBar/Distance
+@onready var _level_select_control := $LevelSelect
 
 func _ready() -> void:
 	if not Breadcrumb.trail:
@@ -40,7 +40,7 @@ func _ready() -> void:
 		MusicPlayer.play_boss_track()
 	else:
 		MusicPlayer.play_menu_track()
-	PlayerData.career.connect("distance_travelled_changed", self, "_on_CareerData_distance_travelled_changed")
+	PlayerData.career.connect("distance_travelled_changed", Callable(self, "_on_CareerData_distance_travelled_changed"))
 	
 	var redirected := false
 	
@@ -63,8 +63,8 @@ func _ready() -> void:
 ## to look for creatures in a non-existent scene tree. These errors are caused by Breadcrumb's Godot #85692 workaround
 ## which delays the freeing of nodes in the previous scene.
 func _exit_tree() -> void:
-	if PlayerData.career.is_connected("distance_travelled_changed", self, "_on_CareerData_distance_travelled_changed"):
-		PlayerData.career.disconnect("distance_travelled_changed", self, "_on_CareerData_distance_travelled_changed")
+	if PlayerData.career.is_connected("distance_travelled_changed", Callable(self, "_on_CareerData_distance_travelled_changed")):
+		PlayerData.career.disconnect("distance_travelled_changed", Callable(self, "_on_CareerData_distance_travelled_changed"))
 
 
 func _refresh_ui() -> void:
@@ -129,7 +129,7 @@ func _refresh_level_select_buttons() -> void:
 	for i in range(_pickable_level_settings.size()):
 		var level_settings: LevelSettings = _pickable_level_settings[i]
 		var level_select_button: LevelSelectButton = _level_select_control.add_level_select_button(level_settings)
-		level_select_button.connect("level_chosen", self, "_on_LevelSelectButton_level_chosen", [i])
+		level_select_button.connect("level_chosen", Callable(self, "_on_LevelSelectButton_level_chosen").bind(i))
 
 
 ## Return a list of random CareerLevels for the player to choose from.
@@ -177,7 +177,7 @@ func _random_levels() -> Array:
 	var random_levels := levels.slice(0, min(SELECTION_COUNT - 1, levels.size() - 1))
 	unplayed_levels = Utils.subtract(unplayed_levels, random_levels)
 	for random_level_index in range(random_levels.size()):
-		if unplayed_levels.empty():
+		if unplayed_levels.is_empty():
 			break
 		
 		if random_levels[random_level_index].level_id in PlayerData.career.level_ids:
@@ -291,9 +291,9 @@ func _after_progress_board() -> void:
 
 ## When the player clicks a level button twice, we launch the selected level
 func _on_LevelSelectButton_level_chosen(level_index: int) -> void:
-	if PlayerData.career.is_connected("distance_travelled_changed", self, "_on_CareerData_distance_travelled_changed"):
+	if PlayerData.career.is_connected("distance_travelled_changed", Callable(self, "_on_CareerData_distance_travelled_changed")):
 		# avoid changing the level button names when you pick an earlier level
-		PlayerData.career.disconnect("distance_travelled_changed", self, "_on_CareerData_distance_travelled_changed")
+		PlayerData.career.disconnect("distance_travelled_changed", Callable(self, "_on_CareerData_distance_travelled_changed"))
 	
 	# apply a distance penalty if they select an earlier level
 	var distance_penalty: int = PlayerData.career.distance_penalties()[level_index]

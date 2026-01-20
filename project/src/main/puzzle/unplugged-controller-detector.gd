@@ -1,10 +1,10 @@
 extends Node
 ## Pops up a "controller disconnected" message in the settings menu when the player's controller disconnects.
 
-onready var _settings_menu: SettingsMenu = get_parent()
+@onready var _settings_menu: SettingsMenu = get_parent()
 
 func _ready() -> void:
-	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
+	Input.connect("joy_connection_changed", Callable(self, "_on_joy_connection_changed"))
 
 
 ## If the player's controller disconnects during gameplay, we pop up the settings menu with a message.

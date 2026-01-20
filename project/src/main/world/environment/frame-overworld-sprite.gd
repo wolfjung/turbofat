@@ -1,9 +1,9 @@
-tool
-extends Sprite
+@tool
+extends Sprite2D
 ## Overworld sprite with different cosmetic variations in a sprite sheet.
 
 ## Editor toggle which randomizes the obstacle's appearance
-export (bool) var shuffle: bool setget set_shuffle
+@export var shuffle: bool: set = set_shuffle
 
 
 ## Randomizes the obstacle's appearance.

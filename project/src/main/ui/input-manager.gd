@@ -19,7 +19,7 @@ const MOUSE_TIMEOUT := 0.5
 ## The input method the player is using to play the game; keyboard or joypad
 ##
 ## This is automatically updated as the player presses keys or joypad buttons.
-var input_mode: int = InputMode.KEYBOARD_MOUSE setget set_input_mode
+var input_mode: int = InputMode.KEYBOARD_MOUSE: set = set_input_mode
 
 ## Time in milliseconds between when the engine started and the most recent mouse input
 var last_mouse_input_time: int = 0
@@ -27,11 +27,11 @@ var last_mouse_input_time: int = 0
 func _ready() -> void:
 	get_tree().quit_on_go_back = false
 	# allow the mouse to show/hide when gameplay is paused
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 func _input(event: InputEvent) -> void:
-	var current_time := OS.get_ticks_msec()
+	var current_time := Time.get_ticks_msec()
 	if event is InputEventMouse:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		last_mouse_input_time = current_time
@@ -67,8 +67,8 @@ func set_input_mode(new_input_mode: int) -> void:
 func _parse_press_and_release_event(action: String) -> void:
 	var press_event := InputEventAction.new()
 	press_event.action = action
-	press_event.pressed = true
+	press_event.button_pressed = true
 	Input.parse_input_event(press_event)
 	var release_event: InputEventAction = press_event.duplicate()
-	release_event.pressed = false
+	release_event.button_pressed = false
 	Input.parse_input_event(release_event)

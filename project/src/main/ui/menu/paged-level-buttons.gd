@@ -18,14 +18,14 @@ signal button_added(button)
 
 const MAX_LEVELS_PER_PAGE := 18
 
-export (PackedScene) var LevelButtonScene: PackedScene
+@export var LevelButtonScene: PackedScene
 
-export (NodePath) var grade_labels_path: NodePath
+@export var grade_labels_path: NodePath
 
 ## CareerRegion or OtherRegion instance whose levels are being shown
-var region: Object setget set_region
+var region: Object: set = set_region_enabled
 
-var level_ids: Array setget set_level_ids
+var level_ids: Array: set = set_level_ids
 
 ## current page of buttons being shown
 var _page := 0
@@ -38,13 +38,13 @@ var _level_settings_by_id: Dictionary = {}
 var _unlock_cheat_enabled := false
 
 ## container for new level buttons
-onready var _grid_container := $GridContainer
+@onready var _grid_container := $GridContainer
 
 ## arrows for paging left and right
-onready var _left_arrow := $LeftArrow
-onready var _right_arrow := $RightArrow
+@onready var _left_arrow := $LeftArrow
+@onready var _right_arrow := $RightArrow
 
-onready var _grade_labels: GradeLabels = get_node(grade_labels_path)
+@onready var _grade_labels: GradeLabels = get_node(grade_labels_path)
 
 func _ready() -> void:
 	_refresh()
@@ -58,13 +58,13 @@ func _input(event: InputEvent) -> void:
 		if _page < _max_selectable_page():
 			_select_next_page()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 	if _leftmost_level_button_has_focus() and event.is_action_pressed("ui_left"):
 		if _page > 0:
 			_select_previous_page()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 ## Returns 'true' if a button in the rightmost column has focus.
@@ -107,7 +107,7 @@ func focus_level(level_id_to_focus: String) -> void:
 		_grid_container.get_children()[button_index_to_focus].grab_focus()
 
 
-func set_region(new_region: Object) -> void:
+func set_region_enabled(new_region: Object) -> void:
 	region = new_region
 	_refresh()
 
@@ -131,7 +131,7 @@ func _refresh() -> void:
 
 ## Adds buttons representing levels the player can choose.
 func _add_buttons() -> void:
-	if level_ids.empty():
+	if level_ids.is_empty():
 		# avoid out of bounds errors when there are zero levels
 		return
 	
@@ -173,7 +173,7 @@ func _refresh_level_settings() -> void:
 	# Sort the levels
 	if region is CareerRegion:
 		# Career levels aren't in any particular order so we sort them.
-		level_ids.sort_custom(self, "_compare_by_level_name")
+		level_ids.sort_custom(Callable(self, "_compare_by_level_name"))
 	else:
 		# Training/tutorial levels are already sorted from easiest to hardest.
 		pass
@@ -214,12 +214,12 @@ func _max_selectable_page() -> int:
 ## 	A new orphaned LevelSelectButton instance for the specified level
 func _level_select_button(level_id: String, level_count: int) -> Node:
 	var level_settings: LevelSettings = _level_settings_by_id[level_id]
-	var level_button: LevelSelectButton = LevelButtonScene.instance()
+	var level_button: LevelSelectButton = LevelButtonScene.instantiate()
 	level_button.decorate_for_level(region, level_settings, _unlock_cheat_enabled)
 	level_button.level_duration = LevelSelectButton.MEDIUM if level_count >= 10 else LevelSelectButton.LONG
 	
-	level_button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [level_button, level_id])
-	level_button.connect("level_chosen", self, "_on_LevelButton_level_chosen", [level_settings])
+	level_button.connect("focus_entered", Callable(self, "_on_LevelButton_focus_entered").bind(level_button, level_id))
+	level_button.connect("level_chosen", Callable(self, "_on_LevelButton_level_chosen").bind(level_settings))
 	return level_button
 
 
@@ -268,5 +268,5 @@ func _on_CheatCodeDetector_cheat_detected(cheat: String, detector: CheatCodeDete
 		_refresh()
 		if button_index_to_focus != -1:
 			if is_inside_tree():
-				yield(get_tree(), "idle_frame")
+				await get_tree().idle_frame
 			_grid_container.get_children()[button_index_to_focus].grab_focus()

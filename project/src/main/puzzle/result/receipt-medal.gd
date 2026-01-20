@@ -5,10 +5,10 @@ extends Control
 
 var _blueprint: ResultsHudBlueprint
 
-onready var _animation_player := $AnimationPlayer
+@onready var _animation_player := $AnimationPlayer
 
-onready var _medal := $Medal
-onready var _hand := $Hand
+@onready var _medal := $Medal
+@onready var _hand := $Hand
 
 ## Plays an animation of a hand swiping by, dropping a medal on the receipt.
 func play(new_blueprint: ResultsHudBlueprint) -> void:

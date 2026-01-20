@@ -15,8 +15,8 @@ extends Node
 ## 	[L]: Toggle whether or not the player has beaten the level already.
 ## 	[Space]: Show/hide message
 
-onready var _label := $Label
-onready var _results_hud := $ResultsHud
+@onready var _label := $Label
+@onready var _results_hud := $ResultsHud
 
 var _success_condition := false
 var _player_success := false

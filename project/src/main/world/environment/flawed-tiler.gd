@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 ## Renders tilemaps with deliberate imperfections.
 ##
@@ -6,28 +6,28 @@ extends Node
 ## randomly swaps out tiles with imperfect tiles to give the tilemap a less monotonous appearance.
 
 ## The parent tilemap's tile ID for tiles to apply imperfections to
-export (int) var target_tile_index := -1
+@export var target_tile_index := -1
 
 ## autotile coordinates for a cell without imperfections
-export (Array, Vector2) var good_cells := []
+@export var good_cells := [] # (Array, Vector2)
 
 ## autotile coordinates for a cell with imperfections
-export (Array, Vector2) var bad_cells := []
+@export var bad_cells := [] # (Array, Vector2)
 
 ## percent of cells without imperfections, in the range [0.0, 1.0]
-export (float, 0.0, 1.0) var quality := 1.0
+@export var quality := 1.0 # (float, 0.0, 1.0)
 
 ## Editor toggle which manually applies autotiling.
 ##
 ## Godot has no way of automatically reacting to GridMap/TileMap changes. See Godot #11855
 ## (https://github.com/godotengine/godot/issues/11855)
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, removing all imperfections.
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 ## tilemap to apply imperfections to
-onready var _tile_map: TileMap = get_parent()
+@onready var _tile_map: TileMap = get_parent()
 
 ## Preemptively initializes onready variables to avoid null references.
 func _enter_tree() -> void:
@@ -42,7 +42,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -69,7 +69,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

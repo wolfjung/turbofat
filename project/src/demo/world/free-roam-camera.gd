@@ -1,7 +1,7 @@
 extends Camera2D
 ## Camera for the free roam overworld. Follows the main character.
 
-export (NodePath) var overworld_environment_path: NodePath setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath: set = set_overworld_environment_path
 
 var _overworld_environment: OverworldEnvironment
 

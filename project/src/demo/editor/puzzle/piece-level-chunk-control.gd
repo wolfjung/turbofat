@@ -5,7 +5,7 @@ enum EditorPiece {
 	PIECE_C, PIECE_J, PIECE_K, PIECE_L, PIECE_O, PIECE_P, PIECE_Q, PIECE_T, PIECE_U, PIECE_V,
 }
 
-export (EditorPiece) var editor_piece: int setget set_editor_piece
+@export var editor_piece: EditorPiece: set = set_editor_piece
 
 var _editor_pieces := {
 	EditorPiece.PIECE_C: PieceTypes.piece_c,

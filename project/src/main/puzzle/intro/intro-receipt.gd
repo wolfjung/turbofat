@@ -7,9 +7,9 @@ extends Control
 var _popped_out := false
 
 func _ready() -> void:
-	PuzzleState.connect("game_prepared", self, "_on_PuzzleState_game_prepared")
-	PuzzleState.connect("game_started", self, "_on_PuzzleState_game_started")
-	CurrentLevel.connect("settings_changed", self, "_on_Level_settings_changed")
+	PuzzleState.connect("game_prepared", Callable(self, "_on_PuzzleState_game_prepared"))
+	PuzzleState.connect("game_started", Callable(self, "_on_PuzzleState_game_started"))
+	CurrentLevel.connect("changed", Callable(self, "_on_Level_settings_changed"))
 	
 	_refresh()
 

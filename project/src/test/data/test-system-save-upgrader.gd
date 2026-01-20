@@ -15,7 +15,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.remove(TEMP_SYSTEM_FILENAME)
 	dir.remove(TEMP_LEGACY_FILENAME)
 	var rolling_backups := RollingBackups.new()
@@ -24,19 +24,19 @@ func after_each() -> void:
 
 
 func load_system_data(filename: String) -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.copy("res://assets/test/data/%s" % filename, TEMP_SYSTEM_FILENAME)
 	SystemSave.load_system_data()
 
 
 func load_player_data(filename: String) -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.copy("res://assets/test/data/%s" % filename, TEMP_PLAYER_FILENAME)
 	PlayerSave.load_player_data()
 
 
 func load_legacy_data(filename: String) -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.copy("res://assets/test/data/%s" % filename, TEMP_LEGACY_FILENAME)
 	SystemSave.load_system_data()
 
@@ -76,7 +76,7 @@ func test_37b3() -> void:
 	# should preserve existing keybinds
 	assert_eq(SystemData.keybind_settings.custom_keybinds.has("rotate_ccw"), true)
 	assert_eq_deep(SystemData.keybind_settings.custom_keybinds["rotate_ccw"], [
-		{"type": "key", "scancode": 91.0},
+		{"type": "key", "keycode": 91.0},
 		{},
 		{},
 	])

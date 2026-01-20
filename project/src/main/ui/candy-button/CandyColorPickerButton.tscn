@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/main/ui/font/fredoka-one-regular.ttf" type="FontFile" id=1]
 [ext_resource path="res://src/main/ui/candy-button/candy-color-picker-button.gd" type="Script" id=2]
 
-[sub_resource type="DynamicFont" id=460]
+[sub_resource type="FontFile" id=460]
 size = 1
 use_filter = true
 font_data = ExtResource( 1 )
@@ -27,17 +27,17 @@ corner_radius_bottom_left = 6
 
 [node name="Button" type="Button"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_right = 25.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 25, 20 )
-custom_fonts/font = SubResource( 460 )
+offset_right = 25.0
+offset_bottom = 20.0
+custom_minimum_size = Vector2( 25, 20 )
+theme_override_fonts/font = SubResource( 460 )
 script = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-custom_styles/panel = SubResource( 461 )
+theme_override_styles/panel = SubResource( 461 )
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

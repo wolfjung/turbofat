@@ -11,7 +11,7 @@ const ECHO_DURATION := 0.30
 ##
 ## For our game's sliders, the speed is half the approximate length of the slider. So for example, our HSV sliders
 ## have a length of 256, and their speed is 128.
-export (float) var sliding_speed: float = 2.0
+@export var sliding_speed: float = 2.0
 
 ## Direction of slider movement (1.0 = right, -1.0 = left, 0.0 = no movement)
 var _sliding_dir := 0.0
@@ -22,13 +22,13 @@ var _sliding_dir := 0.0
 ## possible for its value to be snapped to its step value and never advance.
 var _slider_value_float: float
 
-onready var _slider: HSlider = get_parent()
+@onready var _slider: HSlider = get_parent()
 
 ## Timer which monitors whether a D-Pad input was recently pressed.
-onready var _delay_timer: Timer
+@onready var _delay_timer: Timer
 
 func _ready() -> void:
-	_slider.connect("focus_exited", self, "_on_HSlider_focus_exited")
+	_slider.connect("focus_exited", Callable(self, "_on_HSlider_focus_exited"))
 	_initialize_delay_timer()
 	set_process(false)
 
@@ -66,7 +66,7 @@ func _handle_dpad(event: InputEventJoypadButton) -> void:
 
 func _initialize_delay_timer() -> void:
 	_delay_timer = Timer.new()
-	_delay_timer.connect("timeout", self, "_on_DelayTimer_timeout")
+	_delay_timer.connect("timeout", Callable(self, "_on_DelayTimer_timeout"))
 	_delay_timer.one_shot = true
 	add_child(_delay_timer)
 

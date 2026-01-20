@@ -14,27 +14,27 @@ const SATURATION_THRESHOLD := 0.1
 ## Value threshold above which a palette color is considered black, and moved to the end.
 const VALUE_THRESHOLD := 0.1
 
-export (PackedScene) var CandyColorPickerButtonScene: PackedScene
+@export var CandyColorPickerButtonScene: PackedScene
 
 ## The currently selected color.
-var color: Color setget set_color
+var color: Color: set = set_color
 
 ## (Color) Color presets available to the player.
-var color_presets: Array setget set_color_presets
+var color_presets: Array: set = set_color_presets
 
 ## If 'true', the HSV sliders will not respond to value changes. (This is used temporarily to prevent the HSV sliders
 ## from reacting to themselves.)
 var _suppress_hsv_slider_adjustment := false
 
-onready var _presets_container: Container = $VBoxContainer/PresetsContainer
+@onready var _presets_container: Container = $VBoxContainer/PresetsContainer
 
 ## Separates the presets from the HSV sliders.
-onready var _spacer: Control = $VBoxContainer/Spacer
+@onready var _spacer: Control = $VBoxContainer/Spacer
 
-onready var _hue_slider: HsvSlider = $VBoxContainer/HsvContainer/HueSlider
-onready var _saturation_slider: HsvSlider = $VBoxContainer/HsvContainer/SaturationSlider
-onready var _value_slider: HsvSlider = $VBoxContainer/HsvContainer/ValueSlider
-onready var _vbox_container := $VBoxContainer
+@onready var _hue_slider: HsvSlider = $VBoxContainer/HsvContainer/HueSlider
+@onready var _saturation_slider: HsvSlider = $VBoxContainer/HsvContainer/SaturationSlider
+@onready var _value_slider: HsvSlider = $VBoxContainer/HsvContainer/ValueSlider
+@onready var _vbox_container := $VBoxContainer
 
 
 func _ready() -> void:
@@ -126,11 +126,11 @@ func _refresh_color_presets() -> void:
 	var sorted_color_presets := _sort_color_presets()
 	
 	for color_preset in sorted_color_presets:
-		var candy_color_picker_button: CandyColorPickerButton = CandyColorPickerButtonScene.instance()
+		var candy_color_picker_button: CandyColorPickerButton = CandyColorPickerButtonScene.instantiate()
 		candy_color_picker_button.color = color_preset
 		_presets_container.add_child(candy_color_picker_button)
 		
-		candy_color_picker_button.connect("pressed", self, "_on_CandyColorPickerButton_pressed", [color_preset])
+		candy_color_picker_button.connect("pressed", Callable(self, "_on_CandyColorPickerButton_pressed").bind(color_preset))
 	
 	_presets_container.visible = true if color_presets else false
 	_spacer.visible = true if _presets_container.visible else false
@@ -143,17 +143,17 @@ func _refresh_color_presets() -> void:
 func _sort_color_presets() -> Array:
 	var result := []
 	var colors_by_hue := color_presets.duplicate()
-	colors_by_hue.sort_custom(self, "_compare_by_hue")
+	colors_by_hue.sort_custom(Callable(self, "_compare_by_hue"))
 	
 	var buckets := []
 	
-	while not colors_by_hue.empty():
+	while not colors_by_hue.is_empty():
 		var end := ceil(colors_by_hue.size() / float(8 - buckets.size())) - 1
 		buckets.append(colors_by_hue.slice(0, end))
 		colors_by_hue = colors_by_hue.slice(end + 1, colors_by_hue.size())
 	
 	for i in range(buckets.size()):
-		buckets[i].sort_custom(self, "_compare_by_brightness")
+		buckets[i].sort_custom(Callable(self, "_compare_by_brightness"))
 	
 	for i in range(color_presets.size()):
 		# warning-ignore:integer_division
@@ -180,7 +180,7 @@ func _refresh_size() -> void:
 	if not _vbox_container:
 		return
 	
-	var new_rect_size: Vector2 = _vbox_container.rect_size
+	var new_rect_size: Vector2 = _vbox_container.size
 	
 	# Godot's Containers such as VBoxContainer and GridContainer visibly collapse invisible elements, so intuitively,
 	# you might expect this to affect their rect_size attributes as well. However, the behavior of containers is
@@ -191,8 +191,8 @@ func _refresh_size() -> void:
 		new_rect_size.y -= 22
 		new_rect_size.y -= _presets_container.get_constant("separation", "VBoxContainer")
 	
-	rect_min_size = new_rect_size + Vector2(12, 12)
-	rect_size = rect_min_size
+	custom_minimum_size = new_rect_size + Vector2(12, 12)
+	size = custom_minimum_size
 
 
 func _on_CandyColorPickerButton_pressed(new_color: Color) -> void:

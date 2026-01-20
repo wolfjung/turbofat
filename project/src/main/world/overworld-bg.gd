@@ -1,12 +1,12 @@
-tool
+@tool
 class_name OverworldBg
 extends CanvasLayer
 ## Draws the background behind overworld scenes.
 
 ## If 'true', the background shows a scrolling outer space texture. If 'false', the background is blank.
-export (bool) var outer_space_visible: bool = false setget set_outer_space_visible
+@export var outer_space_visible: bool = false: set = set_outer_space_visible
 
-onready var _outer_space := $OuterSpace
+@onready var _outer_space := $OuterSpace
 
 func _ready() -> void:
 	_refresh_outer_space_visible()

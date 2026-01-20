@@ -48,7 +48,9 @@ func _upgrade_creatures() -> void:
 ## 	'path': Path to a json resource containing creature data to upgrade.
 func _upgrade_creature(path: String) -> void:
 	var old_text := FileUtils.get_file_as_text(path)
-	var old_json: Dictionary = parse_json(old_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(old_text)
+	var old_json: Dictionary = test_json_conv.get_data()
 	if old_json.get("version") != Creatures.CREATURE_DATA_VERSION:
 		# converting the json into a CreatureDef and back upgrades the json
 		var creature_def := CreatureDef.new()
@@ -71,7 +73,7 @@ func _find_creature_paths() -> Array:
 	var dir_queue := CREATURE_DIRS.duplicate()
 	
 	# recursively look for json files under the specified paths
-	var dir: Directory
+	var dir: DirAccess
 	var file: String
 	while true:
 		if file:
@@ -83,12 +85,12 @@ func _find_creature_paths() -> Array:
 		else:
 			if dir:
 				dir.list_dir_end()
-			if dir_queue.empty():
+			if dir_queue.is_empty():
 				break
 			# there are more directories. open the next directory
-			dir = Directory.new()
+			dir = DirAccess.new()
 			dir.open(dir_queue.pop_front())
-			dir.list_dir_begin(true, true)
+			dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		file = dir.get_next()
 	
 	return result
@@ -145,9 +147,9 @@ func _creature_ids_from_directory(dir_string: String) -> Array:
 ## Returns a list of creature defs in a directory.
 func _creature_defs_from_directory(dir_string: String) -> Array:
 	var result := []
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.open(dir_string)
-	dir.list_dir_begin(true, true)
+	dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while true:
 		var file := dir.get_next()
 		if not file:
@@ -206,7 +208,9 @@ func _report_creatures_without_id() -> void:
 func _recolor_creature(path: String) -> void:
 	var color_change_count := 0
 	var old_text := FileUtils.get_file_as_text(path)
-	var old_json: Dictionary = parse_json(old_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(old_text)
+	var old_json: Dictionary = test_json_conv.get_data()
 	var creature_def := CreatureDef.new()
 	creature_def.from_json_dict(old_json)
 	var new_dna := creature_def.dna.duplicate()

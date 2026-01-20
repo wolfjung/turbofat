@@ -8,7 +8,7 @@ script = ExtResource( 1 )
 line_height = 175.0
 
 [node name="Pinup" parent="." instance=ExtResource( 3 )]
-margin_left = -100.0
-margin_top = -87.0
-margin_right = 100.0
-margin_bottom = 88.0
+offset_left = -100.0
+offset_top = -87.0
+offset_right = 100.0
+offset_bottom = 88.0

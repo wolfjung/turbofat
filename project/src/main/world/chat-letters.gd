@@ -20,11 +20,11 @@ const LETTER_ANGLES_BY_ORIENTATION := {
 ## creature currently emitting letters
 var _chatter: Creature
 
-onready var _letter_shooter: LetterShooter = $LetterShooter
+@onready var _letter_shooter: LetterShooter = $LetterShooter
 
 func _ready() -> void:
 	var overworld_ui: OverworldUi = Global.get_overworld_ui()
-	overworld_ui.connect("chatter_talked", self, "_on_OverworldUi_chatter_talked")
+	overworld_ui.connect("chatter_talked", Callable(self, "_on_OverworldUi_chatter_talked"))
 
 
 func _physics_process(_delta: float) -> void:
@@ -53,11 +53,11 @@ func _refresh_letter_shooter() -> void:
 func _on_OverworldUi_chatter_talked(new_chatter: Creature) -> void:
 	# disconnect signal from old chatter
 	if _chatter:
-		_chatter.disconnect("talking_changed", self, "_on_Creature_talking_changed")
+		_chatter.disconnect("talking_changed", Callable(self, "_on_Creature_talking_changed"))
 	_chatter = new_chatter
 	
 	# connect signal to new chatter
-	_chatter.connect("talking_changed", self, "_on_Creature_talking_changed")
+	_chatter.connect("talking_changed", Callable(self, "_on_Creature_talking_changed"))
 	
 	# start emitting letters
 	_letter_shooter.start()

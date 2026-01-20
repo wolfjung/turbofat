@@ -21,8 +21,8 @@ corner_radius_bottom_left = 25
 [node name="ChatFrame" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 400.0
-rect_pivot_offset = Vector2( 362, 79 )
+offset_top = 400.0
+pivot_offset = Vector2( 362, 79 )
 script = ExtResource( 4 )
 __meta__ = {
 "_editor_description_": "Defines the extents of the chat area."
@@ -37,11 +37,11 @@ script = ExtResource( 6 )
 panel_sizes = [ Vector2( 420, 120 ), Vector2( 600, 120 ), Vector2( 600, 160 ), Vector2( 780, 160 ) ]
 
 [node name="NametagPanel" parent="ChatLinePanel" instance=ExtResource( 7 )]
-margin_left = 180.0
-margin_top = -60.0
-margin_right = 540.0
-margin_bottom = 4.57764e-05
-custom_styles/panel = SubResource( 1 )
+offset_left = 180.0
+offset_top = -60.0
+offset_right = 540.0
+offset_bottom = 4.57764e-05
+theme_override_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 
 [node name="ChatLineLabel" parent="." instance=ExtResource( 2 )]

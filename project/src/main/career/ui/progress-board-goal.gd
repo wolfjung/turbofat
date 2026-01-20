@@ -3,15 +3,15 @@ extends Control
 ##
 ## This label's letters bounce up and down, and it animates and disappears if the player reaches the goal.
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _goal_label := $Label
-onready var _goal_sound := $GoalSound
-onready var _animation_player := $AnimationPlayer
+@onready var _goal_label := $Label
+@onready var _goal_sound := $GoalSound
+@onready var _animation_player := $AnimationPlayer
 
 func _ready() -> void:
 	_goal_label.bbcode_enabled = true
-	_goal_label.bbcode_text = "[center][wave amp=40 freq=8]%s[/wave][/center]" % [tr("GOAL")]
+	_goal_label.text = "[center][wave amp=40 freq=8]%s[/wave][/center]" % [tr("GOAL")]
 
 
 ## Moves the label to the goal.
@@ -19,7 +19,7 @@ func _ready() -> void:
 ## Parameters:
 ## 	'goal_spot_position': Position of the ProgressBoardSpot for the goal.
 func move_to_goal_spot(goal_spot_position: Vector2) -> void:
-	rect_position = goal_spot_position - rect_pivot_offset
+	position = goal_spot_position - pivot_offset
 
 
 ## When the player reaches a goal level, we play a special animation.
@@ -33,8 +33,8 @@ func _on_Player_travelling_finished() -> void:
 		var rainbow_colors := ProgressBoard.RAINBOW_CHALK_COLORS.duplicate()
 		rainbow_colors.shuffle()
 		for i in range(rainbow_colors.size()):
-			_tween.tween_callback(_goal_label, "set", ["custom_colors/default_color", rainbow_colors[i]])
+			_tween.tween_callback(Callable(_goal_label, "set").bind("theme_override_colors/default_color", rainbow_colors[i))
 			_tween.tween_interval(ProgressBoard.RAINBOW_INTERVAL)
 	else:
 		_tween = Utils.kill_tween(_tween)
-		_goal_label.set("custom_colors/default_color", ProgressBoard.DEFAULT_CHALK_COLOR)
+		_goal_label.set("theme_override_colors/default_color", ProgressBoard.DEFAULT_CHALK_COLOR)

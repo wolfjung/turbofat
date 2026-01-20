@@ -1,5 +1,5 @@
-tool
-extends Sprite
+@tool
+extends Sprite2D
 ## Exit on the floor which the player can step on to go somewhere else.
 ##
 ## Stepping on this exit results transitions to a new scene.
@@ -35,7 +35,7 @@ const EXIT_N_SHEET := preload("res://assets/main/world/environment/exit-n-sheet.
 const EXIT_NE_SHEET := preload("res://assets/main/world/environment/exit-ne-sheet.png")
 
 ## direction the exit is facing. Also the direction the player needs to move to use the exit
-export (ExitDirection) var exit_direction := ExitDirection.NORTH setget set_exit_direction
+@export var exit_direction := ExitDirection.NORTH: set = set_exit_direction
 
 func _ready() -> void:
 	_refresh_exit_direction()

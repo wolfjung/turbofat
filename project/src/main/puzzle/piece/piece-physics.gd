@@ -5,14 +5,14 @@ extends Node
 ## Some of this logic is pushed out into child nodes such as Rotator and Mover. This class only contains reusable code
 ## and code requiring coordination from different child nodes.
 
-export (NodePath) var piece_states_path: NodePath
+@export var piece_states_path: NodePath
 
-onready var rotator := $Rotator
-onready var mover := $Mover
-onready var dropper := $Dropper
-onready var squisher := $Squisher
+@onready var rotator := $Rotator
+@onready var mover := $Mover
+@onready var dropper := $Dropper
+@onready var squisher := $Squisher
 
-onready var _states: PieceStates = get_node(piece_states_path)
+@onready var _states: PieceStates = get_node(piece_states_path)
 
 ## Positions a new piece at the top of the playfield.
 ##
@@ -25,7 +25,7 @@ func initially_move_piece(piece: ActivePiece) -> bool:
 	# If the player tops out, we move the piece back to this position.
 	var initial_unmoved_pos := piece.target_pos
 	
-	if not piece.get_target_pos_arr().empty():
+	if not piece.get_target_pos_arr().is_empty():
 		# relocate piece to the top of the playfield
 		var highest_pos: float = piece.get_target_pos_arr()[0].y
 		for pos_arr_item in piece.get_target_pos_arr():

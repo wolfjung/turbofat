@@ -1,24 +1,24 @@
 [gd_scene load_steps=42 format=2]
 
-[ext_resource path="res://assets/main/puzzle/critter/spear-stalk.png" type="Texture" id=1]
-[ext_resource path="res://assets/main/puzzle/critter/spear-face-sheet.png" type="Texture" id=2]
-[ext_resource path="res://src/main/puzzle/flat-mix.shader" type="Shader" id=3]
-[ext_resource path="res://assets/main/puzzle/critter/spear-soil-back-sheet.png" type="Texture" id=4]
-[ext_resource path="res://assets/main/puzzle/critter/spear-soil-front-sheet.png" type="Texture" id=5]
+[ext_resource path="res://assets/main/puzzle/critter/spear-stalk.png" type="Texture2D" id=1]
+[ext_resource path="res://assets/main/puzzle/critter/spear-face-sheet.png" type="Texture2D" id=2]
+[ext_resource path="res://src/main/puzzle/flat-mix.gdshader" type="Shader" id=3]
+[ext_resource path="res://assets/main/puzzle/critter/spear-soil-back-sheet.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/main/puzzle/critter/spear-soil-front-sheet.png" type="Texture2D" id=5]
 [ext_resource path="res://src/main/puzzle/critter/spear.gd" type="Script" id=6]
 [ext_resource path="res://src/main/puzzle/critter/spear-state-none.gd" type="Script" id=7]
 [ext_resource path="res://src/main/puzzle/critter/spear-crumbs.gd" type="Script" id=8]
-[ext_resource path="res://assets/main/puzzle/crumbs.png" type="Texture" id=9]
+[ext_resource path="res://assets/main/puzzle/crumbs.png" type="Texture2D" id=9]
 [ext_resource path="res://src/main/puzzle/critter/spear-state-popped-out.gd" type="Script" id=10]
 [ext_resource path="res://src/main/puzzle/critter/spear-state-popped-in.gd" type="Script" id=11]
 [ext_resource path="res://src/main/utils/state-machine.gd" type="Script" id=12]
-[ext_resource path="res://assets/main/puzzle/critter/onion-dirt-clod-sheet.png" type="Texture" id=13]
+[ext_resource path="res://assets/main/puzzle/critter/onion-dirt-clod-sheet.png" type="Texture2D" id=13]
 [ext_resource path="res://assets/main/puzzle/critter/spear-pop.wav" type="AudioStream" id=14]
 [ext_resource path="res://src/main/utils/DeconflictedAudioStreamPlayer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/main/puzzle/critter/spear-sfx.gd" type="Script" id=18]
 [ext_resource path="res://src/main/puzzle/critter/spear-face.gd" type="Script" id=20]
 [ext_resource path="res://src/main/puzzle/critter/spear-waiting.gd" type="Script" id=21]
-[ext_resource path="res://assets/main/puzzle/critter/critter-wait-sheet.png" type="Texture" id=22]
+[ext_resource path="res://assets/main/puzzle/critter/critter-wait-sheet.png" type="Texture2D" id=22]
 [ext_resource path="res://src/main/utils/CritterPoof.tscn" type="PackedScene" id=23]
 [ext_resource path="res://assets/main/puzzle/critter/critter-poof.wav" type="AudioStream" id=24]
 [ext_resource path="res://src/main/puzzle/critter/spear-waiting-end.gd" type="Script" id=25]
@@ -38,10 +38,10 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="Gradient" id=11]
-offsets = PoolRealArray( 0, 0.526316, 0.991228, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.368421, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.526316, 0.991228, 1 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.368421, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=8]
+[sub_resource type="GradientTexture2D" id=8]
 gradient = SubResource( 11 )
 
 [sub_resource type="Curve" id=12]
@@ -50,7 +50,7 @@ _data = [ Vector2( 0, 1 ), 0.0, -0.29535, 0, 1, Vector2( 0.864542, 0.744658 ), -
 [sub_resource type="CurveTexture" id=9]
 curve = SubResource( 12 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticleProcessMaterial" id=13]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 60, 0 )
 flag_disable_z = true
@@ -75,8 +75,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0 ]
 }
@@ -93,8 +93,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 0, 2, 3, 1, 2, 1, 0, 3 ]
 }
@@ -111,8 +111,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 4, 5, 6, 7, 4, 6, 7, 5, 6, 5, 4, 7 ]
 }
@@ -124,10 +124,10 @@ particles_anim_v_frames = 4
 particles_anim_loop = false
 
 [sub_resource type="Gradient" id=17]
-offsets = PoolRealArray( 0, 0.665217, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.665217, 1 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=3]
+[sub_resource type="GradientTexture2D" id=3]
 gradient = SubResource( 17 )
 
 [sub_resource type="Curve" id=18]
@@ -136,7 +136,7 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.735178, 0.768182 ), -0.985
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 18 )
 
-[sub_resource type="ParticlesMaterial" id=19]
+[sub_resource type="ParticleProcessMaterial" id=19]
 emission_shape = 2
 emission_box_extents = Vector3( 64, 1, 1 )
 flag_disable_z = true
@@ -159,24 +159,24 @@ anim_offset_random = 1.0
 [node name="Spear" type="Node2D"]
 script = ExtResource( 6 )
 
-[node name="SoilBack" type="Sprite" parent="."]
+[node name="SoilBack" type="Sprite2D" parent="."]
 texture = ExtResource( 4 )
 hframes = 3
 
 [node name="SpearHolder" type="Control" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_top = -100.0
-margin_right = 1000.0
-margin_bottom = 100.0
-rect_clip_content = true
+offset_top = -100.0
+offset_right = 1000.0
+offset_bottom = 100.0
+clip_contents = true
 
-[node name="Spear" type="Sprite" parent="SpearHolder"]
+[node name="Spear" type="Sprite2D" parent="SpearHolder"]
 material = SubResource( 1 )
 position = Vector2( 0, 100 )
 texture = ExtResource( 1 )
 
-[node name="Face" type="Sprite" parent="SpearHolder/Spear"]
+[node name="Face" type="Sprite2D" parent="SpearHolder/Spear"]
 material = SubResource( 1 )
 position = Vector2( 360, 0 )
 texture = ExtResource( 2 )
@@ -195,11 +195,11 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
-[node name="SoilFront" type="Sprite" parent="."]
+[node name="SoilFront" type="Sprite2D" parent="."]
 texture = ExtResource( 5 )
 hframes = 3
 
-[node name="DirtParticlesBurst" type="Particles2D" parent="SoilFront"]
+[node name="DirtParticlesBurst" type="GPUParticles2D" parent="SoilFront"]
 material = SubResource( 10 )
 position = Vector2( 10, 0 )
 emitting = false
@@ -211,7 +211,7 @@ visibility_rect = Rect2( -1500, -150, 3500, 550 )
 process_material = SubResource( 13 )
 texture = ExtResource( 13 )
 
-[node name="DirtParticlesContinuous" type="Particles2D" parent="SoilFront"]
+[node name="DirtParticlesContinuous" type="GPUParticles2D" parent="SoilFront"]
 material = SubResource( 10 )
 position = Vector2( 10, 0 )
 emitting = false
@@ -220,7 +220,7 @@ visibility_rect = Rect2( -1500, -150, 3500, 550 )
 process_material = SubResource( 13 )
 texture = ExtResource( 13 )
 
-[node name="Wait" type="Sprite" parent="."]
+[node name="Wait" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 54, 0 )
 texture = ExtResource( 22 )
@@ -238,10 +238,10 @@ anims/wait-end = SubResource( 20 )
 position = Vector2( 36, 0 )
 
 [node name="CrumbHolder" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Crumbs" type="Particles2D" parent="CrumbHolder"]
+[node name="Crumbs" type="GPUParticles2D" parent="CrumbHolder"]
 material = SubResource( 16 )
 emitting = false
 amount = 6

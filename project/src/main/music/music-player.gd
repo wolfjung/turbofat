@@ -23,7 +23,7 @@ var all_tracks: Array
 var current_track: CheckpointMusicTrack
 
 ## true if the music should have a low-pass filter applied; used during nighttime
-var night_filter: bool = false setget set_night_filter
+var night_filter: bool = false: set = set_night_filter
 
 ## key: (String) music track id
 ## value: (CheckpointMusicTrack) music
@@ -35,7 +35,7 @@ var tracks_by_id := {}
 ## value: (float) desired volume_db for playing music
 var _max_volume_db_by_track := {}
 
-var _filter_tween: SceneTreeTween
+var _filter_tween: Tween
 
 ## Level id for the newest played puzzle music. We monitor this to ensure repeating a puzzle also repeats the music.
 var _previous_level_id: String
@@ -43,19 +43,19 @@ var _previous_level_id: String
 ## Track id for the newest played puzzle music. We monitor this to ensure repeating a puzzle also repeats the music.
 var _previous_puzzle_track_id: String
 
-onready var _menu_tracks := [
+@onready var _menu_tracks := [
 		$ChubHub, $DessertCourse, $HarderButter,
 		$HotFunkSundae, $LoFiChill, $RainbowSherbeat]
 
-onready var _puzzle_tracks := [
+@onready var _puzzle_tracks := [
 		$AcidReflux, $ChocolateChip, $ChubNBass, $ChunkyObake,
 		$DooDooDoo, $ExtraSprinkles, $GingerbreadHouse, $JuicerMixerGrinder,
 		$MysticMuffin, $PressureCooker, $SugarCrash, $TripleThiccShake]
 
-onready var _credits_track := $SugarCrash
-onready var _tutorial_tracks := [$MyFatnessPal]
-onready var _boss_tracks := [$ExtraSprinkles]
-onready var _music_tween_manager := $MusicTweenManager
+@onready var _credits_track := $SugarCrash
+@onready var _tutorial_tracks := [$MyFatnessPal]
+@onready var _boss_tracks := [$ExtraSprinkles]
+@onready var _music_tween_manager := $MusicTweenManager
 
 func _ready() -> void:
 	all_tracks = _menu_tracks + _puzzle_tracks + _tutorial_tracks
@@ -206,13 +206,13 @@ func set_night_filter(new_night_filter: bool) -> void:
 		# Gradually reduce the cutoff_hz to muffle the music
 		_filter_tween = Utils.recreate_tween(self, _filter_tween)
 		_filter_tween.tween_property(low_pass_filter, "cutoff_hz", MIN_FILTER_HZ, 0.3) \
-				.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+				super.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
 	else:
 		# Gradually increase the cutoff_hz to unmuffle the music
 		_filter_tween = Utils.recreate_tween(self, _filter_tween)
 		_filter_tween.tween_property(low_pass_filter, "cutoff_hz", MAX_FILTER_HZ, 0.3) \
-				.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
-		_filter_tween.tween_callback(self, "_on_Tween_unfilter_completed")
+				super.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+		_filter_tween.tween_callback(Callable(self, "_on_Tween_unfilter_completed"))
 
 
 ## Plays the first track from the specified list, and reorders the tracks.

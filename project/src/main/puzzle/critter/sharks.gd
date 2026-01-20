@@ -7,11 +7,11 @@ extends Node2D
 
 signal shark_squished(shark)
 
-export (PackedScene) var SharkScene: PackedScene
-export (NodePath) var critter_manager_path: NodePath
+@export var SharkScene: PackedScene
+@export var critter_manager_path: NodePath
 
-var piece_manager_path: NodePath setget set_piece_manager_path
-var playfield_path: NodePath setget set_playfield_path
+var piece_manager_path: NodePath: set = set_piece_manager_path
+var playfield_path: NodePath: set = set_playfield_path
 
 ## Queue of calls to defer until after line clears are finished
 var _call_queue: CallQueue = CallQueue.new()
@@ -22,11 +22,11 @@ var _piece_manager: PieceManager
 var _playfield: Playfield
 
 ## node which contains all of the child shark nodes
-onready var _shark_holder := $SharkHolder
-onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
+@onready var _shark_holder := $SharkHolder
+@onready var _critter_manager: CellCritterManager = get_node(critter_manager_path)
 
 func _ready() -> void:
-	PuzzleState.connect("before_piece_written", self, "_on_PuzzleState_before_piece_written")
+	PuzzleState.connect("before_piece_written", Callable(self, "_on_PuzzleState_before_piece_written"))
 	_refresh_playfield_path()
 	_refresh_piece_manager_path()
 
@@ -92,7 +92,7 @@ func _inner_add_sharks(config: SharkConfig) -> void:
 	
 	# sharks prioritize the highest cell, so players can make clever plays by shaping pieces at the top and placing
 	# them below.
-	potential_shark_cells.sort_custom(self, "_compare_by_y_then_random")
+	potential_shark_cells.sort_custom(Callable(self, "_compare_by_y_then_random"))
 	
 	for i in range(min(config.count, potential_shark_cells.size())):
 		_add_shark(potential_shark_cells[i], config)
@@ -133,7 +133,7 @@ func _refresh_sharks_for_piece() -> void:
 	var shark_cells := _critter_manager.get_critter_cells(Shark)
 	
 	## If multiple sharks touch a piece, the highest shark takes precedence
-	shark_cells.sort_custom(self, "_compare_by_y_then_x")
+	shark_cells.sort_custom(Callable(self, "_compare_by_y_then_x"))
 	
 	var piece_bitten := false
 	
@@ -348,14 +348,14 @@ func _refresh_piece_manager_path() -> void:
 		return
 	
 	if _piece_manager:
-		_piece_manager.disconnect("piece_disturbed", self, "_on_PieceManager_piece_disturbed")
-		_piece_manager.disconnect("hard_dropped", self, "_on_PieceManager_hard_dropped")
+		_piece_manager.disconnect("piece_disturbed", Callable(self, "_on_PieceManager_piece_disturbed"))
+		_piece_manager.disconnect("hard_dropped", Callable(self, "_on_PieceManager_hard_dropped"))
 	
 	_piece_manager = get_node(piece_manager_path) if piece_manager_path else null
 	
 	if _piece_manager:
-		_piece_manager.connect("piece_disturbed", self, "_on_PieceManager_piece_disturbed")
-		_piece_manager.connect("hard_dropped", self, "_on_PieceManager_hard_dropped")
+		_piece_manager.connect("piece_disturbed", Callable(self, "_on_PieceManager_piece_disturbed"))
+		_piece_manager.connect("hard_dropped", Callable(self, "_on_PieceManager_hard_dropped"))
 
 
 ## Connects playfield listeners.
@@ -364,16 +364,16 @@ func _refresh_playfield_path() -> void:
 		return
 	
 	if _playfield:
-		_playfield.disconnect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.disconnect("line_filled", self, "_on_Playfield_line_filled")
-		_playfield.disconnect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.disconnect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.disconnect("line_filled", Callable(self, "_on_Playfield_line_filled"))
+		_playfield.disconnect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 	
 	_playfield = get_node(playfield_path) if playfield_path else null
 	
 	if _playfield:
-		_playfield.connect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.connect("line_filled", self, "_on_Playfield_line_filled")
-		_playfield.connect("after_lines_deleted", self, "_on_Playfield_after_lines_deleted")
+		_playfield.connect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.connect("line_filled", Callable(self, "_on_Playfield_line_filled"))
+		_playfield.connect("after_lines_deleted", Callable(self, "_on_Playfield_after_lines_deleted"))
 
 
 ## Returns potential cells to which a shark could be added.
@@ -458,7 +458,7 @@ func _add_shark(cell: Vector2, config: SharkConfig) -> void:
 	if _critter_manager.cell_has_critter(cell):
 		return
 	
-	var shark: Shark = SharkScene.instance()
+	var shark: Shark = SharkScene.instantiate()
 	shark.z_index = 4
 	shark.scale = _playfield.tile_map.scale
 	shark.shark_size = config.size

@@ -8,18 +8,18 @@ const BOUNCE_AMPLITUDE := 4
 ## The duration the save indicator should remain visible
 const DURATION := 1.5
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _sprite := $Sprite
-onready var _animation_player := $AnimationPlayer
+@onready var _sprite := $Sprite2D
+@onready var _animation_player := $AnimationPlayer
 
 func _ready() -> void:
 	_sprite.visible = false
-	SystemSave.connect("before_save", self, "_on_SystemSave_before_save")
-	SystemSave.connect("after_save", self, "_on_SystemSave_after_save")
-	PlayerSave.connect("before_save", self, "_on_PlayerSave_before_save")
-	PlayerSave.connect("after_save", self, "_on_PlayerSave_after_save")
-	SceneTransition.connect("fade_out_started", self, "_on_SceneTransition_fade_out_started")
+	SystemSave.connect("before_save", Callable(self, "_on_SystemSave_before_save"))
+	SystemSave.connect("after_save", Callable(self, "_on_SystemSave_after_save"))
+	PlayerSave.connect("before_save", Callable(self, "_on_PlayerSave_before_save"))
+	PlayerSave.connect("after_save", Callable(self, "_on_PlayerSave_after_save"))
+	SceneTransition.connect("fade_out_started", Callable(self, "_on_SceneTransition_fade_out_started"))
 
 
 func is_playing() -> bool:
@@ -38,8 +38,8 @@ func play() -> void:
 	_sprite.position.y = 20
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.tween_property(_sprite, "position:y", 20 + BOUNCE_AMPLITUDE, BOUNCE_SPEED / 2.0) \
-			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-	_tween.tween_callback(self, "_schedule_looped_tween")
+			super.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	_tween.tween_callback(Callable(self, "_schedule_looped_tween"))
 
 
 ## Hides the save indicator with a 'pop out' animation.
@@ -57,9 +57,9 @@ func _schedule_looped_tween() -> void:
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.set_loops()
 	_tween.tween_property(_sprite, "position:y", 20 - BOUNCE_AMPLITUDE, BOUNCE_SPEED) \
-			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			super.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	_tween.tween_property(_sprite, "position:y", 20 + BOUNCE_AMPLITUDE, BOUNCE_SPEED) \
-			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			super.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 
 
 ## Schedules the save indicator to hide after a delay.
@@ -67,7 +67,7 @@ func _schedule_looped_tween() -> void:
 ## We add a delay to ensure it's visible for a minimum amount of time.
 func _schedule_stop() -> void:
 	if is_inside_tree():
-		get_tree().create_timer(DURATION).connect("timeout", self, "stop")
+		get_tree().create_timer(DURATION).connect("timeout", Callable(self, "stop"))
 
 
 func _on_PlayerSave_before_save() -> void:

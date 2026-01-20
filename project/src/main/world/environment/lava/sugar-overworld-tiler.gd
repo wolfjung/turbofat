@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 ## Randomizes sugar on an overworld terrain map.
 ##
@@ -6,16 +6,16 @@ extends Node
 ## and selecting random autotile coordinates.
 
 ## Terrain tilemap's tile ID for sugar tiles
-export (int) var sugar_tile_index: int
+@export var sugar_tile_index: int
 
 ## Editor toggle which randomizes the appearance of sugar tiles.
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, reverting all sugar tiles to an unflipped non-random state.
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 ## Terrain tilemap with sugar tiles to place
-onready var _tile_map := get_parent()
+@onready var _tile_map := get_parent()
 
 ## Preemptively initializes onready variables to avoid null references
 func _enter_tree() -> void:
@@ -28,7 +28,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -49,7 +49,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

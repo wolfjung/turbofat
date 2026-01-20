@@ -44,7 +44,7 @@ func popup() -> void:
 	for corrupt_filename in PlayerSave.corrupt_filenames:
 		corrupt_filenames.append(StringUtils.substring_after(corrupt_filename, "user://"))
 	message += tr("The invalid save data is available in the following path:\n\n%s (%s)") \
-			% [OS.get_user_data_dir(), PoolStringArray(corrupt_filenames).join(", ")]
+			% [OS.get_user_data_dir(), ", ".join(PackedStringArray(corrupt_filenames))]
 	
 	message += "\n\n"
 	message += tr("I'm really sorry.")
@@ -53,7 +53,7 @@ func popup() -> void:
 
 
 func hide() -> void:
-	.hide()
+	super.hide()
 	$Popup.hide()
 
 

@@ -33,8 +33,8 @@ func test_valid_custom_ui_keybinds_missing_keybind_null() -> void:
 
 func test_valid_custom_ui_keybinds_duplicate_keybind() -> void:
 	var custom_keybinds := _custom_keybinds()
-	custom_keybinds["next_tab"] = [{"type": "key", "scancode": 88}, {}, {}]
-	custom_keybinds["prev_tab"] = [{"type": "key", "scancode": 88}, {}, {}]
+	custom_keybinds["next_tab"] = [{"type": "key", "keycode": 88}, {}, {}]
+	custom_keybinds["prev_tab"] = [{"type": "key", "keycode": 88}, {}, {}]
 	SystemData.keybind_settings.custom_keybinds = custom_keybinds
 	
 	assert_eq(SystemData.keybind_settings.valid_custom_ui_keybinds(), false)
@@ -42,4 +42,6 @@ func test_valid_custom_ui_keybinds_duplicate_keybind() -> void:
 
 func _custom_keybinds() -> Dictionary:
 	var custom_keybinds_text := FileUtils.get_file_as_text("res://assets/main/keybind/default-custom.json")
-	return parse_json(custom_keybinds_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(custom_keybinds_text)
+	return test_json_conv.get_data()

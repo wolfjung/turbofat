@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://src/main/utils/outline.shader" type="Shader" id=1]
-[ext_resource path="res://assets/main/world/environment/lava/zagma-table.png" type="Texture" id=2]
+[ext_resource path="res://src/main/utils/outline.gdshader" type="Shader" id=1]
+[ext_resource path="res://assets/main/world/environment/lava/zagma-table.png" type="Texture2D" id=2]
 [ext_resource path="res://src/main/world/environment/overworld-obstacle.gd" type="Script" id=3]
 
 [sub_resource type="ShaderMaterial" id=3]
@@ -14,11 +14,11 @@ shader_param/edge_fix_factor = 1.0
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 60, 20 )
 
-[node name="Table" type="KinematicBody2D"]
+[node name="Table" type="CharacterBody2D"]
 script = ExtResource( 3 )
 shadow_scale = 0.9
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource( 3 )
 scale = Vector2( 0.549, 0.5 )
 texture = ExtResource( 2 )

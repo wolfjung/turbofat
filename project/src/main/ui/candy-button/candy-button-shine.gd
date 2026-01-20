@@ -4,27 +4,27 @@ extends TextureRect
 ## This graphic toggles between a shiny texture and less shiny texture based on the button's state.
 
 ## Bright shiny reflection texture which overlays the button and text when the button is not pressed.
-export (Texture) var texture_normal: Texture setget set_texture_normal
+@export var texture_normal: Texture2D: set = set_texture_normal
 
 ## Less shiny reflection texture which overlays the button and text when the button is pressed.
-export (Texture) var texture_pressed: Texture setget set_texture_pressed
+@export var texture_pressed: Texture2D: set = set_texture_pressed
 
 ## CandyButton which this graphic is overlaid onto.
-onready var _button := get_parent()
+@onready var _button := get_parent()
 
 func _ready() -> void:
-	_button.connect("button_down", self, "_on_Button_button_down")
-	_button.connect("button_up", self, "_on_Button_button_up")
-	_button.connect("toggled", self, "_on_Button_toggled")
+	_button.connect("button_down", Callable(self, "_on_Button_button_down"))
+	_button.connect("button_up", Callable(self, "_on_Button_button_up"))
+	_button.connect("toggled", Callable(self, "_on_Button_toggled"))
 	_refresh_shine()
 
 
-func set_texture_normal(new_texture_normal: Texture) -> void:
+func set_texture_normal(new_texture_normal: Texture2D) -> void:
 	texture_normal = new_texture_normal
 	_refresh_shine()
 
 
-func set_texture_pressed(new_texture_pressed: Texture) -> void:
+func set_texture_pressed(new_texture_pressed: Texture2D) -> void:
 	texture_pressed = new_texture_pressed
 	_refresh_shine()
 

@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 ## Row which shows the player the keybinds for a specific action, such as 'Move Piece Left'.
 ##
@@ -7,11 +7,11 @@ extends HBoxContainer
 ## Size of joypad image textures
 const IMAGE_SIZE := Vector2(20, 20)
 
-export (String) var description: String setget set_description
+@export var description: String: set = set_description
 
 ## String and Texture instances shown for the keybind. Strings are used for keys like "Backspace", textures are used
 ## for XBox buttons like the A button.
-export (Array) var keybind_values: Array setget set_keybind_values
+@export var keybind_values: Array: set = set_keybind_values
 
 func _ready() -> void:
 	_refresh_description_label()
@@ -42,7 +42,7 @@ func _refresh_keybind_value_label() -> void:
 				$Value.add_text(", ")
 			$Value.add_text(keybind_value)
 			previous_item_was_text = true
-		if keybind_value is Texture:
+		if keybind_value is Texture2D:
 			if previous_item_was_text:
 				$Value.add_text(", ")
 			$Value.add_image(keybind_value, IMAGE_SIZE.x, IMAGE_SIZE.y)

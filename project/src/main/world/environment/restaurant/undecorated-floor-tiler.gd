@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 ## Autotiles a tilemap for undecorated floors.
 ##
@@ -19,19 +19,19 @@ const ALL_AUTOTILE_ALTERNATIVES := [
 const UNDECORATED_QUALITY := 0.88
 
 ## Parent tilemap's tile ID for undecorated floor tiles
-export (int) var undecorated_tile_index: int = -1
+@export var undecorated_tile_index: int = -1
 
 ## Editor toggle which manually applies autotiling.
 ##
 ## Godot has no way of automatically reacting to GridMap/TileMap changes. See Godot #11855
 ## (https://github.com/godotengine/godot/issues/11855)
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, removing all floor imperfections.
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 ## tilemap containing floors
-onready var _tile_map: TileMap = get_parent()
+@onready var _tile_map: TileMap = get_parent()
 
 
 ## Preemptively initializes onready variables to avoid null references.
@@ -47,7 +47,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -62,7 +62,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

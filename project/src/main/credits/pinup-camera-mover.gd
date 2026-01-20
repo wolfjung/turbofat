@@ -4,17 +4,17 @@ extends AnimationPlayer
 ## While this is an AnimationPlayer, the animation is only used to calculate the camera position. It shouldn't ever be
 ## played as an animation.
 
-export (NodePath) var creature_path: NodePath
-export (NodePath) var customer_camera_path: NodePath
+@export var creature_path: NodePath
+@export var customer_camera_path: NodePath
 
 ## Amount of empty space over the creature's head.
-export (float, 0, 1) var headroom := 1.0 setget set_headroom
+@export var headroom := 1.0: set = set_headroom
 
 ## if 'true', the target camera position needs to be recalculated because something about the customer changed
 var _position_dirty := true
 
-onready var _creature := get_node(creature_path)
-onready var _camera := get_node(customer_camera_path)
+@onready var _creature := get_node(creature_path)
+@onready var _camera := get_node(customer_camera_path)
 
 func _ready() -> void:
 	_refresh_zoom_and_headroom()

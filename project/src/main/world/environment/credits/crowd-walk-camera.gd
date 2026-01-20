@@ -14,7 +14,7 @@ const LERP_WEIGHT := 0.10
 const ZOOM_AMOUNT_NEAR := Vector2(0.18750, 0.18750)
 const ZOOM_AMOUNT_FAR := Vector2(0.3750, 0.3750)
 
-export (NodePath) var overworld_environment_path: NodePath setget set_overworld_environment_path
+@export var overworld_environment_path: NodePath: set = set_overworld_environment_path
 
 var _overworld_environment: OverworldEnvironment
 

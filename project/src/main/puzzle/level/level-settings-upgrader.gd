@@ -126,7 +126,7 @@ func _upgrade_5a6b(old_json: Dictionary, old_key: String, new_json: Dictionary) 
 						criteria_strings_split[i] = "top=%s" % StringUtils.substring_after(criteria_string, "m=")
 						break
 				new_value[rank_criteria_property_index] = "rank_criteria %s" \
-						% [PoolStringArray(criteria_strings_split).join(" ")]
+						% [" ".join(PackedStringArray(criteria_strings_split))]
 				new_json[old_key] = new_value
 		_:
 			new_json[old_key] = old_json[old_key]
@@ -208,7 +208,7 @@ func _upgrade_block_obj_49db(block_dict: Dictionary) -> void:
 		var pos_array: Array = block_dict["tile"].split(" ")
 		if int(pos_array[2]) >= 4:
 			pos_array[2] = int(pos_array[2]) + 1
-		block_dict["tile"] = PoolStringArray(pos_array).join(" ")
+		block_dict["tile"] = " ".join(PackedStringArray(pos_array))
 	if block_dict.has("pickup"):
 		var pickup_int := int(block_dict["pickup"])
 		if pickup_int >= 4:
@@ -253,7 +253,7 @@ func _increment_phase_string(phase: String, condition: String) -> String:
 		
 		if phase_fragment.begins_with("%s=" % [condition]):
 			split[i_split] = increment_string(phase_fragment)
-			result = PoolStringArray(split).join(" ")
+			result = " ".join(PackedStringArray(split))
 			break
 	
 	return result

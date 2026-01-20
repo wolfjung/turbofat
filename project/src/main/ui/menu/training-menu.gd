@@ -5,11 +5,11 @@ extends Control
 const DEFAULT_REGION_ID := OtherRegion.ID_MARATHON
 const DEFAULT_LEVEL_ID := "practice/marathon_normal"
 
-export (NodePath) var high_scores_path: NodePath
-export (NodePath) var level_button_scroller_path: NodePath
-export (NodePath) var level_description_label_path: NodePath
-export (NodePath) var speed_selector_path: NodePath
-export (NodePath) var start_button_path: NodePath
+@export var high_scores_path: NodePath
+@export var level_button_scroller_path: NodePath
+@export var level_description_label_path: NodePath
+@export var speed_selector_path: NodePath
+@export var start_button_path: NodePath
 
 ## CareerRegion or OtherRegion instance for the currently selected region
 var _region: Object
@@ -20,14 +20,14 @@ var _level_settings: LevelSettings = LevelSettings.new()
 ## Currently selected piece speed
 var _piece_speed: String
 
-onready var _high_scores: Panel = get_node(high_scores_path)
-onready var _level_button_scroller: LevelButtonScroller = get_node(level_button_scroller_path)
-onready var _level_description_label: Label = get_node(level_description_label_path)
-onready var _speed_selector: PracticeSpeedSelector = get_node(speed_selector_path)
-onready var _start_button: BaseButton = get_node(start_button_path)
+@onready var _high_scores: Panel = get_node(high_scores_path)
+@onready var _level_button_scroller: LevelButtonScroller = get_node(level_button_scroller_path)
+@onready var _level_description_label: Label = get_node(level_description_label_path)
+@onready var _speed_selector: PracticeSpeedSelector = get_node(speed_selector_path)
+@onready var _start_button: BaseButton = get_node(start_button_path)
 
-onready var _level_submenu := $LevelSubmenu
-onready var _region_submenu := $RegionSubmenu
+@onready var _level_submenu := $LevelSubmenu
+@onready var _region_submenu := $RegionSubmenu
 
 func _ready() -> void:
 	MusicPlayer.play_menu_track()
@@ -54,7 +54,7 @@ func _ready() -> void:
 ## Parameters:
 ## 	'overwrite': If true, this will overwrite the player's data even if they've already launched the practice menu.
 func _assign_default_recent_data() -> void:
-	if not PlayerData.practice.region_id.empty() and not PlayerData.practice.level_id.empty():
+	if not PlayerData.practice.region_id.is_empty() and not PlayerData.practice.level_id.is_empty():
 		# player has already launched the practice menu
 		return
 	
@@ -197,7 +197,7 @@ func _on_LevelSelect_level_chosen(region: Object, settings: LevelSettings) -> vo
 	_refresh_speed_selector()
 	_refresh_high_scores()
 	if is_inside_tree():
-		yield(get_tree(), "idle_frame")
+		await get_tree().idle_frame
 	_start_button.grab_focus()
 
 
@@ -205,7 +205,7 @@ func _on_LevelSubmenu_visibility_changed() -> void:
 	_refresh_input_focus_mode()
 	if not _level_submenu.visible:
 		if is_inside_tree():
-			yield(get_tree(), "idle_frame")
+			await get_tree().idle_frame
 		_start_button.grab_focus()
 
 

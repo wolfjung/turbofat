@@ -9,19 +9,19 @@ const FADE_DURATION := 0.5
 const GRADES := ["M", "SSS", "SS+", "SS", "S+", "S", "S-", "AA+", "AA", "A+", "A", "A-", "B+", "B", "B-"]
 
 ## Completion percent currently shown; updating this value updates the label
-var displayed_completion_percent: float setget set_displayed_completion_percent
+var displayed_completion_percent: float: set = set_displayed_completion_percent
 
 ## Grade currently shown; updating this value updates the label
-var displayed_grade: String setget set_displayed_grade
+var displayed_grade: String: set = set_displayed_grade
 
 ## Stores the previously visible characters to calculate when new characters are revealed
 var _old_congratulations_visible_characters: int
 
 ## Container holding all visual elements
-onready var _vbox_container := $VBoxContainer
+@onready var _vbox_container := $VBoxContainer
 
 ## Combo sounds played when revealing the final 'turbofat' letters
-onready var _combo_sounds := [
+@onready var _combo_sounds := [
 	$ComboSound0,
 	$ComboSound1,
 	$ComboSound2,
@@ -33,37 +33,37 @@ onready var _combo_sounds := [
 ]
 
 ## 'turbofat' title revealed letter-by-letter
-onready var _title := $Title
+@onready var _title := $Title
 
 ## Visual elements showing the player's grade; hidden if the player does not reach 100% completion
-onready var _grade_container := $VBoxContainer/HBoxContainer/GradeContainer
-onready var _grade_label := $VBoxContainer/HBoxContainer/GradeContainer/Label
-onready var _grade_value := $VBoxContainer/HBoxContainer/GradeContainer/Value
-onready var _grade_particles := $VBoxContainer/HBoxContainer/GradeContainer/Value/Particles
+@onready var _grade_container := $VBoxContainer/HBoxContainer/GradeContainer
+@onready var _grade_label := $VBoxContainer/HBoxContainer/GradeContainer/Label
+@onready var _grade_value := $VBoxContainer/HBoxContainer/GradeContainer/Value
+@onready var _grade_particles := $VBoxContainer/HBoxContainer/GradeContainer/Value/Particles
 
 ## Visual elements showing the player's completion percent
-onready var _completion_label := $VBoxContainer/HBoxContainer/CompletionContainer/Label
-onready var _completion_value := $VBoxContainer/HBoxContainer/CompletionContainer/Value
-onready var _completion_particles := $VBoxContainer/HBoxContainer/CompletionContainer/Value/Particles
+@onready var _completion_label := $VBoxContainer/HBoxContainer/CompletionContainer/Label
+@onready var _completion_value := $VBoxContainer/HBoxContainer/CompletionContainer/Value
+@onready var _completion_particles := $VBoxContainer/HBoxContainer/CompletionContainer/Value/Particles
 
 ## Label which shows a congratulatory message; revealed letter-by-letter
-onready var _congratulations_label := $VBoxContainer/CongratulationsLabel
+@onready var _congratulations_label := $VBoxContainer/CongratulationsLabel
 
 ## plays a typewriter sound as text appears
-onready var _bebebe_sound := $BebebeSound
+@onready var _bebebe_sound := $BebebeSound
 
 ## Timer which rapidly cycles through different grades
-onready var _grade_scramble_timer := $GradeScrambleTimer
+@onready var _grade_scramble_timer := $GradeScrambleTimer
 
 ## Plays a winding sound as the grade/completion are calculated
-onready var _clock_advance_sound := $ClockAdvanceSound
+@onready var _clock_advance_sound := $ClockAdvanceSound
 
 ## Plays a ringing sound as the grade/completion are shown
-onready var _clock_ring_sound := $ClockRingSound
+@onready var _clock_ring_sound := $ClockRingSound
 
 func _ready() -> void:
 	_old_congratulations_visible_characters = _congratulations_label.visible_characters
-	_vbox_container.modulate = Color.transparent
+	_vbox_container.modulate = Color.TRANSPARENT
 
 
 func _process(_delta: float) -> void:
@@ -72,8 +72,8 @@ func _process(_delta: float) -> void:
 			and _old_congratulations_visible_characters != -1:
 		
 		# the number of visible letters increased. play a sound effect
-		_bebebe_sound.volume_db = rand_range(-22.0, -12.0)
-		_bebebe_sound.pitch_scale = rand_range(0.95, 1.05)
+		_bebebe_sound.volume_db = randf_range(-22.0, -12.0)
+		_bebebe_sound.pitch_scale = randf_range(0.95, 1.05)
 		_bebebe_sound.play()
 	
 	_old_congratulations_visible_characters = _congratulations_label.visible_characters
@@ -88,25 +88,25 @@ func _process(_delta: float) -> void:
 func play(completion_percent: float, grade: String) -> void:
 	_reset()
 	
-	create_tween().tween_property(_vbox_container, "modulate", Color.white, FADE_DURATION)
+	create_tween().tween_property(_vbox_container, "modulate", Color.WHITE, FADE_DURATION)
 	
 	var tween := create_tween()
 	
 	# play 'completion percent' animation
-	tween.tween_callback(self, "_play_completion_animation", [completion_percent])
+	tween.tween_callback(Callable(self, "_play_completion_animation").bind(completion_percent))
 	
 	if completion_percent == 1.0:
 		# play 'grade' animation
 		_grade_container.visible = true
-		tween.tween_callback(self, "_play_grade_animation", [grade]).set_delay(3.0)
+		tween.tween_callback(Callable(self, "_play_grade_animation").bind(grade)).set_delay(3.0)
 	else:
 		_grade_container.visible = false
 	
 	# slowly type out 'congratulations! you are a super player'
-	tween.tween_callback(self, "_play_congratulations_animation").set_delay(3.0)
+	tween.tween_callback(Callable(self, "_play_congratulations_animation")).set_delay(3.0)
 	
 	# burst in letters in 'turbo fat'
-	tween.tween_callback(self, "_play_title_animation").set_delay(8.0)
+	tween.tween_callback(Callable(self, "_play_title_animation")).set_delay(8.0)
 
 
 func set_displayed_grade(new_displayed_grade: String) -> void:
@@ -123,11 +123,11 @@ func set_displayed_completion_percent(new_displayed_completion_percent: float) -
 
 ## Resets the end text screen to its initial state, with all components invisible.
 func _reset() -> void:
-	_completion_label.modulate = Color.transparent
-	_completion_value.modulate = Color.transparent
+	_completion_label.modulate = Color.TRANSPARENT
+	_completion_value.modulate = Color.TRANSPARENT
 	
-	_grade_label.modulate = Color.transparent
-	_grade_value.modulate = Color.transparent
+	_grade_label.modulate = Color.TRANSPARENT
+	_grade_value.modulate = Color.TRANSPARENT
 	
 	_congratulations_label.visible_characters = 0
 	
@@ -143,18 +143,18 @@ func _reset() -> void:
 func _play_completion_animation(completion_percent: float) -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(_completion_label, "modulate", Color.white, FADE_DURATION)
+	tween.tween_property(_completion_label, "modulate", Color.WHITE, FADE_DURATION)
 	
 	displayed_completion_percent = 0.0
-	_completion_value.modulate = Color.white
+	_completion_value.modulate = Color.WHITE
 	_completion_value.text = ""
 	
-	tween.tween_callback(_clock_advance_sound, "play").set_delay(0.7)
+	tween.tween_callback(Callable(_clock_advance_sound, "play")).set_delay(0.7)
 	tween.tween_property(self, "displayed_completion_percent", completion_percent, 1.5) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT).set_delay(0.7)
-	tween.tween_callback(_completion_particles, "emit").set_delay(2.2)
-	tween.tween_callback(_clock_advance_sound, "stop").set_delay(2.2)
-	tween.tween_callback(_clock_ring_sound, "play").set_delay(2.2)
+			super.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT).set_delay(0.7)
+	tween.tween_callback(Callable(_completion_particles, "emit")).set_delay(2.2)
+	tween.tween_callback(Callable(_clock_advance_sound, "stop")).set_delay(2.2)
+	tween.tween_callback(Callable(_clock_ring_sound, "play")).set_delay(2.2)
 
 
 ## Plays the 'grade' label animation.
@@ -167,18 +167,18 @@ func _play_completion_animation(completion_percent: float) -> void:
 func _play_grade_animation(grade: String) -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(_grade_label, "modulate", Color.white, FADE_DURATION)
+	tween.tween_property(_grade_label, "modulate", Color.WHITE, FADE_DURATION)
 	
-	_grade_value.modulate = Color.white
+	_grade_value.modulate = Color.WHITE
 	_grade_value.text = ""
 	
-	tween.tween_callback(_clock_advance_sound, "play").set_delay(0.7)
-	tween.tween_callback(_grade_scramble_timer, "start").set_delay(0.7)
-	tween.tween_callback(_grade_scramble_timer, "stop").set_delay(2.2)
-	tween.tween_callback(self, "set_displayed_grade", [grade]).set_delay(2.2)
-	tween.tween_callback(_grade_particles, "emit").set_delay(2.2)
-	tween.tween_callback(_clock_advance_sound, "stop").set_delay(2.2)
-	tween.tween_callback(_clock_ring_sound, "play").set_delay(2.2)
+	tween.tween_callback(Callable(_clock_advance_sound, "play")).set_delay(0.7)
+	tween.tween_callback(Callable(_grade_scramble_timer, "start")).set_delay(0.7)
+	tween.tween_callback(Callable(_grade_scramble_timer, "stop")).set_delay(2.2)
+	tween.tween_callback(Callable(self, "set_displayed_grade").bind(grade)).set_delay(2.2)
+	tween.tween_callback(Callable(_grade_particles, "emit")).set_delay(2.2)
+	tween.tween_callback(Callable(_clock_advance_sound, "stop")).set_delay(2.2)
+	tween.tween_callback(Callable(_clock_ring_sound, "play")).set_delay(2.2)
 
 
 ## Plays the 'congratulations' label animation.
@@ -197,8 +197,8 @@ func _play_title_animation() -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
 	for i in range(8):
-		tween.tween_callback(_title, "add_next_letter").set_delay(i * 0.2)
-		tween.tween_callback(_combo_sounds[i], "play").set_delay(i * 0.2)
+		tween.tween_callback(Callable(_title, "add_next_letter")).set_delay(i * 0.2)
+		tween.tween_callback(Callable(_combo_sounds[i], "play")).set_delay(i * 0.2)
 
 
 ## When the GradeScrambleTimer times out, we show a new random grade such as 'SSS' or 'AA+'.

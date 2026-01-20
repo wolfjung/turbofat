@@ -7,11 +7,11 @@ extends Node
 ## 	'1-6': Update quit type: QUIT, SAVE_AND_QUIT, GIVE_UP, SAVE_AND_QUIT_OR_GIVE_UP, RESTART_OR_GIVE_UP,
 ## 		QUIT_TO_DESKTOP
 
-onready var _label := $Label
-onready var _settings_menu := $SettingsMenu
+@onready var _label := $Label
+@onready var _settings_menu := $SettingsMenu
 
 func _ready() -> void:
-	pause_mode = PAUSE_MODE_PROCESS
+	process_mode = PROCESS_MODE_ALWAYS
 	_settings_menu.show()
 
 

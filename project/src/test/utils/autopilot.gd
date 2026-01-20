@@ -7,10 +7,10 @@ extends Node
 ## To enable this script, it needs to be added to the Project Settings as an Autoload singleton.
 
 ## The interval between UI clicks and keypresses. By default, inputs will be run every single frame.
-export (float, 0.0, 2.0) var interval: float = 0.1
+@export var interval: float = 0.1 # (float, 0.0, 2.0)
 
 ## 'true' if the automation script should run.
-export (bool) var active := true
+@export var active := true
 
 ## If 'interval' is assigned, this timer triggers UI clicks and keypresses.
 var _interval_timer: Timer
@@ -33,7 +33,7 @@ var _scene_state := {}
 var _simulated_input := false
 
 func _ready() -> void:
-	get_tree().connect("node_added", self, "_on_SceneTree_node_added")
+	get_tree().connect("node_added", Callable(self, "_on_SceneTree_node_added"))
 	
 	# If 'interval' is unset, we run a test cycle during each '_process' step
 	set_process(active and interval == 0.0)
@@ -43,7 +43,7 @@ func _ready() -> void:
 		_interval_timer = Timer.new()
 		add_child(_interval_timer)
 		_interval_timer.start(interval)
-		_interval_timer.connect("timeout", self, "_on_Timer_timeout")
+		_interval_timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 	
 	if active:
 		# Disable verbose debug messages. Changing scenes 100s of time generates too much output otherwise.
@@ -153,8 +153,8 @@ func _left_click_control(control: Control) -> void:
 
 ## Clicks a position on the screen (typically the center of a button.)
 func _left_click(position: Vector2) -> void:
-	_press_mouse(BUTTON_LEFT, position)
-	_release_mouse(BUTTON_LEFT, position)
+	_press_mouse(MOUSE_BUTTON_LEFT, position)
+	_release_mouse(MOUSE_BUTTON_LEFT, position)
 
 
 ## Simulates a mouse press event.
@@ -184,19 +184,19 @@ func _release_mouse(button_index: int, global_position: Vector2) -> void:
 
 
 ## Simulates a key press event.
-func _press_key(scancode: int) -> void:
+func _press_key(keycode: int) -> void:
 	var key := InputEventKey.new()
-	key.scancode = scancode
-	key.pressed = true
+	key.keycode = keycode
+	key.button_pressed = true
 	Input.parse_input_event(key)
 	_simulated_input = true
 
 
 ## Simulates a key release event.
-func _release_key(scancode: int) -> void:
+func _release_key(keycode: int) -> void:
 	var key := InputEventKey.new()
-	key.scancode = scancode
-	key.pressed = false
+	key.keycode = keycode
+	key.button_pressed = false
 	Input.parse_input_event(key)
 	_simulated_input = true
 

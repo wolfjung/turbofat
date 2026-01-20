@@ -1,31 +1,31 @@
-tool
+@tool
 class_name CreditsLine
 extends Node2D
 ## A line which scrolls vertically during the credits.
 ##
 ## This line usually includes text, but might include graphics too.
 
-export (NodePath) var fade_in_point_path: NodePath setget set_fade_in_point_path
-export (NodePath) var fade_out_point_path: NodePath setget set_fade_out_point_path
+@export var fade_in_point_path: NodePath: set = set_fade_in_point_path
+@export var fade_out_point_path: NodePath: set = set_fade_out_point_path
 
 ## Height in units. Used for calculating the scroll speed.
-export (float) var line_height: float
+@export var line_height: float
 
 var velocity := Vector2(0, -50)
 
 ## A point near the top of the screen where lines fade out.
-onready var fade_out_point: Node2D
+@onready var fade_out_point: Node2D
 ## A point near the bottom of the screen where lines fade in.
-onready var fade_in_point: Node2D
+@onready var fade_in_point: Node2D
 
 func _ready() -> void:
 	add_to_group("credits_lines")
 	_refresh_fade_point_path()
-	modulate = Color.transparent
+	modulate = Color.TRANSPARENT
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	
 	position += velocity * delta

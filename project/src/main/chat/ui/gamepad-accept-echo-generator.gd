@@ -13,10 +13,10 @@ class InputEventEcho extends InputEventAction:
 const ECHO_DURATION := 0.30
 
 ## The action which should generate echo events for gamepad inputs.
-export (String) var action_name
+@export var action_name: String
 
 ## Timer which delays the first echo event until the specified duration (ECHO_DURATION).
-onready var _delay_timer: Timer
+@onready var _delay_timer: Timer
 
 func _ready() -> void:
 	_initialize_delay_timer()
@@ -45,13 +45,13 @@ func _process(_delta: float) -> void:
 func _parse_input_event_action(pressed: bool) -> void:
 	var ev := InputEventEcho.new()
 	ev.action = action_name
-	ev.pressed = pressed
+	ev.button_pressed = pressed
 	Input.parse_input_event(ev)
 
 
 func _initialize_delay_timer() -> void:
 	_delay_timer = Timer.new()
-	_delay_timer.connect("timeout", self, "_on_DelayTimer_timeout")
+	_delay_timer.connect("timeout", Callable(self, "_on_DelayTimer_timeout"))
 	_delay_timer.one_shot = true
 	add_child(_delay_timer)
 

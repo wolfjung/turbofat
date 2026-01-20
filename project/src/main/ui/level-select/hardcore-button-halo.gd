@@ -1,7 +1,7 @@
 extends Control
 ## Displays a dark halo behind hardcore level select buttons.
 
-onready var _sprite := $Sprite
+@onready var _sprite := $Sprite2D
 
 func _ready() -> void:
 	_refresh_size()
@@ -12,8 +12,8 @@ func _refresh_size() -> void:
 	if not _sprite:
 		return
 	
-	_sprite.scale = rect_size * 0.012
-	_sprite.position = rect_size * Vector2(0.5, 0.5)
+	_sprite.scale = size * 0.012
+	_sprite.position = size * Vector2(0.5, 0.5)
 
 
 func _on_resized() -> void:

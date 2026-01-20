@@ -21,11 +21,11 @@ func copy(player: Node) -> Node:
 	
 	var new_player: Node = player.duplicate()
 	add_child(new_player)
-	new_player.connect("finished", self, "_cleanup_player", [new_player])
+	new_player.connect("finished", Callable(self, "_cleanup_player").bind(new_player))
 	
 	# Clean up unplayed audio streams after a short delay
 	if is_inside_tree():
-		get_tree().create_timer(0.1).connect("timeout", self, "_cleanup_player", [new_player])
+		get_tree().create_timer(0.1).connect("timeout", Callable(self, "_cleanup_player").bind(new_player))
 
 	return new_player
 

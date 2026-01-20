@@ -13,9 +13,9 @@ signal central_button_changed
 ## Threshold below which the secondary buttons are not interactable.
 const INVISIBLE_BUTTON_THRESHOLD := 0.10
 
-export (PackedScene) var LevelSelectButtonScene: PackedScene
+@export var LevelSelectButtonScene: PackedScene
 
-var central_button_index: int setget set_central_button_index
+var central_button_index: int: set = set_central_button_index
 
 ## CareerRegion/OtherRegion instance for the _region whose levels should be shown
 var _region: Object
@@ -30,7 +30,7 @@ var _unlock_cheat_enabled := false
 var _level_settings_by_id: Dictionary = {}
 
 ## Smoothly scrolls the level buttons
-var _tween: SceneTreeTween
+var _tween: Tween
 
 ## true if the central_button_index changed this frame
 var _central_button_just_changed := false
@@ -38,8 +38,8 @@ var _central_button_just_changed := false
 ## true if the current 'button_down' even corresponds to the central button
 var _central_button_down := true
 
-onready var _level_buttons_container: HBoxContainer = $LevelButtons
-onready var _grade_labels := $GradeLabels
+@onready var _level_buttons_container: HBoxContainer = $LevelButtons
+@onready var _grade_labels := $GradeLabels
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreen"):
@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 			_slide_central_button(central_button_index + 1)
 			_central_button().grab_focus()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 	if _level_button_has_focus() and event.is_action_pressed("ui_left"):
 		# scroll level buttons left, if possible
@@ -59,7 +59,7 @@ func _input(event: InputEvent) -> void:
 			_slide_central_button(central_button_index - 1)
 			_central_button().grab_focus()
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 func _process(_delta: float) -> void:
@@ -68,9 +68,9 @@ func _process(_delta: float) -> void:
 	for button in _level_buttons_container.get_children():
 		# Update the button's transparency. The further from the center, the more transparent it is
 		var button_relative_position: Vector2 = button.get_global_rect().get_center() - get_global_rect().get_center()
-		var alpha := clamp(inverse_lerp(rect_size.x * 0.4, 20, abs(button_relative_position.x)), 0, 1)
+		var alpha := clamp(inverse_lerp(size.x * 0.4, 20, abs(button_relative_position.x)), 0, 1)
 		alpha = pow(alpha, 1.3)
-		button.modulate = Utils.to_transparent(Color.white, alpha)
+		button.modulate = Utils.to_transparent(Color.WHITE, alpha)
 		
 		# Update the button's focus mode. If it falls below a threshold, it is not interactable.
 		if button.modulate.a < INVISIBLE_BUTTON_THRESHOLD and button.get_focus_mode() == FOCUS_CLICK:
@@ -157,7 +157,7 @@ func _refresh_level_settings() -> void:
 	# Sort the levels
 	if _region is CareerRegion:
 		# Career levels aren't in any particular order so we sort them.
-		_level_ids.sort_custom(self, "_compare_by_level_name")
+		_level_ids.sort_custom(Callable(self, "_compare_by_level_name"))
 	else:
 		# Training/tutorial levels are already sorted from easiest to hardest.
 		pass
@@ -169,7 +169,7 @@ func _compare_by_level_name(a: String, b: String) -> bool:
 
 ## Creates and adds the level buttons.
 func _add_buttons() -> void:
-	if _level_ids.empty():
+	if _level_ids.is_empty():
 		# avoid out of bounds errors when there are zero levels
 		return
 
@@ -209,15 +209,15 @@ func _refresh_central_button_index(animate: bool = true) -> void:
 	_central_button().set_focus_mode(Control.FOCUS_ALL)
 	
 	# move all buttons so the central button appears in the center
-	var target_x: float = get_parent().rect_size.x / 2 \
-			- _central_button().rect_position.x - _central_button().rect_size.x / 2
+	var target_x: float = get_parent().size.x / 2 \
+			- _central_button().position.x - _central_button().size.x / 2
 	if animate:
 		_tween = Utils.recreate_tween(self, _tween)
-		_tween.tween_property(_level_buttons_container, "rect_position:x", target_x, 0.4) \
-			.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+		_tween.tween_property(_level_buttons_container, "position:x", target_x, 0.4) \
+			super.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
 	else:
 		_tween = Utils.kill_tween(_tween)
-		_level_buttons_container.rect_position.x = target_x
+		_level_buttons_container.position.x = target_x
 
 
 func _central_button() -> LevelSelectButton:
@@ -240,13 +240,13 @@ func _level_button_has_focus() -> bool:
 ## 	'settings': The level settings which control the button's appearance.
 func _level_select_button(level_id: String) -> LevelSelectButton:
 	var settings: LevelSettings = _level_settings_by_id[level_id]
-	var button: LevelSelectButton = LevelSelectButtonScene.instance()
+	var button: LevelSelectButton = LevelSelectButtonScene.instantiate()
 	button.decorate_for_level(_region, settings, _unlock_cheat_enabled)
 	button.size_flags_horizontal = 4
 	button.size_flags_vertical = 4
 	
-	button.connect("button_down", self, "_on_LevelSelectButton_button_down")
-	button.connect("pressed", self, "_on_LevelSelectButton_pressed", [button])
+	button.connect("button_down", Callable(self, "_on_LevelSelectButton_button_down"))
+	button.connect("pressed", Callable(self, "_on_LevelSelectButton_pressed").bind(button))
 	button.connect("focus_entered", self, "_on_LevelSelectButton_focus_entered", \
 			[_level_buttons_container.get_child_count()])
 	_level_buttons_container.add_child(button)

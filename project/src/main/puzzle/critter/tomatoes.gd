@@ -5,16 +5,16 @@ extends Node2D
 ## Tomatoes show up when there are full lines which can't be cleared because of level rules. They hold up fingers
 ## counting down '3, 2, 1' so players can anticipate when lines will clear.
 
-export (PackedScene) var TomatoScene: PackedScene
-export (NodePath) var critter_manager_path: NodePath
+@export var TomatoScene: PackedScene
+@export var critter_manager_path: NodePath
 
 ## Timer which suppresses tomato voice sound effects when the scene is first loaded.
-onready var _suppress_sfx_timer := $SuppressSfxTimer
+@onready var _suppress_sfx_timer := $SuppressSfxTimer
 
 ## node which contains all of the Tomato child nodes
-onready var _tomato_holder := $TomatoHolder
+@onready var _tomato_holder := $TomatoHolder
 
-var playfield_path: NodePath setget set_playfield_path
+var playfield_path: NodePath: set = set_playfield_path
 
 var _playfield: Playfield
 
@@ -26,7 +26,7 @@ var _tomatoes_by_cell_y: Dictionary = {}
 var _tomato_columns := [0, 1, 2, 6, 7, 8]
 
 func set_playfield_path(new_playfield_path: NodePath) -> void:
-	PuzzleState.connect("after_piece_written", self, "_on_PuzzleState_after_piece_written")
+	PuzzleState.connect("after_piece_written", Callable(self, "_on_PuzzleState_after_piece_written"))
 	playfield_path = new_playfield_path
 	_tomato_columns.shuffle()
 	_refresh_playfield_path()
@@ -41,14 +41,14 @@ func add_tomato(tomato_y: int) -> void:
 		# row already contains a tomato
 		return
 	
-	var tomato: Tomato = TomatoScene.instance()
+	var tomato: Tomato = TomatoScene.instantiate()
 	
 	tomato.z_index = 5
 	tomato.scale = _playfield.tile_map.scale
 	tomato.column = _pop_tomato_column()
 	
 	var cell := Vector2(0, tomato_y)
-	tomato.position = _playfield.tile_map.map_to_world(cell + Vector2(0, -3))
+	tomato.position = _playfield.tile_map.map_to_local(cell + Vector2(0, -3))
 	tomato.position += _playfield.tile_map.cell_size * Vector2(0.0, 0.5)
 	tomato.position *= _playfield.tile_map.scale
 	
@@ -99,18 +99,18 @@ func _refresh_playfield_path() -> void:
 		return
 	
 	if _playfield:
-		_playfield.disconnect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.disconnect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.disconnect("line_inserted", self, "_on_Playfield_line_inserted")
-		_playfield.disconnect("line_deleted", self, "_on_Playfield_line_deleted")
+		_playfield.disconnect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.disconnect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.disconnect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
+		_playfield.disconnect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
 	
 	_playfield = get_node(playfield_path) if playfield_path else null
 	
 	if _playfield:
-		_playfield.connect("blocks_prepared", self, "_on_Playfield_blocks_prepared")
-		_playfield.connect("line_erased", self, "_on_Playfield_line_erased")
-		_playfield.connect("line_inserted", self, "_on_Playfield_line_inserted")
-		_playfield.connect("line_deleted", self, "_on_Playfield_line_deleted")
+		_playfield.connect("blocks_prepared", Callable(self, "_on_Playfield_blocks_prepared"))
+		_playfield.connect("line_erased", Callable(self, "_on_Playfield_line_erased"))
+		_playfield.connect("line_inserted", Callable(self, "_on_Playfield_line_inserted"))
+		_playfield.connect("line_deleted", Callable(self, "_on_Playfield_line_deleted"))
 
 
 ## Adds any missing tomatoes and updates their states.

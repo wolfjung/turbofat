@@ -1,13 +1,13 @@
 extends Node
 ## Graphical creature editor which lets players design their own creatures.
 
-export (NodePath) var overworld_environment_path: NodePath
-export (NodePath) var dialogs_path: NodePath
-export (NodePath) var creature_saver_path: NodePath
+@export var overworld_environment_path: NodePath
+@export var dialogs_path: NodePath
+@export var creature_saver_path: NodePath
 
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
-onready var _dialogs: CreatureEditorDialogs = get_node(dialogs_path)
-onready var _creature_saver: CreatureSaver = get_node(creature_saver_path)
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _dialogs: CreatureEditorDialogs = get_node(dialogs_path)
+@onready var _creature_saver: CreatureSaver = get_node(creature_saver_path)
 
 func _ready() -> void:
 	MusicPlayer.play_menu_track()

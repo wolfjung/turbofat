@@ -1,15 +1,15 @@
 extends Node
 ## Plays sound effects for Chocolava Canyon's cutscenes.
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
-onready var _cheer := $Cheer
+@onready var _cheer := $Cheer
 
 func _ready() -> void:
-	SceneTransition.connect("fade_out_started", self, "_on_SceneTransition_fade_out_started")
+	SceneTransition.connect("fade_out_started", Callable(self, "_on_SceneTransition_fade_out_started"))
 	
 	if Global.get_overworld_ui():
-		Global.get_overworld_ui().connect("chat_event_meta_played", self, "_on_OverworldUi_chat_event_meta_played")
+		Global.get_overworld_ui().connect("chat_event_meta_played", Callable(self, "_on_OverworldUi_chat_event_meta_played"))
 
 
 ## Fade out and stop the sound effect
@@ -21,7 +21,7 @@ func _stop_sfx(duration: float) -> void:
 	_tween = Utils.recreate_tween(self, _tween)
 	_tween.set_parallel(true)
 	_tween.tween_property(_cheer, "volume_db", -23.0, duration)
-	_tween.tween_callback(_cheer, "stop").set_delay(duration)
+	_tween.tween_callback(Callable(_cheer, "stop")).set_delay(duration)
 
 
 ## Listen for 'play_sfx' chat events and play sound effects

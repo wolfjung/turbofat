@@ -10,8 +10,8 @@ const CHIME_SOUNDS := [
 	preload("res://assets/main/world/environment/restaurant/door-chime4.wav"),
 ]
 
-onready var _suppress_sfx_timer := $SuppressSfxTimer
-onready var _chime_timer := $ChimeTimer
+@onready var _suppress_sfx_timer := $SuppressSfxTimer
+@onready var _chime_timer := $ChimeTimer
 
 func _ready() -> void:
 	# suppress door chime at the start of a level

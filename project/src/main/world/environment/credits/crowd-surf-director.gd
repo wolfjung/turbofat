@@ -8,15 +8,15 @@ signal played
 ## Emitted when the cutscenes animations are stopped.
 signal stopped
 
-export (NodePath) var player_path: NodePath
-export (NodePath) var sensei_path: NodePath
+@export var player_path: NodePath
+@export var sensei_path: NodePath
 
 ## key: (Node2D) node whose position should be initialized
 ## value: (Vector2) initial position
 var _initial_positions_by_node: Dictionary
 
-onready var _player: CrowdSurfingBuddy = get_node(player_path)
-onready var _sensei: CrowdSurfingBuddy = get_node(sensei_path)
+@onready var _player: CrowdSurfingBuddy = get_node(player_path)
+@onready var _sensei: CrowdSurfingBuddy = get_node(sensei_path)
 
 func _ready() -> void:
 	_save_initial_positions()

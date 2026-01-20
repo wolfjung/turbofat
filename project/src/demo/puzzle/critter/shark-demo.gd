@@ -36,7 +36,7 @@ var _eaten_color_index := 0
 var _eaten_piece_shape_index := 2
 var _eat_duration_index := 1
 
-onready var _shark := $Shark
+@onready var _shark := $Shark
 
 func _ready() -> void:
 	_shark.state = Shark.DANCING

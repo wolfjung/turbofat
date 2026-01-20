@@ -26,29 +26,29 @@ const BOUNCE_HEIGHT := 60
 const MOOD_TIMER_MAX_DURATION := 5.9
 
 ## path to the other creature whom this creature is walking with
-export (NodePath) var buddy_path: NodePath
+@export var buddy_path: NodePath
 
 ## path to the destination. the leader stops moving if they reach this destination
-export (NodePath) var destination_path: NodePath
+@export var destination_path: NodePath
 
 ## designates this creature as either a leader or follower
-export (LeaderOrFollower) var leader_or_follower: int
+@export var leader_or_follower: LeaderOrFollower
 
 var _velocity: Vector2
 
 ## the creature's desired velocity, based on how close they are to their buddy and destination
 var _desired_velocity: Vector2
 
-var _elevation_tween: SceneTreeTween
+var _elevation_tween: Tween
 
 ## other creature whom this creature is walking with
-onready var _buddy: Creature = get_node(buddy_path)
+@onready var _buddy: Creature = get_node(buddy_path)
 
 ## other creature whom this creature is walking with
-onready var _destination: Node2D = get_node(destination_path)
+@onready var _destination: Node2D = get_node(destination_path)
 
 ## periodically changes the creature's mood and orientation
-onready var _mood_timer := $MoodTimer
+@onready var _mood_timer := $MoodTimer
 
 func _ready() -> void:
 	stop()
@@ -80,9 +80,9 @@ func play_bounce_animation() -> void:
 	# start bounce animation
 	_elevation_tween = Utils.recreate_tween(self, _elevation_tween)
 	_elevation_tween.tween_property(self, "elevation", SURF_HEIGHT + BOUNCE_HEIGHT, 0.5 / BOUNCES_PER_SECOND) \
-			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			super.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_elevation_tween.tween_property(self, "elevation", SURF_HEIGHT, 0.5 / BOUNCES_PER_SECOND) \
-			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			super.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_elevation_tween.set_loops()
 	
 	# start mood timer
@@ -143,7 +143,7 @@ func _refresh_desired_velocity() -> void:
 	
 	# if the creature is in front of their buddy, their speed is purely random
 	if position.x >= _destination.position.x and leader_or_follower == LeaderOrFollower.LEADER:
-		desired_speed_factor = rand_range(0.5, 1.5)
+		desired_speed_factor = randf_range(0.5, 1.5)
 	
 	_desired_velocity = Global.to_iso(Vector2(-1, 1) * AVERAGE_TRAVEL_SPEED * desired_speed_factor)
 
@@ -156,4 +156,4 @@ func _on_MoodTimer_timeout() -> void:
 	_randomize_mood()
 	
 	# randomize the mood timer's duration to keep the creature's emotions from being perfectly synchronized
-	_mood_timer.start(MOOD_TIMER_MAX_DURATION * rand_range(0.5, 1.0))
+	_mood_timer.start(MOOD_TIMER_MAX_DURATION * randf_range(0.5, 1.0))

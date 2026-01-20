@@ -24,21 +24,21 @@ const HAND_POSITIONS_BY_HOUR := {
 ##
 ## This is stored independently of the player's career data because this clock might animate to show a time in the past
 ## or future.
-var hours_passed := 0 setget set_hours_passed
+var hours_passed := 0: set = set_hours_passed
 
-var _tween: SceneTreeTween
+var _tween: Tween
 
 ## Digital text which shows the time using text like '8:50 pm'
-onready var _label: Label = $Swoosher/Label
+@onready var _label: Label = $Swoosher/Label
 
 ## Analog clock which shows the time using an and hour and minute hand.
-onready var _visuals: ProgressBoardClockVisuals = $Swoosher/VisualsHolder/Visuals
+@onready var _visuals: ProgressBoardClockVisuals = $Swoosher/VisualsHolder/Visuals
 
 ## Winding sound that plays as the clock's hands spin.
-onready var _clock_advance_sound := $ClockAdvanceSound
+@onready var _clock_advance_sound := $ClockAdvanceSound
 
 ## Bell sound that plays when the clock's hands stop spinning.
-onready var _clock_ring_sound := $ClockRingSound
+@onready var _clock_ring_sound := $ClockRingSound
 
 func _ready() -> void:
 	_refresh()
@@ -70,7 +70,7 @@ func play(new_hours_passed: int, duration: float) -> void:
 	_tween.tween_property(_visuals, "minutes", new_minute_hand_position, duration)
 	_tween.tween_property(_visuals, "hours", _hour_hand_position(new_hours_passed), duration)
 	_tween.tween_property(_visuals, "filled_percent", _filled_percent(new_hours_passed), duration)
-	_tween.chain().tween_callback(self, "_on_Tween_completed")
+	_tween.chain().tween_callback(Callable(self, "_on_Tween_completed"))
 	
 	_clock_advance_sound.play()
 	

@@ -55,7 +55,7 @@ func _set_random_keyboard_keybinds() -> void:
 	
 	for action_name in KeybindSettings.PUZZLE_ACTION_NAMES:
 		SystemData.keybind_settings.set_custom_keybind(action_name, 0, \
-				{"type": "key", "device": 0, "scancode": shuffled_scancodes.pop_front()})
+				{"type": "key", "device": 0, "keycode": shuffled_scancodes.pop_front()})
 		SystemData.keybind_settings.set_custom_keybind(action_name, 1, {})
 		SystemData.keybind_settings.set_custom_keybind(action_name, 2, {})
 

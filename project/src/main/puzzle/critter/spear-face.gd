@@ -1,16 +1,16 @@
-extends Sprite
+extends Sprite2D
 ## Visuals for the face of a spear critter.
 ##
 ## Spears periodically blink and change their facial expression.
 
 ## Schedules the face to cycle between similar frames for a squigglevision effect.
-onready var _wiggle_timer := $WiggleTimer
+@onready var _wiggle_timer := $WiggleTimer
 
 ## Schedules the face to blink.
-onready var _start_blink_timer := $StartBlinkTimer
+@onready var _start_blink_timer := $StartBlinkTimer
 
 ## Schedules the face to re-open their eyes after blinking or squinting.
-onready var _open_eyes_timer := $OpenEyesTimer
+@onready var _open_eyes_timer := $OpenEyesTimer
 
 func _ready() -> void:
 	_open_eyes()
@@ -34,7 +34,7 @@ func _close_eyes() -> void:
 
 ## Schedules the next blink event.
 func _schedule_blink() -> void:
-	_start_blink_timer.start(rand_range(6, 8))
+	_start_blink_timer.start(randf_range(6, 8))
 
 
 ## Opens the face's eyes after a squint or blink.

@@ -12,7 +12,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	dir.remove(TEMP_SYSTEM_FILENAME)
 	dir.remove(TEMP_LEGACY_FILENAME)
 	var rolling_backups := RollingBackups.new()

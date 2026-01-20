@@ -7,7 +7,7 @@ extends Node
 ## 	[5]: Show an x50 combo burst.
 ## 	[0]: Show an x100 combo burst.
 
-export (PackedScene) var ComboBurstScene: PackedScene
+@export var ComboBurstScene: PackedScene
 
 func _input(event: InputEvent) -> void:
 	match Utils.key_scancode(event):
@@ -18,7 +18,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _add_combo_burst(combo: int) -> void:
-	var combo_burst := ComboBurstScene.instance()
+	var combo_burst := ComboBurstScene.instantiate()
 	combo_burst.position = Global.window_size / 2
 	combo_burst.combo = combo
 	combo_burst.scale = Vector2(2, 2)

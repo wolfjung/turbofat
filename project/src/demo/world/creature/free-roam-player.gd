@@ -6,7 +6,7 @@ extends Creature
 var free_roam := false
 
 func _ready() -> void:
-	SceneTransition.connect("fade_out_started", self, "_on_SceneTransition_fade_out_started")
+	SceneTransition.connect("fade_out_started", Callable(self, "_on_SceneTransition_fade_out_started"))
 	refresh_collision_extents()
 
 
@@ -19,7 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# calculate the direction the player wants to move
 		set_non_iso_walk_direction(Utils.ui_pressed_dir())
 		if is_inside_tree():
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 ## Stop moving when a chat choice appears.

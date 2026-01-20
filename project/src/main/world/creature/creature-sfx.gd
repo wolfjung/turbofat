@@ -63,7 +63,7 @@ const GOODBYE_VOICES := [
 const CHEW_ALT_SFX_RESET_DURATION := 2.500
 
 ## 'true' if the creature should not make any sounds when walking/loading. Used for the creature editor.
-var suppress_sfx := false setget set_suppress_sfx
+var suppress_sfx := false: set = set_suppress_sfx
 
 var should_play_sfx := false
 
@@ -75,13 +75,13 @@ var _prev_munch_msec := 0.0
 
 ## AudioStreamPlayer which plays all of the creature's voices. We reuse the same player so that they can't say two
 ## things at once.
-onready var _voice_player := $VoicePlayer
+@onready var _voice_player := $VoicePlayer
 
-onready var _munch_sound := $MunchSound
-onready var _hop_sound := $HopSound
-onready var _bonk_sound := $BonkSound
+@onready var _munch_sound := $MunchSound
+@onready var _hop_sound := $HopSound
+@onready var _bonk_sound := $BonkSound
 
-onready var _suppress_sfx_timer := $SuppressSfxTimer
+@onready var _suppress_sfx_timer := $SuppressSfxTimer
 
 func _ready() -> void:
 	_refresh_should_play_sfx()
@@ -155,7 +155,7 @@ func _refresh_should_play_sfx() -> void:
 	
 	var old_should_play_sfx := should_play_sfx
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		# Skip the sound effects if we're using this as an editor tool
 		should_play_sfx = false
 	elif not _suppress_sfx_timer.is_stopped():
@@ -183,7 +183,7 @@ func _on_Creature_food_eaten(_food_type: int) -> void:
 		# play a random chewing sound with random variance
 		_munch_sound.volume_db = 0.0
 		_munch_sound.stream = Utils.rand_value(CHEW_SOUNDS)
-		_munch_sound.pitch_scale = rand_range(0.96, 1.04)
+		_munch_sound.pitch_scale = randf_range(0.96, 1.04)
 	else:
 		# play an alternate 'pop!' sound which escalates in pitch
 		_munch_sound.volume_db = -6.0
@@ -191,10 +191,10 @@ func _on_Creature_food_eaten(_food_type: int) -> void:
 		# decrease the pitch if it hasn't been played recently
 		var decrease_amount := clamp((Time.get_ticks_msec() - _prev_munch_msec) \
 				/ (1000 * CHEW_ALT_SFX_RESET_DURATION), 0.0, 1.0)
-		_munch_sound.pitch_scale = lerp(_munch_sound.pitch_scale, rand_range(0.66, 0.72), decrease_amount)
+		_munch_sound.pitch_scale = lerp(_munch_sound.pitch_scale, randf_range(0.66, 0.72), decrease_amount)
 
 		# increase the pitch a random amount
-		_munch_sound.pitch_scale = lerp(_munch_sound.pitch_scale, 2.0, rand_range(0.04, 0.12))
+		_munch_sound.pitch_scale = lerp(_munch_sound.pitch_scale, 2.0, randf_range(0.04, 0.12))
 
 		_munch_sound.stream = Utils.rand_value(CHEW_ALT_SOUNDS)
 

@@ -13,9 +13,9 @@ const BAR_WIDTH := 85
 ## The desired y coordinate for the top of the stacked BarGraphBars
 const CAMERA_TARGET_Y := 100
 
-export (NodePath) var receipt_table_path: NodePath
+@export var receipt_table_path: NodePath
 
-var _tween: SceneTreeTween
+var _tween: Tween
 var _blueprint: ResultsHudBlueprint
 
 ## The unscaled height of the individual BarGraphBars.
@@ -27,28 +27,28 @@ var _extra_bar_height := 0.0
 var _height_scale := 1.0
 
 ## The table for the results hud. The label for the bar graph synchronizes with the label from the table.
-onready var receipt_table: ReceiptTable = get_node(receipt_table_path)
+@onready var receipt_table: ReceiptTable = get_node(receipt_table_path)
 
-onready var _sfx := $Sfx
+@onready var _sfx := $Sfx
 
 ## The contents; these shift up and down if the bar graph grows too tall
-onready var _contents := $Contents
+@onready var _contents := $Contents
 
 ## Stacked BarGraphBars
-onready var _box_bar := $Contents/BoxBar
-onready var _combo_bar := $Contents/ComboBar
-onready var _extra_bar := $Contents/OtherBar
+@onready var _box_bar := $Contents/BoxBar
+@onready var _combo_bar := $Contents/ComboBar
+@onready var _extra_bar := $Contents/OtherBar
 
 ## Label at the top of the stacked BarGraphBars
-onready var _total_label := $Contents/TotalLabel
+@onready var _total_label := $Contents/TotalLabel
 
 ## BarGraphGoals which show dashed lines with time goals or score goals
-onready var _success_goal := $Contents/SuccessGoal
-onready var _sss_goal := $Contents/SssGoal
-onready var _ss_goal := $Contents/SsGoal
-onready var _s_goal := $Contents/SGoal
-onready var _a_goal := $Contents/AGoal
-onready var _b_goal := $Contents/BGoal
+@onready var _success_goal := $Contents/SuccessGoal
+@onready var _sss_goal := $Contents/SssGoal
+@onready var _ss_goal := $Contents/SsGoal
+@onready var _s_goal := $Contents/SGoal
+@onready var _a_goal := $Contents/AGoal
+@onready var _b_goal := $Contents/BGoal
 
 func _ready() -> void:
 	set_process(false)
@@ -58,16 +58,16 @@ func _process(_delta: float) -> void:
 	_refresh_bars()
 	
 	# slide the bar graph down if it grows too tall
-	if _contents.rect_position.y + _total_label.rect_position.y < CAMERA_TARGET_Y:
-		_contents.rect_position.y = lerp(_contents.rect_position.y, \
-				CAMERA_TARGET_Y - _total_label.rect_position.y, _delta * 5)
+	if _contents.position.y + _total_label.position.y < CAMERA_TARGET_Y:
+		_contents.position.y = lerp(_contents.position.y, \
+				CAMERA_TARGET_Y - _total_label.position.y, _delta * 5)
 
 
 ## Resets the graph to be empty, with a set of BarGraphGoals based on the current level.
 func reset(new_blueprint: ResultsHudBlueprint) -> void:
 	_blueprint = new_blueprint
 	_tween = Utils.kill_tween(_tween)
-	_contents.rect_position.y = 0
+	_contents.position.y = 0
 	_box_bar_height = 0
 	_combo_bar_height = 0
 	_extra_bar_height = 0
@@ -143,7 +143,7 @@ func _refresh_goals() -> void:
 		
 		# update the goal position
 		var goal_node_y := GRAPH_START_Y - goal_height * _height_scale
-		goal_node.rect_position = Vector2(0, goal_node_y - 10)
+		goal_node.position = Vector2(0, goal_node_y - 10)
 		goal_node.text = "%s  %s" % [goal_value_string, goal_grade]
 		
 		# calculate the 'lowest_unreached_goal' field
@@ -153,9 +153,9 @@ func _refresh_goals() -> void:
 	# If there is a goal the player hasn't reached, we reposition it. This avoids a scenario where the player gets
 	# an S rank, but can't see the requirement for an SS.
 	if lowest_unreached_goal \
-			and lowest_unreached_goal.rect_position.y + 10 < 0 \
-			and lowest_unreached_goal.rect_position.y + 10 < bar_top_y - CAMERA_TARGET_Y:
-		lowest_unreached_goal.rect_position.y = bar_top_y - CAMERA_TARGET_Y - 20
+			and lowest_unreached_goal.position.y + 10 < 0 \
+			and lowest_unreached_goal.position.y + 10 < bar_top_y - CAMERA_TARGET_Y:
+		lowest_unreached_goal.position.y = bar_top_y - CAMERA_TARGET_Y - 20
 	
 	# If the goals are too close to each other, we turn them invisible. This avoids a case where the "A" and "B"
 	# goals are squashed so close at the bottom that you can't read either one.
@@ -168,7 +168,7 @@ func _refresh_goals() -> void:
 
 func hide_behind(back_goal: BarGraphGoal, front_goal: BarGraphGoal) -> void:
 	if back_goal.visible and front_goal.visible \
-			and abs(back_goal.rect_position.y - front_goal.rect_position.y) <= 12:
+			and abs(back_goal.position.y - front_goal.position.y) <= 12:
 		back_goal.visible = false
 
 
@@ -212,7 +212,7 @@ func _schedule_bar_stack_growth() -> void:
 			_tween.tween_interval(ResultsHudBlueprint.PAUSE_DURATION)
 		
 		# stop processing, so that the 'camera' will stop moving
-		_tween.tween_callback(self, "set_process", [false]).set_delay(2.0)
+		_tween.tween_callback(Callable(self, "set_process").bind(false)).set_delay(2.0)
 
 
 ## Schedules the sound effect for the stacked bar growing from one height to another height.
@@ -226,7 +226,7 @@ func _schedule_bar_stack_growth() -> void:
 func _schedule_bar_sound(duration: float, start_height: float, end_height: float) -> void:
 	var start_pitch: float = _bar_pitch(start_height)
 	var end_pitch: float = _bar_pitch(end_height)
-	_tween.parallel().tween_callback(_sfx, "play_bar_sound", [duration, start_pitch, end_pitch])
+	_tween.parallel().tween_callback(Callable(_sfx, "play_bar_sound").bind(duration, start_pitch, end_pitch))
 
 
 ## Calculates the sound effect pitch to play when the bar reaches the specified height
@@ -242,19 +242,19 @@ func _bar_pitch(bar_y: float) -> float:
 ## Recalculate and reposition the BarGraphBars and bar graph label.
 func _refresh_bars() -> void:
 	# set box bar height and size
-	_box_bar.rect_size = Vector2(BAR_WIDTH, _box_bar_height * _height_scale)
-	_box_bar.rect_position = Vector2(0, GRAPH_START_Y - _box_bar.rect_size.y)
+	_box_bar.size = Vector2(BAR_WIDTH, _box_bar_height * _height_scale)
+	_box_bar.position = Vector2(0, GRAPH_START_Y - _box_bar.size.y)
 	
 	# set combo bar height and size
-	_combo_bar.rect_size = Vector2(BAR_WIDTH, _combo_bar_height * _height_scale)
-	_combo_bar.rect_position = _box_bar.rect_position - Vector2(0, _combo_bar.rect_size.y)
+	_combo_bar.size = Vector2(BAR_WIDTH, _combo_bar_height * _height_scale)
+	_combo_bar.position = _box_bar.position - Vector2(0, _combo_bar.size.y)
 	
 	# set other bar height and size
-	_extra_bar.rect_size = Vector2(BAR_WIDTH, _extra_bar_height * _height_scale)
-	_extra_bar.rect_position = _combo_bar.rect_position - Vector2(0, _extra_bar.rect_size.y)
+	_extra_bar.size = Vector2(BAR_WIDTH, _extra_bar_height * _height_scale)
+	_extra_bar.position = _combo_bar.position - Vector2(0, _extra_bar.size.y)
 	
 	# position total label, set text
-	_total_label.rect_position = _extra_bar.rect_position - Vector2(0, _total_label.rect_size.y)
+	_total_label.position = _extra_bar.position - Vector2(0, _total_label.size.y)
 	
 	if _blueprint and _blueprint.rank_result.compare == "-seconds":
 		_total_label.text = StringUtils.format_duration(_blueprint.rank_result.seconds)

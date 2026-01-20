@@ -6,7 +6,7 @@ extends Node
 ## 	[L]: Changes the locale (english, spanish...)
 ## 	[P]: Shows/hides the popup
 
-onready var _control := $BadSaveDataControl
+@onready var _control := $BadSaveDataControl
 
 func _ready() -> void:
 	PlayerSave.corrupt_filenames = ["user://example.save"]

@@ -64,9 +64,9 @@ var _skill_records := []
 
 var _regions := []
 
-onready var _option_button_regions := $VBoxContainer/Top/OptionButtonRegions
-onready var _text_edit_in := $VBoxContainer/Bottom/TextEditIn
-onready var _text_edit_out := $VBoxContainer/Bottom/TextEditOut
+@onready var _option_button_regions := $VBoxContainer/Top/OptionButtonRegions
+@onready var _text_edit_in := $VBoxContainer/Bottom/TextEditIn
+@onready var _text_edit_out := $VBoxContainer/Bottom/TextEditOut
 
 func _ready() -> void:
 	_regions.append(ALL_REGIONS)
@@ -202,7 +202,7 @@ func _analyze_player_data() -> void:
 	_append_records([LevelArchetype.CUSTOMERS, LevelArchetype.CUSTOMERS_FAST])
 	
 	# sort the biggest outliers to the top
-	_skill_records.sort_custom(self, "_compare_by_deviation")
+	_skill_records.sort_custom(Callable(self, "_compare_by_deviation"))
 
 
 ## Outputs text based on the result of analyzing the player's performance.
@@ -307,7 +307,7 @@ func _compare_by_deviation(a: SkillRecord, b: SkillRecord) -> bool:
 ## These lines use the following format:
 ## 	practice/marathon_normal score=2609 seconds=223
 func _parse_line(line_number: int, line: String) -> void:
-	if line.empty():
+	if line.is_empty():
 		return
 	var words := line.split(" ")
 	if words.size() < 2:

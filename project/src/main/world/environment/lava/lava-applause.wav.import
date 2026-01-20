@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/lava-applause.wav-92166fe4ebb2597fff8d7ff165a3da84.sample"
+type="AudioStreamWAV"
+uid="uid://dutufimagbly4"
+path="res://.godot/imported/lava-applause.wav-92166fe4ebb2597fff8d7ff165a3da84.sample"
 
 [deps]
 
 source_file="res://src/main/world/environment/lava/lava-applause.wav"
-dest_files=[ "res://.import/lava-applause.wav-92166fe4ebb2597fff8d7ff165a3da84.sample" ]
+dest_files=["res://.godot/imported/lava-applause.wav-92166fe4ebb2597fff8d7ff165a3da84.sample"]
 
 [params]
 

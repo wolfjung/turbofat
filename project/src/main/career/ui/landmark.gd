@@ -60,27 +60,27 @@ const LANDMARK_RESOURCES_BY_TYPE := {
 	CIRCLES_6: preload("res://assets/main/career/ui/map/circles-6.png"),
 }
 
-export (LandmarkType) var type: int setget set_type
-export (int) var distance: int setget set_distance
+@export var type: LandmarkType: set = set_type
+@export var distance: int: set = set_distance
 
 ## Shows the landmark's icon
-onready var _texture_rect := $TextureRect
+@onready var _texture_rect := $TextureRect
 
 ## Shows the landmark's distance
-onready var _label := $Label
+@onready var _label := $Label
 
 func _ready() -> void:
 	# This texture rect changes its size. But sometimes these size changes confuse Godot's layout manager which
 	# then relocates it to (-45, -45) for no good reason. (This maybe a bug in Godot v3.4.2.stable.official)
-	_texture_rect.rect_position = Vector2(-7.5, 30)
+	_texture_rect.position = Vector2(-7.5, 30)
 	
 	_refresh_type()
 	_refresh_distance()
 	
 	# Shift the texture/label around randomly so they're not in a perfect line
-	var random_offset := Vector2(rand_range(-6, 6), rand_range(-30, 30))
-	_texture_rect.rect_position += random_offset
-	_label.rect_position += random_offset
+	var random_offset := Vector2(randf_range(-6, 6), randf_range(-30, 30))
+	_texture_rect.position += random_offset
+	_label.position += random_offset
 
 
 ## Preemptively initializes onready variables to avoid null references.
@@ -120,7 +120,7 @@ func _is_circles_type() -> bool:
 
 ## Returns the coordinates of the center of our texture, relative to the map
 func _texture_center() -> Vector2:
-	return rect_position + _texture_rect.rect_position + _texture_rect.rect_size * Vector2(0.5, 0.5)
+	return position + _texture_rect.position + _texture_rect.size * Vector2(0.5, 0.5)
 
 
 ## Updates our icon texture based on the current 'type' value
@@ -129,7 +129,7 @@ func _refresh_type() -> void:
 		return
 	
 	_texture_rect.texture = LANDMARK_RESOURCES_BY_TYPE.get(type)
-	_texture_rect.rect_size = Vector2(120, 90) if _is_circles_type() else Vector2(90, 90)
+	_texture_rect.size = Vector2(120, 90) if _is_circles_type() else Vector2(90, 90)
 	_texture_rect.modulate = Color("64646e") if _is_circles_type() else Color("c8c8c8")
 
 

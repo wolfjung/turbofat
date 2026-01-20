@@ -3,7 +3,7 @@ extends PopupPanel
 
 signal name_changed(name)
 
-onready var _line_edit := $LineEdit
+@onready var _line_edit := $LineEdit
 
 func _ready() -> void:
 	$LineEdit.max_length = NameUtils.MAX_CREATURE_NAME_LENGTH
@@ -25,4 +25,4 @@ func _on_LineEdit_text_entered(_new_text: String) -> void:
 
 func _on_about_to_show() -> void:
 	_line_edit.select_all()
-	_line_edit.caret_position = _line_edit.text.length()
+	_line_edit.caret_column = _line_edit.text.length()

@@ -1,12 +1,12 @@
 extends Node
 ## A unique cutscene where the player and Fat Sensei crowd surf on a cheering crowd.
 
-onready var _crowd_surf_director: CrowdSurfDirector = $Environment/CrowdSurfDirector
+@onready var _crowd_surf_director: CrowdSurfDirector = $Environment/CrowdSurfDirector
 
-onready var _bg := $Bg
-onready var _launch_bg := $LaunchBg
-onready var _environment := $Environment
-onready var _camera := $Camera2D
+@onready var _bg := $Bg
+@onready var _launch_bg := $LaunchBg
+@onready var _environment := $Environment
+@onready var _camera := $Camera2D
 
 ## Makes the cutscene appear, setting it as the current cutscene within its viewport.
 func show() -> void:

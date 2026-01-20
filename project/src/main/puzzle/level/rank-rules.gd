@@ -3,7 +3,8 @@ class_name RankRules
 
 ## Parses a json string like 'rank_criteria m=1000 s=800' into a RankCriteria instance.
 class RankCriteriaParser extends RuleParser.PropertyParser:
-	func _init(init_target: Object, init_name: String).(init_target, init_name) -> void:
+	func _init(init_target: Object, init_name: String) -> void:
+		super(init_target, init_name)
 		pass
 	
 	func to_json_strings() -> Array:

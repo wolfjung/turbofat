@@ -2,9 +2,9 @@ class_name CreditsPieces
 extends Node2D
 ## Launches and stores the puzzle pieces which appear in the credits.
 
-export (NodePath) var header_path: NodePath
-export (NodePath) var orb_path: NodePath
-export (PackedScene) var PieceScene: PackedScene
+@export var header_path: NodePath
+@export var orb_path: NodePath
+@export var PieceScene: PackedScene
 
 ## key: (int) index of a piece launched by the CreditsOrb
 ## value: (int) index of a letter in the text 'turbo fat' in CreditsHeader
@@ -17,11 +17,11 @@ var _target_position_by_piece_index: Dictionary = {}
 ## index of the next unlaunched piece
 var _next_piece_index := 0
 
-onready var _orb: CreditsOrb = get_node(orb_path)
-onready var _header: CreditsHeader = get_node(header_path)
+@onready var _orb: CreditsOrb = get_node(orb_path)
+@onready var _header: CreditsHeader = get_node(header_path)
 
 func _ready() -> void:
-	_orb.connect("frame_changed", self, "_on_Orb_frame_changed")
+	_orb.connect("frame_changed", Callable(self, "_on_Orb_frame_changed"))
 
 
 ## Assigns a piece which, when launched by the CreditsOrb, will target a specific letter in CreditsHeader
@@ -50,7 +50,7 @@ func _process_launch_interval() -> void:
 
 ## Initialize a CreditsPiece and adds it to the scene tree.
 func _add_credits_piece(piece_index: int) -> void:
-	var piece: CreditsPiece = PieceScene.instance()
+	var piece: CreditsPiece = PieceScene.instantiate()
 	piece.initialize(_orb)
 	if _target_position_by_piece_index.has(piece_index):
 		var target_position: Vector2 = _target_position_by_piece_index[piece_index]

@@ -1,4 +1,4 @@
-extends Particles2D
+extends GPUParticles2D
 ## Emits crumb particles as blocks are speared.
 
 ## Emits particle properties based on the speared blocks.

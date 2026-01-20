@@ -18,14 +18,14 @@ enum Speed {
 }
 
 ## 'true' if the player can use a 'hold piece'
-var hold_piece := false setget set_hold_piece
+var hold_piece := false: set = set_hold_piece
 
 ## 'true' if line pieces should appear on all levels
-var line_piece := false setget set_line_piece
+var line_piece := false: set = set_line_piece
 
 ## Current gameplay speed. The player can reduce this to make the game easier. They can also increase it to make
 ## the game harder, or to cheat on levels which otherwise require slow and thoughtful play.
-var speed: int = Speed.DEFAULT setget set_speed
+var speed: int = Speed.DEFAULT: set = set_velocity
 
 func set_hold_piece(new_hold_piece: bool) -> void:
 	if hold_piece == new_hold_piece:
@@ -41,7 +41,7 @@ func set_line_piece(new_line_piece: bool) -> void:
 	emit_signal("line_piece_changed", new_line_piece)
 
 
-func set_speed(new_speed: int) -> void:
+func set_velocity(new_speed: int) -> void:
 	if speed == new_speed:
 		return
 	speed = new_speed
@@ -56,7 +56,7 @@ func reset() -> void:
 func from_json_dict(json: Dictionary) -> void:
 	set_hold_piece(json.get("hold_piece", false))
 	set_line_piece(json.get("line_piece", false))
-	set_speed(Utils.enum_from_snake_case(Speed, json.get("speed", "")))
+	set_velocity(Utils.enum_from_snake_case(Speed, json.get("speed", "")))
 
 
 func to_json_dict() -> Dictionary:

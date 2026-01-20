@@ -1,20 +1,20 @@
-tool
+@tool
 extends OverworldObstacle
 ## Overworld obstacle with different cosmetic variations in a sprite sheet.
 
 ## Current frame to display from the sprite sheet.
-export (int) var frame: int setget set_frame
+@export var frame: int: set = set_frame
 
 ## If true, the sprite's texture is flipped horizontally.
-export (bool) var flip_h: bool setget set_flip_h
+@export var flip_h: bool: set = set_flip_h
 
 ## Editor toggle which randomizes the obstacle's appearance
-export (bool) var shuffle: bool setget set_shuffle
+@export var shuffle: bool: set = set_shuffle
 
 ## List of frames to allow when shuffling. If omitted, all frames will be used.
-export (Array, int) var shuffle_frames: Array
+@export var shuffle_frames: Array # (Array, int)
 
-onready var _sprite := $Sprite
+@onready var _sprite := $Sprite2D
 
 func _ready() -> void:
 	_refresh()
@@ -50,18 +50,18 @@ func set_shuffle(value: bool) -> void:
 	set_flip_h(randf() < 0.5)
 	scale = Vector2.ONE
 	
-	property_list_changed_notify()
+	notify_property_list_changed()
 
 
 func _initialize_onready_variables() -> void:
-	_sprite = $Sprite
+	_sprite = $Sprite2D
 
 
 func _refresh() -> void:
 	if not is_inside_tree():
 		return
 	
-	if Engine.editor_hint and not _sprite:
+	if Engine.is_editor_hint() and not _sprite:
 		_initialize_onready_variables()
 	
 	_sprite.frame = frame

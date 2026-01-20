@@ -29,7 +29,8 @@ class DefaultState extends AbstractState:
 	
 	var chat_state: AbstractState
 	
-	func _init(init_chat_tree: ChatTree).(init_chat_tree) -> void:
+	func _init(init_chat_tree: ChatTree) -> void:
+		super(init_chat_tree)
 		pass
 	
 	
@@ -39,9 +40,13 @@ class DefaultState extends AbstractState:
 			pass
 		elif line.begins_with("{") and line.ends_with("}"):
 			# json dictionary; set metadata
-			var parsed = parse_json(line)
+			var test_json_conv = JSON.new()
+			test_json_conv.parse(line)
+			var parsed = test_json_conv.get_data()
 			if typeof(parsed) == TYPE_DICTIONARY:
-				chat_tree.meta = parse_json(line)
+				var test_json_conv = JSON.new()
+				test_json_conv.parse(line)
+				chat_tree.meta = test_json_conv.get_data()
 				if "version" in chat_tree.meta:
 					chat_tree.meta.erase("version")
 			else:
@@ -60,7 +65,8 @@ class DefaultState extends AbstractState:
 ## Parser state for parsing location data (where a conversation takes place).
 class LocationState extends AbstractState:
 	
-	func _init(init_chat_tree: ChatTree).(init_chat_tree) -> void:
+	func _init(init_chat_tree: ChatTree) -> void:
+		super(init_chat_tree)
 		pass
 	
 	
@@ -86,7 +92,8 @@ class CharactersState extends AbstractState:
 	## value: (String) alias used in chatscript chat lines
 	var _aliases_by_creature_id: Dictionary
 	
-	func _init(init_chat_tree: ChatTree, init_aliases_by_creature_id: Dictionary).(init_chat_tree) -> void:
+	func _init(init_chat_tree: ChatTree, init_aliases_by_creature_id: Dictionary) -> void:
+		super(init_chat_tree)
 		_aliases_by_creature_id = init_aliases_by_creature_id
 	
 	
@@ -166,7 +173,8 @@ class ChatState extends AbstractState:
 	## Current branch key being parsed. Any additional chat events will be attached to this branch.
 	var _branch_key := ""
 	
-	func _init(init_chat_tree: ChatTree, init_aliases_by_creature_id: Dictionary).(init_chat_tree) -> void:
+	func _init(init_chat_tree: ChatTree, init_aliases_by_creature_id: Dictionary) -> void:
+		super(init_chat_tree)
 		_aliases_by_creature_id = init_aliases_by_creature_id
 	
 	

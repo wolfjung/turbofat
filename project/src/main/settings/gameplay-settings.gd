@@ -6,13 +6,13 @@ signal lock_fade_changed(value)
 signal soft_drop_lock_cancel_changed(value)
 
 ## 'true' if a ghost piece should be shown during the puzzle sections.
-var ghost_piece := true setget set_ghost_piece
+var ghost_piece := true: set = set_ghost_piece
 
 ## 'true' if pieces should darken while locking..
-var lock_fade := false setget set_lock_fade
+var lock_fade := false: set = set_lock_fade
 
 ## 'true' if pressing soft drop should perform a lock cancel
-var soft_drop_lock_cancel := false setget set_soft_drop_lock_cancel
+var soft_drop_lock_cancel := false: set = set_soft_drop_lock_cancel
 
 ## Transient properties which are temporarily stored for backwards compatibility.
 ##

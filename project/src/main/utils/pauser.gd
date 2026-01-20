@@ -13,7 +13,7 @@ var _paused: bool
 var _pausers := {}
 
 func _ready() -> void:
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 ## Purges all pause requests and unpauses the game.
@@ -49,4 +49,4 @@ func toggle_pause(request_id: String, paused: bool) -> void:
 	else:
 		_pausers.erase(request_id)
 	
-	get_tree().paused = false if _pausers.empty() else true
+	get_tree().paused = false if _pausers.is_empty() else true

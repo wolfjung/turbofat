@@ -2,18 +2,18 @@ class_name CreatureEditorDialogs
 extends Control
 ## Shows popup dialogs for the creature editor.
 
-export (NodePath) var overworld_environment_path: NodePath
+@export var overworld_environment_path: NodePath
 
 ## Object and method to call after the player confirms or cancels the "unsaved changes" dialog
 var _unsaved_changes_confirmation_target: Object
 var _unsaved_changes_confirmation_method: String
 
-onready var _error: AcceptDialog = $Error
-onready var _export: FileDialog = $Export
-onready var _import: FileDialog = $Import
-onready var _unsaved_changes_confirmation := $UnsavedChangesConfirmation
+@onready var _error: AcceptDialog = $Error
+@onready var _export: FileDialog = $Export
+@onready var _import: FileDialog = $Import
+@onready var _unsaved_changes_confirmation := $UnsavedChangesConfirmation
 
-onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
+@onready var _overworld_environment: OverworldEnvironment = get_node(overworld_environment_path)
 
 func _ready() -> void:
 	# Assign default dialog paths. These path properties were removed in Godot 3.5 in 2022 as a security precaution
@@ -22,11 +22,11 @@ func _ready() -> void:
 	_import.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
 	_export.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
 	
-	_unsaved_changes_confirmation.get_ok().text = tr("Save")
-	_unsaved_changes_confirmation.get_cancel().text = tr("Discard")
+	_unsaved_changes_confirmation.get_ok_button().text = tr("Save")
+	_unsaved_changes_confirmation.get_cancel_button().text = tr("Discard")
 	_unsaved_changes_confirmation.connect("confirmed",
 			self, "_on_UnsavedChangesQuitConfirmation_save_pressed")
-	_unsaved_changes_confirmation.get_cancel().connect("pressed",
+	_unsaved_changes_confirmation.get_cancel_button().connect("pressed",
 			self, "_on_UnsavedChangesQuitConfirmation_discard_pressed")
 	_unsaved_changes_confirmation.get_close_button().connect("pressed",
 			self, "_on_UnsavedChangesQuitConfirmation_closed")
@@ -67,8 +67,8 @@ func show_error_dialog(text: String) -> void:
 
 
 ## Configures a dialog to be dismissed by the 'ui_cancel' action.
-func _assign_dialog_cancel_shortcut(dialog: WindowDialog) -> void:
-	var new_shortcut := ShortCut.new()
+func _assign_dialog_cancel_shortcut(dialog: Window) -> void:
+	var new_shortcut := Shortcut.new()
 	var new_input_event_action := InputEventAction.new()
 	new_input_event_action.action = "ui_cancel"
 	new_shortcut.shortcut = new_input_event_action

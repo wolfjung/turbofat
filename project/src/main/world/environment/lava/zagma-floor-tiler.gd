@@ -1,24 +1,24 @@
-tool
+@tool
 extends Node
 ## Randomizes brick patterns for the floors in Zagma studios.
 
 ## The parent tilemap's tile ID for small 1x1 tiles to apply brick patterns to
-export (int) var small_tile_index := -1
+@export var small_tile_index := -1
 
 ## The parent tilemap's tile ID for large 2x2 tiles to apply brick patterns to
-export (int) var large_tile_index := -1
+@export var large_tile_index := -1
 
 ## percent of cells without brick patterns, in the range [0.0, 1.0]
-export (float, 0.0, 1.0) var quality := 1.0
+@export var quality := 1.0 # (float, 0.0, 1.0)
 
 ## Editor toggle which manually applies autotiling.
 ##
 ## Godot has no way of automatically reacting to GridMap/TileMap changes. See Godot #11855
 ## (https://github.com/godotengine/godot/issues/11855)
-export (bool) var _autotile: bool setget autotile
+@export var _autotile: bool: set = autotile
 
 ## Editor toggle which undoes autotiling, removing all brick patterns.
-export (bool) var _unautotile: bool setget unautotile
+@export var _unautotile: bool: set = unautotile
 
 const SMALL_FLAWED_TILE_INDEXES := [
 	Vector2(1, 0), Vector2(2, 0),
@@ -39,7 +39,7 @@ const LARGE_NEIGHBOR_DIRS := [
 ]
 
 ## tilemap to apply brick patterns to
-onready var _tile_map: TileMap = get_parent()
+@onready var _tile_map: TileMap = get_parent()
 
 ## Autotiles the parent tilemap, applying random brick patterns.
 ##
@@ -49,7 +49,7 @@ func autotile(value: bool) -> void:
 		# only autotile in the editor when the 'autotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()
@@ -82,7 +82,7 @@ func unautotile(value: bool) -> void:
 		# only unautotile in the editor when the 'unautotile' property is toggled
 		return
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		if not _tile_map:
 			# initialize variables to avoid nil reference errors in the editor when editing tool scripts
 			_initialize_onready_variables()

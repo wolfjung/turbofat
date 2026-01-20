@@ -51,20 +51,20 @@ const LONG := LevelSize.LONG
 var level_id: String
 
 ## Enum from LevelSize for the duration of the level. This affects the button size
-var level_duration: int = LevelSize.MEDIUM setget set_level_duration
+var level_duration: int = LevelSize.MEDIUM: set = set_level_duration
 
 ## status whether or not this level is locked/unlocked
-var lock_status: int = STATUS_NONE setget set_lock_status
+var lock_status: int = STATUS_NONE: set = set_lock_status
 
 ## number of remaining levels the player needs to play to unlock this level
-var keys_needed := -1 setget set_keys_needed
+var keys_needed := -1: set = set_keys_needed
 
-var level_name: String setget set_level_name
+var level_name: String: set = set_level_name
 
-var level_icons := [] setget set_level_icons
+var level_icons := []: set = set_level_icons
 
 ## Button's background color. If omitted, the button will use a pseudo-random background color based on its id
-var bg_color: Color setget set_bg_color
+var bg_color: Color: set = set_bg_color
 
 ## 'true' if this button just received focus this frame. A mouse click which grants focus doesn't emit a 'level
 ## started' event
@@ -73,14 +73,14 @@ var _focus_just_entered := false
 ## 'true' if the 'level started' signal should be emitted in response to a button click.
 var _emit_level_chosen := false
 
-onready var _label := $ButtonControlHolder/ButtonControl/Label
-onready var _icon_tile_map := $ButtonControlHolder/ButtonControl/IconTileMapHolder/IconTileMap
+@onready var _label := $ButtonControlHolder/ButtonControl/Label
+@onready var _icon_tile_map := $ButtonControlHolder/ButtonControl/IconTileMapHolder/IconTileMap
 
-onready var button_control := $ButtonControlHolder/ButtonControl
+@onready var button_control := $ButtonControlHolder/ButtonControl
 
 func _ready() -> void:
 	button_control.text = ""
-	button_control.rect_size = rect_size
+	button_control.size = size
 	refresh_size()
 	_refresh_appearance()
 
@@ -179,8 +179,8 @@ func refresh_style_color(color: Color) -> void:
 	if not is_inside_tree():
 		return
 	
-	button_control.get("custom_styles/normal").bg_color = color
-	button_control.get("custom_styles/hover").bg_color = color
+	button_control.get("theme_override_styles/normal").bg_color = color
+	button_control.get("theme_override_styles/hover").bg_color = color
 
 
 ## Returns true if this button is currently focused.
@@ -215,7 +215,7 @@ func refresh_size() -> void:
 	if not button_control:
 		return
 	
-	button_control.rect_size = rect_size
+	button_control.size = size
 
 
 ## Updates the button's text, colors, size and icon based on the level and its status.
@@ -224,9 +224,9 @@ func _refresh_appearance() -> void:
 		return
 	
 	match level_duration:
-		LevelSize.SHORT: rect_min_size.y = 80
-		LevelSize.MEDIUM: rect_min_size.y = 100
-		LevelSize.LONG: rect_min_size.y = 120
+		LevelSize.SHORT: custom_minimum_size.y = 80
+		LevelSize.MEDIUM: custom_minimum_size.y = 100
+		LevelSize.LONG: custom_minimum_size.y = 120
 	
 	_label.text = StringUtils.default_if_empty(level_name, "-")
 	
@@ -263,7 +263,7 @@ func _on_ButtonControl_pressed() -> void:
 
 func _on_ButtonControl_focus_entered() -> void:
 	_focus_just_entered = true
-	var font: DynamicFont = _label.get("custom_fonts/font")
+	var font: FontFile = _label.get("theme_override_fonts/font")
 	font.outline_color = Color("007a99")
 	_icon_tile_map.material.set("shader_param/black", font.outline_color)
 	
@@ -273,7 +273,7 @@ func _on_ButtonControl_focus_entered() -> void:
 
 
 func _on_ButtonControl_focus_exited() -> void:
-	var font: DynamicFont = _label.get("custom_fonts/font")
+	var font: FontFile = _label.get("theme_override_fonts/font")
 	font.outline_color = Color("6c4331")
 	_icon_tile_map.material.set("shader_param/black", font.outline_color)
 

@@ -2,20 +2,20 @@
 
 [ext_resource path="res://src/main/ui/theme/h4.theme" type="Theme" id=1]
 [ext_resource path="res://src/main/ui/menu/system-buttons.gd" type="Script" id=2]
-[ext_resource path="res://src/main/ui/UiCancelShortcut.tres" type="ShortCut" id=3]
-[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="ShortCut" id=4]
+[ext_resource path="res://src/main/ui/UiCancelShortcut.tres" type="Shortcut" id=3]
+[ext_resource path="res://src/main/ui/UiMenuShortcut.tres" type="Shortcut" id=4]
 [ext_resource path="res://src/main/ui/ButtonShortcutHelper.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture" id=6]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o.png" type="Texture2D" id=6]
 [ext_resource path="res://src/main/ui/candy-button/gradient-yellow-normal.tres" type="Gradient" id=7]
 [ext_resource path="res://src/main/ui/candy-button/CandyButtonH4.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/main/ui/candy-button/gradient-red-normal.tres" type="Gradient" id=9]
 [ext_resource path="res://src/main/ui/candy-button/gradient-violet-normal.tres" type="Gradient" id=10]
-[ext_resource path="res://src/main/ui/candy-button/gradient-map.shader" type="Shader" id=11]
-[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture" id=12]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture" id=13]
-[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture" id=14]
-[ext_resource path="res://assets/main/ui/candy-button/h4-p.png" type="Texture" id=15]
-[ext_resource path="res://assets/main/ui/candy-button/h4-p-pressed.png" type="Texture" id=16]
+[ext_resource path="res://src/main/ui/candy-button/gradient-map.gdshader" type="Shader" id=11]
+[ext_resource path="res://assets/main/ui/candy-button/h4-o-pressed.png" type="Texture2D" id=12]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q.png" type="Texture2D" id=13]
+[ext_resource path="res://assets/main/ui/candy-button/h4-q-pressed.png" type="Texture2D" id=14]
+[ext_resource path="res://assets/main/ui/candy-button/h4-p.png" type="Texture2D" id=15]
+[ext_resource path="res://assets/main/ui/candy-button/h4-p-pressed.png" type="Texture2D" id=16]
 
 [sub_resource type="GradientTexture2D" id=7]
 resource_local_to_scene = true
@@ -51,17 +51,17 @@ shader_param/gradient = SubResource( 9 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -124.0
+offset_top = -124.0
 theme = ExtResource( 1 )
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 script = ExtResource( 2 )
 
 [node name="Settings" parent="." instance=ExtResource( 8 )]
 material = SubResource( 2 )
-margin_left = 452.0
-margin_top = 0.0
-margin_right = 572.0
-margin_bottom = 30.0
+offset_left = 452.0
+offset_top = 0.0
+offset_right = 572.0
+offset_bottom = 30.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 shortcut = ExtResource( 4 )
@@ -78,10 +78,10 @@ overridden_action = "ui_menu"
 
 [node name="Credits" parent="." instance=ExtResource( 8 )]
 material = SubResource( 4 )
-margin_left = 452.0
-margin_top = 40.0
-margin_right = 572.0
-margin_bottom = 70.0
+offset_left = 452.0
+offset_top = 40.0
+offset_right = 572.0
+offset_bottom = 70.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource( 15 )
@@ -93,10 +93,10 @@ shape = 4
 
 [node name="Quit" parent="." instance=ExtResource( 8 )]
 material = SubResource( 6 )
-margin_left = 452.0
-margin_top = 80.0
-margin_right = 572.0
-margin_bottom = 110.0
+offset_left = 452.0
+offset_top = 80.0
+offset_right = 572.0
+offset_bottom = 110.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 shortcut = ExtResource( 3 )
@@ -108,10 +108,10 @@ color = 1
 shape = 5
 
 [node name="Spacer" type="Control" parent="."]
-margin_top = 120.0
-margin_right = 1024.0
-margin_bottom = 130.0
-rect_min_size = Vector2( 0, 10 )
+offset_top = 120.0
+offset_right = 1024.0
+offset_bottom = 130.0
+custom_minimum_size = Vector2( 0, 10 )
 
 [connection signal="pressed" from="Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="Credits" to="." method="_on_Credits_pressed"]

@@ -13,14 +13,14 @@ signal tile_map_changed
 signal pickups_changed
 
 ## tiles keys which can be selected. 'start' is always the first item in this array
-var tiles_keys := ["start"] setget set_tiles_keys
+var tiles_keys := ["start"]: set = set_tiles_keys
 ## currently selected tiles key
-var tiles_key := "start" setget set_tiles_key
+var tiles_key := "start": set = set_tiles_key
 
-onready var _playfield_nav := $PlayfieldNav
-onready var _rotate_button := $Palette/VBoxContainer/Buttons/RotateButton
-onready var _next_button := $Palette/VBoxContainer/Buttons/NextButton
-onready var _prev_button := $Palette/VBoxContainer/Buttons/PrevButton
+@onready var _playfield_nav := $PlayfieldNav
+@onready var _rotate_button := $Palette/VBoxContainer/Buttons/RotateButton
+@onready var _next_button := $Palette/VBoxContainer/Buttons/NextButton
+@onready var _prev_button := $Palette/VBoxContainer/Buttons/PrevButton
 
 func _ready() -> void:
 	_connect_chunk_control_listeners()
@@ -59,11 +59,11 @@ func _connect_chunk_control_listeners() -> void:
 		return
 	for chunk_control in get_tree().get_nodes_in_group("chunk_controls"):
 		if chunk_control.has_method("_on_RotateButton_pressed"):
-			_rotate_button.connect("pressed", chunk_control, "_on_RotateButton_pressed")
+			_rotate_button.connect("pressed", Callable(chunk_control, "_on_RotateButton_pressed"))
 		if chunk_control.has_method("_on_NextButton_pressed"):
-			_next_button.connect("pressed", chunk_control, "_on_NextButton_pressed")
+			_next_button.connect("pressed", Callable(chunk_control, "_on_NextButton_pressed"))
 		if chunk_control.has_method("_on_PrevButton_pressed"):
-			_prev_button.connect("pressed", chunk_control, "_on_PrevButton_pressed")
+			_prev_button.connect("pressed", Callable(chunk_control, "_on_PrevButton_pressed"))
 
 
 ## Ensure the tiles keys are sorted, and that they always include a 'start' key.
@@ -92,7 +92,7 @@ func _on_PlayfieldNav_add_tiles_key_pressed() -> void:
 			new_key = potential_new_key
 			break
 	
-	if new_key.empty():
+	if new_key.is_empty():
 		push_error("Couldn't add tiles key: Too many conflicts")
 		return
 	

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/bar-pop.wav-bf1d36217d7ba40247281daa1d696f07.sample"
+type="AudioStreamWAV"
+uid="uid://cn2qbjfiuyr51"
+path="res://.godot/imported/bar-pop.wav-bf1d36217d7ba40247281daa1d696f07.sample"
 
 [deps]
 
 source_file="res://assets/main/puzzle/result/bar-pop.wav"
-dest_files=[ "res://.import/bar-pop.wav-bf1d36217d7ba40247281daa1d696f07.sample" ]
+dest_files=["res://.godot/imported/bar-pop.wav-bf1d36217d7ba40247281daa1d696f07.sample"]
 
 [params]
 

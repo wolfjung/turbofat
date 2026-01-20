@@ -1,13 +1,13 @@
 extends Node
 ## Non-interactive demo which shows the different labels and icons for level buttons.
 
-export (PackedScene) var LevelButtonScene: PackedScene
-export (PackedScene) var HardcoreLevelButtonScene: PackedScene
-export (PackedScene) var BossLevelButtonScene: PackedScene
-export (PackedScene) var HardcoreBossLevelButtonScene: PackedScene
+@export var LevelButtonScene: PackedScene
+@export var HardcoreLevelButtonScene: PackedScene
+@export var BossLevelButtonScene: PackedScene
+@export var HardcoreBossLevelButtonScene: PackedScene
 
-onready var _grid_container := $Control/GridContainer
-onready var _grade_labels := $Control/GradeLabels
+@onready var _grid_container := $Control/GridContainer
+@onready var _grade_labels := $Control/GradeLabels
 
 func _ready() -> void:
 	PlayerData.level_history.reset()
@@ -44,13 +44,13 @@ func _button() -> LevelSelectButton:
 	
 	var button: LevelSelectButton
 	if button_index == 2:
-		button = HardcoreLevelButtonScene.instance()
+		button = HardcoreLevelButtonScene.instantiate()
 	elif button_index == 4:
-		button = BossLevelButtonScene.instance()
+		button = BossLevelButtonScene.instantiate()
 	elif button_index == 6:
-		button = HardcoreBossLevelButtonScene.instance()
+		button = HardcoreBossLevelButtonScene.instantiate()
 	else:
-		button = LevelButtonScene.instance()
+		button = LevelButtonScene.instantiate()
 	button.level_id = "level_%03d" % [button_index]
 	button.level_name = "Level %03d" % [button_index]
 	

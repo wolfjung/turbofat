@@ -2,16 +2,16 @@ extends Control
 ## Menu which lets the player select their difficulty and enable helpers.
 
 ## The button for 'Normal Mode' which is focused if the player's settings are in an unusual state
-onready var _normal_difficulty_button := $DropPanel/VBoxContainer/Difficulty/Buttons/Button2
+@onready var _normal_difficulty_button := $DropPanel/VBoxContainer/Difficulty/Buttons/Button2
 
-onready var _hold_piece_checkbox := $DropPanel/VBoxContainer/Helpers/HBoxContainer/HoldPiecePanel/CheckBox
-onready var _line_piece_checkbox := $DropPanel/VBoxContainer/Helpers/HBoxContainer/LinePiecePanel/CheckBox
+@onready var _hold_piece_checkbox := $DropPanel/VBoxContainer/Helpers/HBoxContainer/HoldPiecePanel/CheckBox
+@onready var _line_piece_checkbox := $DropPanel/VBoxContainer/Helpers/HBoxContainer/LinePiecePanel/CheckBox
 
 ## Conditionally shows a 'Customize your difficulty!' message if the menu is forced upon the player
-onready var _tip_label := $TipLabel
+@onready var _tip_label := $TipLabel
 
 func _ready() -> void:
-	PlayerData.difficulty.connect("speed_changed", self, "_on_DifficultyData_speed_changed")
+	PlayerData.difficulty.connect("speed_changed", Callable(self, "_on_DifficultyData_speed_changed"))
 	
 	_focus_difficulty_button()
 	_assign_focus_neighbours()
@@ -58,8 +58,8 @@ func _assign_focus_neighbours() -> void:
 		button_to_focus = _normal_difficulty_button
 	
 	# assign the difficulty button as a focus neighbor
-	_hold_piece_checkbox.focus_neighbour_top = button_to_focus.get_path()
-	_line_piece_checkbox.focus_neighbour_top = button_to_focus.get_path()
+	_hold_piece_checkbox.focus_neighbor_top = button_to_focus.get_path()
+	_line_piece_checkbox.focus_neighbor_top = button_to_focus.get_path()
 
 
 func _on_DifficultyData_speed_changed(_value: int) -> void:

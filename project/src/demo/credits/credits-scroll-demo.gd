@@ -18,14 +18,14 @@ extends Node
 ## 	[Right brace]: Hold to speed up the credits.
 
 ## 'true' to show the "cool credits" after the player beats the game. 'false' to show the "boring credits".
-export (bool) var cool_credits: bool = true
+@export var cool_credits: bool = true
 
 ## Number of seconds the demo has been running, shown on the time label
 var _total_time := 0.0
 
-onready var _scroll := $CreditsScroll
-onready var _credits_director := $CreditsScroll/CreditsDirector
-onready var _time_label := $TimeLabel
+@onready var _scroll := $CreditsScroll
+@onready var _credits_director := $CreditsScroll/CreditsDirector
+@onready var _time_label := $TimeLabel
 
 func _ready() -> void:
 	if cool_credits:
@@ -88,7 +88,7 @@ func _input(event: InputEvent) -> void:
 		KEY_KP_3:
 			_scroll.credits_position = Credits.CreditsPosition.BOTTOM_RIGHT
 	
-	if event is InputEventKey and event.scancode == KEY_BRACKETRIGHT and not event.is_echo():
+	if event is InputEventKey and event.keycode == KEY_BRACKETRIGHT and not event.is_echo():
 		if event.is_pressed():
 			# disable 'adjusting_time_scale' so that CreditsDirector doesn't take change the time_scale while we're
 			# fast-forwarding

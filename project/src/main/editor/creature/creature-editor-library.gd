@@ -1,4 +1,4 @@
-tool
+@tool
 class_name CreatureEditorLibrary
 extends Node
 ## Manages data for the creature editor. This includes the list of category names, which buttons should be shown,
@@ -190,7 +190,9 @@ func get_operations_by_category_index(category_index: int) -> Array:
 
 func _load_raw_json_data() -> void:
 	var categories_text := FileUtils.get_file_as_text(CATEGORIES_PATH)
-	var categories_json: Dictionary = parse_json(categories_text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(categories_text)
+	var categories_json: Dictionary = test_json_conv.get_data()
 	for category_json in categories_json.get("categories", []):
 		var category := CreatureEditorCategory.new()
 		category.from_json_dict(category_json)

@@ -1,4 +1,4 @@
-tool
+@tool
 class_name CreditsWallOfText
 extends Node2D
 ## A wall of text which appears and disappears during the credits.
@@ -8,20 +8,20 @@ extends Node2D
 
 const FADE_DURATION := 0.5
 
-export (String) var text: String setget set_text
+@export var text: String: set = set_text
 
 ## Time in seconds the text remains visible before fading out.
-var duration: float = 5.0 setget set_duration
+var duration: float = 5.0: set = set_duration
 
-var _modulate_tween: SceneTreeTween
+var _modulate_tween: Tween
 
-onready var _label := $Label
+@onready var _label := $Label
 
 ## Timer which makes us disappear after a delay.
-onready var _timer := $Timer
+@onready var _timer := $Timer
 
 func _ready() -> void:
-	_label.modulate = Color.transparent
+	_label.modulate = Color.TRANSPARENT
 	_refresh()
 
 
@@ -43,13 +43,13 @@ func _refresh() -> void:
 	_label.text = PlayerData.creature_library.substitute_variables(text)
 	_timer.start(max(duration - FADE_DURATION, 0.5))
 
-	modulate = Color.white
+	modulate = Color.WHITE
 	_modulate_tween = Utils.recreate_tween(self, _modulate_tween)
-	_modulate_tween.tween_property(_label, "modulate", Color.white, FADE_DURATION)
+	_modulate_tween.tween_property(_label, "modulate", Color.WHITE, FADE_DURATION)
 
 
 ## When the timer times out we fade out and queue ourselves for deletion.
 func _on_Timer_timeout() -> void:
 	_modulate_tween = Utils.recreate_tween(self, _modulate_tween)
-	_modulate_tween.tween_property(_label, "modulate", Color.transparent, FADE_DURATION)
-	_modulate_tween.tween_callback(self, "queue_free")
+	_modulate_tween.tween_property(_label, "modulate", Color.TRANSPARENT, FADE_DURATION)
+	_modulate_tween.tween_callback(Callable(self, "queue_free"))

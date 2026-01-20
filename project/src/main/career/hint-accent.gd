@@ -1,12 +1,12 @@
-tool
+@tool
 extends Panel
 ## Brown accent which appears behind the career hint label.
 ##
 ## This node's parent should always be a Label instance.
 
-export (bool) var _refresh: bool setget refresh
+@export var _refresh: bool: set = refresh
 
-onready var _parent: Label = get_parent()
+@onready var _parent: Label = get_parent()
 
 func _ready() -> void:
 	refresh()
@@ -40,5 +40,5 @@ func refresh(_value: bool = false) -> void:
 func _refresh_accent() -> void:
 	var shown_text := tr(_parent.text)
 	var string_width := _parent.get_font("font").get_string_size(shown_text).x
-	rect_size.x = string_width + 30
-	rect_position.x = _parent.rect_size.x / 2 - rect_size.x / 2
+	size.x = string_width + 30
+	position.x = _parent.size.x / 2 - size.x / 2

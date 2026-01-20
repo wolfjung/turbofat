@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Utils
 ## Contains global utilities.
 
@@ -106,7 +106,7 @@ static func enum_to_snake_case(
 	elif default != "e3343934-8d10-46f8-b19d-da50eb47d0d8":
 		# 'from' is an invalid enum, return the specified default
 		result = default
-	elif not enum_dict.empty():
+	elif not enum_dict.is_empty():
 		# 'from' is an invalid enum and no default was specified, use the first key
 		result = enum_dict.keys()[0].to_lower()
 	else:
@@ -121,7 +121,7 @@ static func enum_to_snake_case(
 ## find_closest([1.0, 2.0, 4.0, 8.0], 100) = 3
 ## find_closest([], 100)                   = -1
 static func find_closest(values: Array, target: float) -> int:
-	if values.empty():
+	if values.is_empty():
 		return -1
 	
 	var result := 0
@@ -145,7 +145,7 @@ static func find_closest(values: Array, target: float) -> int:
 static func find_focusable_nodes(parent_node: Node) -> Array:
 	var focusable_nodes := []
 	var node_queue := [parent_node]
-	while not node_queue.empty():
+	while not node_queue.is_empty():
 		var next_node: Node = node_queue.pop_front()
 		if next_node is Control \
 				and next_node.focus_mode != Control.FOCUS_NONE \
@@ -171,7 +171,7 @@ static func get_child_members(parent: Node, group: String) -> Array:
 	
 	var child_members := []
 	for member in parent.get_tree().get_nodes_in_group(group):
-		if parent.is_a_parent_of(member):
+		if parent.is_ancestor_of(member):
 			child_members.append(member)
 	return child_members
 
@@ -206,7 +206,7 @@ static func intersection(a: Array, b: Array) -> Array:
 static func is_json_deep_equal(dict1: Dictionary, dict2: Dictionary) -> bool:
 	var result := true
 	var queue := [[dict1, dict2]]
-	while not queue.empty() and result:
+	while not queue.is_empty() and result:
 		var pair: Array = queue.pop_front()
 		if typeof(pair[0]) != typeof(pair[1]):
 			result = false
@@ -244,10 +244,10 @@ static func key_num(event: InputEvent) -> int:
 
 ## Returns the scancode for a keypress event, or -1 if the event is not a keypress event.
 static func key_scancode(event: InputEvent) -> int:
-	var scancode := -1
+	var keycode := -1
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
-		scancode = event.scancode
-	return scancode
+		keycode = event.keycode
+	return keycode
 
 
 ## Invalidates a tween if it is already active.
@@ -259,7 +259,7 @@ static func key_scancode(event: InputEvent) -> int:
 ##
 ## Returns:
 ## 	null
-static func kill_tween(tween: SceneTreeTween) -> SceneTreeTween:
+static func kill_tween(tween: Tween) -> Tween:
 	if tween:
 		tween.kill()
 	return null
@@ -276,14 +276,14 @@ static func kill_tween(tween: SceneTreeTween) -> SceneTreeTween:
 ## For now, the nuance and complexity required in correctly implementing this trivial functionality warrants a utility
 ## function.
 static func map_to_world_centered(tile_map: TileMap, cell: Vector2) -> Vector2:
-	return (tile_map.map_to_world(cell) + tile_map.map_to_world(cell + Vector2.ONE)) * 0.5
+	return (tile_map.map_to_local(cell) + tile_map.map_to_world(cell + Vector2.ONE)) * 0.5
 
 
 ## Returns the maximum value of the specified array.
 ##
 ## Returns a default value of 0.0 if the array is empty.
 static func max_value(values: Array, default := 0.0) -> float:
-	if values.empty():
+	if values.is_empty():
 		return default
 	
 	var max_value: float = values[0]
@@ -296,7 +296,7 @@ static func max_value(values: Array, default := 0.0) -> float:
 ##
 ## Returns a default value of 0.0 if the array is empty.
 static func mean(values: Array, default := 0.0) -> float:
-	if values.empty():
+	if values.is_empty():
 		return default
 	
 	var sum := 0.0
@@ -306,7 +306,7 @@ static func mean(values: Array, default := 0.0) -> float:
 
 
 static func print_json(value) -> String:
-	return JSON.print(value, "  ")
+	return JSON.stringify(value, "  ")
 
 
 ## If the specified key does not exist, this method associates it with the given value.
@@ -338,7 +338,7 @@ static func randi_range(from: int, to: int) -> int:
 ##
 ## Returns:
 ## 	A new SceneTreeTween bound to the specified node.
-static func recreate_tween(node: Node, tween: SceneTreeTween) -> SceneTreeTween:
+static func recreate_tween(node: Node, tween: Tween) -> Tween:
 	kill_tween(tween)
 	return node.create_tween()
 
@@ -399,7 +399,7 @@ static func to_bool(s: String) -> bool:
 	match s:
 		"True", "TRUE", "true", "1": result = true
 		"False", "FALSE", "false", "0": result = false
-		_: result = false if s.empty() else true
+		_: result = false if s.is_empty() else true
 	return result
 
 
@@ -498,4 +498,4 @@ static func weighted_rand_value(weights_map: Dictionary):
 ## 	colors are similar, a large value like '1.0' indicates they are not similar at all.
 static func color_distance_rgb(a: Color, b: Color) -> float:
 	return (Vector3(a.r, a.g, a.b) * PERCEPTUAL_RGB_WEIGHTS) \
-			.distance_to(Vector3(b.r, b.g, b.b) * PERCEPTUAL_RGB_WEIGHTS)
+			super.distance_to(Vector3(b.r, b.g, b.b) * PERCEPTUAL_RGB_WEIGHTS)
